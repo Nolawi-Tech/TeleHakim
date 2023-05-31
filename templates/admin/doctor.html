@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Telemedicine Online - Admin</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../asset/plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../asset/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="../asset/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+   <link rel="stylesheet" href="../asset/tables/datatables-bs4/css/dataTables.bootstrap4.min.css">   
+   <style type="text/css">
+    td p {
+       margin: -0.3rem;
+       font-size: 0.9rem;
+    }
+    aside.main-sidebar{
+       background-color: #ddd;
+       color:rgb(77, 75, 75);
+    }
+    nav ul li a p{
+       color:rgb(3, 38, 76);
+    }
+    nav ul li a i{
+       color:rgb(3, 38, 76);
+    }
+ </style>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+  <div class="wrapper">
+
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color: rgb(86, 189, 202);">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+      </ul>
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="fullscreen" href="../index.html">
+             <i class="fas fa-sign-out-alt"></i>
+          </a>
+       </li>
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: rgb(98, 179, 159);">
+      <!-- Brand Logo -->
+      <a href="index.html" class="brand-link">
+        <img src="../asset/img/logo.png" alt="Logo" width="200" style="margin-bottom:-50px;margin-top:-50px"
+          style="opacity: .8">
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+          data-accordion="false">
+          <li class="nav-item">
+             <a href="index.html" class="nav-link">
+                <i class="nav-icon fa fa-tachometer-alt"></i>
+                <p>
+                   Dashboard
+                </p>
+             </a>
+          </li>
+          <li class="nav-item">
+             <a href="patient.html" class="nav-link">
+                <i class="nav-icon fa fa-wheelchair"></i>
+                <p>
+                   Patient
+                </p>
+             </a>
+          </li>
+          <li class="nav-item">
+             <a href="doctor.html" class="nav-link">
+                <i class="nav-icon fa fa-user-md"></i>
+                <p>
+                   Doctor
+                </p>
+             </a>
+          </li>
+          <li class="nav-item">
+             <a href="services.html" class="nav-link">
+                <i class="nav-icon fa fa-hand-holding-heart"></i>
+                <p>
+                   Services
+                </p>
+             </a>
+          </li>
+          <li class="nav-item">
+             <a href="payment.html" class="nav-link">
+                <i class="nav-icon fa fa-money-bill"></i>
+                <p>
+                   Payment
+                </p>
+             </a>
+          </li>
+          <li class="nav-item">
+             <a href="report.html" class="nav-link">
+                <i class="nav-icon fa fa-chart-pie"></i>
+                <p>
+                   Reports
+                </p>
+             </a>
+          </li>
+       </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
+      <div class="content-wrapper">
+         <div class="content-header">
+            <div class="container-fluid">
+               <div class="row mb-2">
+                  <div class="col-sm-6">
+                     <h1 class="m-0 text-dark"><span class="fa fa-user-md"></span> Doctors</h1>
+                  </div>
+                  <div class="col-sm-6">
+                     <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Doctors</li>
+                     </ol>
+                  </div>
+                  <a class="btn btn-sm elevation-2" href="add-doctor.html" style="margin-top: 20px;margin-left: 10px;background-color: #05445E;color: #ddd;"><i
+                        class="fa fa-user-plus"></i>
+                     Add New</a>
+               </div>
+            </div>
+         </div>
+         <section class="content">
+            <div class="container-fluid">
+               <div class="card card-info elevation-2">
+                  <br>
+                  <div class="col-md-12 table-responsive">
+                     <table id="example1" class="table table-bordered table-hover">
+                        <thead class="btn-cancel">
+                           <tr>
+                              <th>Profile</th>
+                              <th>Doctor Info</th>
+                              <th>Address</th>
+                              <th>Account Status</th>
+                              <th>Clinic Map</th>
+                              <th>Action</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td><img src="../asset/img/profile.png" width="50" alt="User Image"></td>
+                              <td>
+                                 <p class="info">Name: <b>James Andress</b></p>
+                                 <p class="info"><small>Contact: <b>098733526171</b></small></p>
+                                 <p class="info"><small>Email: <b>james@gmail.com</b></small></p>
+                              </td>
+                              <td>Pasig, Metro Manila</td>
+                              <td><span class="badge bg-success">active</span></td>
+                              <td><a class="btn btn-sm btn-info" href="#" data-toggle="modal" data-target="#map"><i
+                                       class="fa fa-map"></i> location</a></td>
+                              <td class="text-right">
+                                 <a class="btn btn-sm btn-success" href="#" data-toggle="modal" data-target="#edit"><i
+                                       class="fa fa-user-edit"></i></a>
+                                 <a class="btn btn-sm btn-danger" href="#" data-toggle="modal" data-target="#delete"><i
+                                       class="fa fa-trash-alt"></i></a>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td><img src="../asset/img/profile.png" width="50" alt="User Image"></td>
+                              <td>
+                                 <p class="info">Name: <b>John Doe</b></p>
+                                 <p class="info"><small>Contact: <b>098733526171</b></small></p>
+                                 <p class="info"><small>Email: <b>john@gmail.com</b></small></p>
+                              </td>
+                              <td>Makati, Metro Manila</td>
+                              <td><span class="badge bg-success">active</span></td>
+                              <td><a class="btn btn-sm btn-info" href="#" data-toggle="modal" data-target="#map"><i
+                                       class="fa fa-map"></i> location</a></td>
+                              <td class="text-right">
+                                 <a class="btn btn-sm btn-success" href="#" data-toggle="modal" data-target="#edit"><i
+                                       class="fa fa-user-edit"></i></a>
+                                 <a class="btn btn-sm btn-danger" href="#" data-toggle="modal" data-target="#delete"><i
+                                       class="fa fa-trash-alt"></i></a>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td><img src="../asset/img/profile.png" width="50" alt="User Image"></td>
+                              <td>
+                                 <p class="info">Name: <b>Juan Luna</b></p>
+                                 <p class="info"><small>Contact: <b>098733526171</b></small></p>
+                                 <p class="info"><small>Email: <b>juan@gmail.com</b></small></p>
+                              </td>
+                              <td>Mandaluyong, Metro Manila</td>
+                              <td><span class="badge bg-danger">inactive</span></td>
+                              <td><a class="btn btn-sm btn-info" href="#" data-toggle="modal" data-target="#map"><i
+                                       class="fa fa-map"></i> location</a></td>
+                              <td class="text-right">
+                                 <a class="btn btn-sm btn-success" href="#" data-toggle="modal" data-target="#edit"><i
+                                       class="fa fa-user-edit"></i></a>
+                                 <a class="btn btn-sm btn-danger" href="#" data-toggle="modal" data-target="#delete"><i
+                                       class="fa fa-trash-alt"></i></a>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </section>
+      </div>
+   </div>
+
+   <div id="map" class="modal animated rubberBand delete-modal" role="dialog">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+         <div class="modal-content">
+            <div class="modal-body text-center">
+               <form>
+                           <div class="card-header">
+                              <h1 class="m-0 text-dark"><span class="fa fa-clinic-medical"></span> Clinic Location</h1>
+                           </div>
+                  <div class="card-body">
+                     <div class="mapouter"><div class="gmap_canvas"><iframe width="750" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=manila&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://123movies-to.org">123movies</a><br><style>.mapouter{position:relative;text-align:right;height:500px;width:700px;}</style><a href="https://www.embedgooglemap.net"></a><style>.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:700px;}</style></div></div>
+                  </div>
+
+                  <div class="card-footer">
+                     <a href="#" class="btn btn-info" data-dismiss="modal">Close</a>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+  <!-- jQuery -->
+  <script src="../asset/plugins/jquery/jquery.min.js"></script>
+  <script src="../asset/js/bootstrap.bundle.min.js"></script>
+  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+  <script>
+    $.widget.bridge('uibutton', $.ui.button)
+  </script>
+  <!-- ChartJS -->
+  <script src="../asset/plugins/chart.js/Chart.min.js"></script>
+  <!-- overlayScrollbars -->
+  <script src="../asset/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../asset/js/adminlte.js"></script>   
+   <!-- DataTables  & Plugins -->
+   <script src="../asset/tables/datatables/jquery.dataTables.min.js"></script>
+   <script src="../asset/tables/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+   <script src="../asset/tables/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+   <script src="../asset/tables/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+  <script>
+      $(function () {
+         $("#example1").DataTable();
+      });
+   </script>
+</body>
+
+</html>
