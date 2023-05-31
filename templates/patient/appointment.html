@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Telemedicine Online - Patient</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../asset/plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../asset/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="../asset/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+   <link rel="stylesheet" href="../asset/tables/datatables-bs4/css/dataTables.bootstrap4.min.css">   
+   <style type="text/css">
+    td p {
+       margin: -0.3rem;
+       font-size: 0.9rem;
+    }
+    aside.main-sidebar{
+       background-color: #ddd;
+       color:rgb(77, 75, 75);
+    }
+    nav ul li a p{
+       color:rgb(3, 38, 76);
+    }
+    nav ul li a i{
+       color:rgb(3, 38, 76);
+    }
+ </style>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+  <div class="wrapper">
+
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color: rgb(86, 189, 202);color:seashell">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+      </ul>
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="fullscreen" href="../index.html">
+             <i class="fas fa-sign-out-alt"></i>
+          </a>
+       </li>
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: rgb(98, 179, 159);">
+      <!-- Brand Logo -->
+      <a href="index.html" class="brand-link">
+        <img src="../asset/img/logo.png" alt="Logo" width="200" style="margin-bottom:-50px;margin-top:-50px"
+          style="opacity: .8">
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+          data-accordion="false">
+          <li class="nav-item">
+             <a href="index.html" class="nav-link">
+                <i class="nav-icon fa fa-tachometer-alt"></i>
+                <p>
+                   Dashboard
+                </p>
+             </a>
+          </li>
+          <li class="nav-item">
+             <a href="doctor.html" class="nav-link">
+                <i class="nav-icon fa fa-user-md"></i>
+                <p>
+                   Doctor
+                </p>
+             </a>
+          </li>
+          <li class="nav-item">
+             <a href="appointment.html" class="nav-link">
+                <i class="nav-icon fa fa-calendar-alt"></i>
+                <p>
+                   Appointment
+                </p>
+             </a>
+          </li>
+          <li class="nav-item">
+             <a href="payment.html" class="nav-link">
+                <i class="nav-icon fa fa-money-bill"></i>
+                <p>
+                   Payment
+                </p>
+             </a>
+          </li>
+       </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
+      <div class="content-wrapper">
+         <div class="content-header">
+            <div class="container-fluid">
+               <div class="row mb-2">
+                  <div class="col-sm-6">
+                     <h1 class="m-0 text-dark"><span class="fa fa-calendar-check"></span> Appointments</h1>
+                  </div>
+                  <div class="col-sm-6">
+                     <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Appointments</li>
+                     </ol>
+                  </div>
+                  <a class="btn btn-sm elevation-2" href="add-appointment.html" style="margin-top: 20px;margin-left: 10px;background-color: #05445E;color: #ddd;"><i
+                        class="fa fa-plus"></i>
+                     Add New</a>
+               </div>
+            </div>
+         </div>
+         <section class="content">
+            <div class="container-fluid">
+               <div class="card card-info elevation-2">
+                  <br>
+                  <div class="col-md-12 table-responsive">
+                     <table id="example1" class="table table-bordered table-hover">
+                        <thead class="btn-cancel">
+                           <tr>
+                              <th>Doctor</th>
+                              <th>Service</th>
+                              <th>Date</th>
+                              <th>Time</th>
+                              <th>Remarks</th>
+                              <th>Link</th>
+                              <th>Status</th>
+                              <th>Action</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td>Dr. John</td>
+                              <td>Service 1</td>
+                              <td>Oct 21, 2021</td>
+                              <td>10:00 AM</td>
+                              <td>Remarks</td>
+                              <td><a href="#">Meeting Link – Google Meet, Zoom</a></td>
+                              <td><span class="badge bg-success">accepted</span></td>
+                              <td class="text-right">
+                                 <a class="btn btn-sm btn-success" href="#" data-toggle="modal" data-target="#edit"><i
+                                       class="fa fa-user-edit"></i></a>
+                                 <a class="btn btn-sm btn-danger" href="#" data-toggle="modal" data-target="#delete"><i
+                                       class="fa fa-trash-alt"></i></a>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td>Dr. Paul</td>
+                              <td>Service 2</td>
+                              <td>Oct 25, 2021</td>
+                              <td>08:00 AM</td>
+                              <td>Remarks</td>
+                              <td><a href="#">Meeting Link – Google Meet, Zoom</a></td>
+                              <td><span class="badge bg-info">pending</span></td>
+                              <td class="text-right">
+                                 <a class="btn btn-sm btn-success" href="#" data-toggle="modal" data-target="#edit"><i
+                                       class="fa fa-user-edit"></i></a>
+                                 <a class="btn btn-sm btn-danger" href="#" data-toggle="modal" data-target="#delete"><i
+                                       class="fa fa-trash-alt"></i></a>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </section>
+      </div>
+   </div>
+   <div id="delete" class="modal animated rubberBand delete-modal" role="dialog">
+      <div class="modal-dialog modal-dialog-centered">
+         <div class="modal-content">
+            <div class="modal-body text-center">
+               <img src="../asset/img/sent.png" alt="" width="50" height="46">
+               <h3>Are you sure want to delete this Operator?</h3>
+               <div class="m-t-20">
+                  <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
+                  <button type="submit" class="btn btn-danger">Delete</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+  <!-- jQuery -->
+  <script src="../asset/plugins/jquery/jquery.min.js"></script>
+  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+  <script>
+    $.widget.bridge('uibutton', $.ui.button)
+  </script>
+  <!-- ChartJS -->
+  <script src="../asset/plugins/chart.js/Chart.min.js"></script>
+  <!-- overlayScrollbars -->
+  <script src="../asset/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../asset/js/adminlte.js"></script>   
+   <!-- DataTables  & Plugins -->
+   <script src="../asset/tables/datatables/jquery.dataTables.min.js"></script>
+   <script src="../asset/tables/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+   <script src="../asset/tables/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+   <script src="../asset/tables/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+  <script>
+      $(function () {
+         $("#example1").DataTable();
+      });
+   </script>
+</body>
+
+</html>
