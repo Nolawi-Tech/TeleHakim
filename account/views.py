@@ -40,3 +40,52 @@ def register(request):
         'form': PatientRegistrationForm()
     }
     return render(request, 'register.html' , context)
+
+def register_doctor(request):
+    if request.method == 'POST':
+        form = DoctorRegistrationForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Welcome, you are successfully registered.")
+            return redirect('account:login')
+        else:
+            messages.error(request, "Not Valid Form, please fill form accordingly or may account exist.")
+    context = {
+        'form': DoctorRegistrationForm()
+    }
+    return render(request, 'register_doctor.html', context)
+
+
+def profile(request):
+    if request.session.has_key('email'):
+        email = request.session['email']
+        patient = Patient.objects.get(email=email)
+        context = {
+            'patient': patient
+        }
+        return render(request, 'account/profile.html', context)
+    else:
+        return redirect('account:login')
+
+
+def edit_profile(request):
+    if request.session.has_key('email'):
+        email = request.session['email']
+        patient = Patient.objects.get(email=email)
+        if request.method == 'POST':
+            form = PatientRegistrationForm(request.POST, request.FILES, instance=patient)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Your profile is successfully updated.")
+                return redirect('account:profile')
+            else:
+                messages.error(request, "Not Valid Form, please fill form accordingly or may account exist.")
+        context = {
+            'form': PatientRegistrationForm(instance=patient)
+        }
+        return render(request, 'account/edit_profile.html', context)
+    else:
+        return redirect('account:login')
+
+
+
