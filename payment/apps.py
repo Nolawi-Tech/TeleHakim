@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class PayConfig(AppConfig):
+class PaymentConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'pay'
+    name = 'payment'
