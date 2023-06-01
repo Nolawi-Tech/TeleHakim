@@ -9,7 +9,7 @@ class Patient(models.Model):
     phone = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
     address = models.CharField(max_length=100, null=True, blank=True)
-    date_of_birth = models.DateField()
+    date_of_birth = models.DateField(null=True, blank=True)
     photo = models.ImageField(upload_to='patient_photo', blank=True)
 
     def __str__(self):
