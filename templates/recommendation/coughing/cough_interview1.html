@@ -1,0 +1,275 @@
+ {% load static %}
+
+<!-- 
+<head>
+    <link href="{% static 'asset/css/recommendation/recommend.css'%} " rel="stylesheet">
+    <link href="{% static 'asset/css/bootstrap.min.css' %}" rel="stylesheet">
+    <title>terms</title>
+</head>
+
+<body style="background-color: #f3f5f7;"> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TeleHakim</title>
+    <meta name="description" content="Free Bootstrap Theme by BootstrapMade.com">
+    <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'https://fonts.googleapis.com/css?family=Open+Sans|Raleway|Candal' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/font-awesome.min.css' %}">
+    <!-- <link href="{% static 'asset/css/recommendation/bootstrap1.min.css' %}" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/recommendation/style.css' %}">
+    <link href="{% static 'asset/css/recommendation/recommend.css'%} " rel="stylesheet">
+    <link href="{% static 'asset/css/recommendation/modified.css'%} " rel="stylesheet">
+
+</head>
+
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+    <!--banner-->
+    <section id="banner" class="banner">
+        <div class="bg-color">
+            <nav class="navbar navbar-default">
+                <div class="container">
+                    <div class="col-md-12">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                          </button>
+                            <a class="navbar-brand" href="#"><img src="{% static 'asset/img/logo.png'%}" class="img-responsive" style="width: 140px; margin-top: -16px;"></a>
+                        </div>
+                        <div class="collapse navbar-collapse navbar-right" id="myNavbar">
+                            <ul class="nav navbar-nav">
+                                <li class=""><a href="{url ''}">Home</a></li>
+                                <li class=""><a href="#service">Services</a></li>
+                                <li class=""><a href="#about">About</a></li>
+                                <li class=""><a href="#testimonial">Testimonial</a></li>
+                                <li class=""><a href="#contact">Contact</a></li>
+
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </nav>
+        </div>
+    </section>
+    <!-- main part -->
+    <!-- main part -->
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Coughing Assessment</title>
+    </head>
+
+    <body>
+        <div class="container col-6 main my-5">
+            <div id="waiting-text" style="display: none;">
+                <p class="h2 p-5 text-center"></p>
+            </div>
+            <div id="about_cough">
+                <p class="h2 p-5 text-center">How would you describe your coughing?</p>
+                <div class="row d-flex justify-content-between">
+                    <div class="col-auto">
+                        <button class="btn btn-success" id="dry">Dry coughing</button>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-success" id="up-sputum">Coughing up sputum</button>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-success" id="loud-cry">Coughs followed by breath sound like loud cry</button>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-success" id="barking-cough">Barking cough</button>
+                    </div>
+                    <br><br>
+                </div>
+            </div>
+
+            <div id="fever" style="display: none;">
+                <div class="row justify-content-between">
+                    <div class="col-8">
+                        <p class="h2 p-5 text-center">Is your cough accompanied by a fever?</p>
+                        <div class="row d-flex justify-content-between">
+                            <div class="col-auto">
+                                <button class="btn btn-success" id="fever_yes">Yes</button>
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-success" id="fever_no">No</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div>
+                            <img class="img img-fluid" src="{% static 'heartcare/images/recommend/symptoms/fever.png' %}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="yes_fever" style="display: none;">
+                <p class="h2 p-5 text-center">Select your fever level</p>
+                <div class="row d-flex justify-content-between">
+                    <div class="col-auto">
+                        <button class="btn btn-success" id="fever-low">Low</button>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-success" id="fever-medium">Medium</button>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-success" id="fever-high">High</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="no-fever" style="display: none;">
+                <p class="h2 p-5 text-center">Is there stomach pain?</p>
+                <div class="row d-flex justify-content-between">
+                    <div class="col-auto">
+                        <button class="btn btn-success" id="stomach-pain-yes">Yes</button>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-success" id="stomach-pain-no">No</button>
+                    </div>
+                </div>
+            </div>
+            <div id="yes-stomach" style="display: none;">
+                <p class="h2 p-5 text-center">Is your stomach pain accompanied by vomiting?</p>
+                <div class="row d-flex justify-content-between">
+                    <div class="col-auto">
+                        <button class="btn btn-success" id="vomiting-yes">Yes</button>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-success" id="vomiting-no">No</button>
+                    </div>
+                </div>
+            </div>
+            <div id="yes-vomiting" style="display: none;">
+                <button>show your result</button>
+                <p class="h4 p-5 text-center" id="message"></p>
+            </div>
+            <div id="no-vomiting" style="display: none;">
+                <button>show your result</button>
+                <p class="h4 p-5 text-center" id="message"></p>
+            </div>
+        </div>
+
+        <!-- main part -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const coughing = document.querySelectorAll("#dry, #up-sputum, #loud-cry, #barking-cough");
+                const feverYesButton = document.querySelector("#fever_yes");
+                const feverNoButton = document.querySelector("#fever_no");
+                const stomachPainYesButton = document.querySelector("#stomach-pain-yes");
+                const stomachPainNoButton = document.querySelector("#stomach-pain-no");
+                const feverHighButton = document.querySelectorAll("#fever-high, #fever-low, #fever-medium");
+                const vomitingYesButton = document.querySelector("#vomiting-yes");
+                const vomitingNoButton = document.querySelector("#vomiting-no");
+                const waitingText = document.querySelector("#waiting-text");
+
+                function showWaitingText(message) {
+                    const waitingTextMessage = document.querySelector("#waiting-text p");
+                    waitingTextMessage.textContent = message;
+                    waitingText.style.display = "block";
+                }
+
+                function hideWaitingText() {
+                    waitingText.style.display = "none";
+                }
+
+                coughing.forEach(function(button) {
+                    button.addEventListener("click", function() {
+                        const coughSection = document.querySelector("#about_cough");
+                        coughSection.style.display = "none";
+                        showWaitingText("Please wait... Checking fever...");
+                        setTimeout(function() {
+                            hideWaitingText();
+                            const feverSection = document.querySelector("#fever");
+                            feverSection.style.display = "block";
+                        }, 2000);
+                    });
+                });
+
+                feverYesButton.addEventListener("click", function() {
+                    const feverSection = document.querySelector("#fever");
+                    feverSection.style.display = "none";
+                    showWaitingText("Please wait... Checking fever...");
+                    setTimeout(function() {
+                        hideWaitingText();
+                        const yesFeverSection = document.querySelector("#yes_fever");
+                        yesFeverSection.style.display = "block";
+                    }, 2000);
+                });
+
+                feverNoButton.addEventListener("click", function() {
+                    const feverSection = document.querySelector("#fever");
+                    feverSection.style.display = "none";
+                    showWaitingText("Please wait... Checking stomach pain...");
+                    setTimeout(function() {
+                        hideWaitingText();
+                        const noFeverSection = document.querySelector("#no-fever");
+                        noFeverSection.style.display = "block";
+                    }, 2000);
+                });
+                stomachPainYesButton.addEventListener("click", function() {
+                    const NofeverSection = document.querySelector('#no-fever');
+                    NofeverSection.style.display = "none"
+                    showWaitingText("Please wait...is there vomiting...");
+                    setTimeout(function() {
+                        hideWaitingText();
+                        const yes_stomach = document.querySelector("#yes-stomach");
+                        yes_stomach.style.display = "block";
+                    }, 2000);
+
+                });
+
+
+                feverHighButton.forEach(function(button) {
+                    button.addEventListener("click", function() {
+                        const feverSection = document.querySelector("#yes_fever");
+                        feverSection.style.display = "none";
+                        showWaitingText("Please wait... Checking vomiting...");
+                        setTimeout(function() {
+                            hideWaitingText();
+                            const stomachSection = document.querySelector("#yes-stomach");
+                            stomachSection.style.display = "block";
+                        }, 2000);
+                    });
+                });
+
+                vomitingYesButton.addEventListener("click", function() {
+                    const vomitingSection = document.querySelector("#yes-stomach");
+                    vomitingSection.style.display = "none";
+                    showWaitingText("Please wait... Processing...");
+                    setTimeout(function() {
+                        hideWaitingText();
+
+                        const noVomitingSection = document.querySelector("#yes-vomiting");
+                        noVomitingSection.style.display = "block";
+                    }, 2000);
+                });
+
+                vomitingNoButton.addEventListener("click", function() {
+                    const vomitingSection = document.querySelector("#yes-stomach");
+                    vomitingSection.style.display = "none";
+                    showWaitingText("Please wait... Processing...");
+                    setTimeout(function() {
+                        hideWaitingText();
+                        const noVomitingSection = document.querySelector("#no-vomiting");
+                        noVomitingSection.style.display = "block";
+                    }, 2000);
+                });
+            });
+        </script>
+    </body>
+
+    </html>
