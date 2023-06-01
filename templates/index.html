@@ -38,8 +38,8 @@
                 <li class=""><a href="#about">About</a></li>
                 <li class=""><a href="#testimonial">Testimonial</a></li>
                 <li class=""><a href="#contact">Contact</a></li>
-                <li class=""><a href="login.html" class="btn btn-info btn-block">Login</a></li>
-                
+                <li class=""><a href="{% url 'account:login' %}" class="btn btn-info btn-block">Login</a></li>
+                <li class=""><a href="{% url 'account:register' %}" class="btn btn-info btn-block">Sign-Up</a></li>
               </ul>
               
             </div>
