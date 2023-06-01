@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,10 +8,10 @@
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="asset/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'asset/plugins/fontawesome-free/css/all.min.css' %}">
   <!-- Theme style -->
-  <link rel="stylesheet" href="asset/css/adminlte.min.css">
-  <link rel="stylesheet" href="asset/css/style.css">
+  <link rel="stylesheet" href="{% static 'asset/css/adminlte.min.css' %}">
+  <link rel="stylesheet" href="{% static 'asset/css/style.css' %}">
   <style>
     .margin {
       margin-bottom: -20px;
@@ -27,7 +28,8 @@
         <div class="card">
          
           <!-- form start -->
-          <form>
+          <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
             <div class="col-md-12">
               <div class="row">
                 <div class="col-md-6">
@@ -35,25 +37,25 @@
                     <div class="col-md-12 ">
                       <div class="form-group">
                         <br><br><label class="margin">First Name</label>
-                        <input type="text" class="form-control" placeholder="First name">
+                        {{ form.first_name }}
                       </div>
                     </div>
                     <div class="col-md-12 ">
                       <div class="form-group">
                         <label class="margin">Last Name</label>
-                        <input type="text" class="form-control" placeholder="Last name">
+                        {{ form.last_name }}
                       </div>
                     </div>
                     <div class="col-md-12 ">
                       <div class="form-group">
                         <label class="margin">Phone</label>
-                        <input type="text" class="form-control" placeholder="Phone">
+                        {{ form.phone }}
                       </div>
                     </div>
                     <div class="col-md-12 margin">
                       <div class="form-group">
                         <label class="margin">Email</label>
-                        <input type="email" class="form-control" placeholder="Email">
+                        {{ form.email }}
                       </div>
                     </div>
                   </div>
@@ -63,31 +65,25 @@
                     <div class="col-md-12 ">
                       <div class="form-group">
                         <br><br><label class="margin">Address</label>
-                        <input type="text" class="form-control" placeholder="Address">
+                        {{ form.address }}
                       </div>
                     </div>
                     <div class="col-md-12 ">
                       <div class="form-group">
                         <label class="margin">Date of Birth</label>
-                        <input type="date" class="form-control">
-                      </div>
-                    </div>
-                    <div class="col-md-12 ">
-                      <div class="form-group">
-                        <label class="margin">Age</label>
-                        <input type="number" class="form-control">
-                      </div>
-                    </div>
-                    <div class="col-md-12 ">
-                      <div class="form-group">
-                        <label class="margin">Username</label>
-                        <input type="text" class="form-control">
+                        {{ form.date_of_birth }}
                       </div>
                     </div>
                     <div class="col-md-12 ">
                       <div class="form-group">
                         <label class="margin">Password</label>
-                        <input type="password" class="form-control">
+                        {{ form.password }}
+                      </div>
+                    </div>
+                    <div class="col-md-12 ">
+                      <div class="form-group">
+                        <label class="margin">Photo</label>
+                        {{ form.photo }}
                       </div>
                     </div>
                   </div>
@@ -100,7 +96,7 @@
                 <button type="submit" class="btn btn-info btn-block">Register</button>
               </div>
               <div class="col-3">
-                <a href="index.html" class="text-center btn btn-info btn-block">Sign In</a>
+                <a href="{% url 'account:login' %}" class="text-center btn btn-info btn-block">Sign In</a>
               </div>
             </div>
             <br>
