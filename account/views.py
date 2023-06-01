@@ -33,8 +33,9 @@ def register(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Welcome, you are successfully registered.")
+            return redirect('account:login')
         else:
-            messages.error(request, "Not Valid Form, please fill form accordingly.")
+            messages.error(request, "Not Valid Form, please fill form accordingly or may account exist.")
     context = {
         'form': PatientRegistrationForm()
     }
