@@ -36,6 +36,8 @@ diseases={0: '(vertigo) Paroymsal  Positional Vertigo',1: 'AIDS',2: 'Acne',3: 'A
         33: 'Peptic ulcer diseae',34: 'Pneumonia',35: 'Psoriasis',36: 'Tuberculosis',37: 'Typhoid',
         38: 'Urinary tract infection',39: 'Varicose veins',40: 'hepatitis A'}
 
+def login(request):
+     return render(request,'login.html')
 
 def re_home(request):
      x=[1,2,3,4]
