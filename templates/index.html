@@ -18,35 +18,12 @@
 
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
   <!--banner-->
-  <section id="banner" class="banner">
-    <div class="bg-color">
-      <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-          <div class="col-md-12">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-				        <span class="icon-bar"></span>
-				        <span class="icon-bar"></span>
-				        <span class="icon-bar"></span>
-				      </button>
-              <a class="navbar-brand" href="#"><img src="{% static 'asset/img/logo.png'%}" class="img-responsive" style="width: 140px; margin-top: -16px;"></a>
-            </div>
-            <div class="collapse navbar-collapse navbar-right" id="myNavbar">
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="#banner">Home</a></li>
-                <li class=""><a href="#service">Services</a></li>
-                <li class=""><a href="#about">About</a></li>
-                <li class=""><a href="#testimonial">Testimonial</a></li>
-                <li class=""><a href="#contact">Contact</a></li>
-                <li class=""><a href="{% url 'account:login' %}" class="btn btn-info btn-block">Login</a></li>
-                <li class=""><a href="{% url 'account:register' %}" class="btn btn-info btn-block">Sign-Up</a></li>
-                <li class=""><a href="{% url 'account:register_doctor' %}" class="btn btn-info btn-block">Sign-Up(Doctor)</a></li>
-              </ul>
-              
-            </div>
-          </div>
-        </div>
-      </nav>
+  
+ {% include 'partials/header.html' %}
+
+ <!--/banner-->
+
+
       <div class="container">
         <div class="row">
           <div class="banner-info">
@@ -470,65 +447,7 @@
   </section>
   <!--/ contact-->
   <!--footer-->
-  <footer id="footer">
-    <div class="top-footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4 col-sm-4 marb20">
-            <div class="ftr-tle">
-              <h4 class="white no-padding">About Us</h4>
-            </div>
-            <div class="info-sec">
-              <p>Praesent convallis tortor et enim laoreet, vel consectetur purus latoque penatibus et dis parturient.</p>
-            </div>
-          </div>
-          <div class="col-md-4 col-sm-4 marb20">
-            <div class="ftr-tle">
-              <h4 class="white no-padding">Quick Links</h4>
-            </div>
-            <div class="info-sec">
-              <ul class="quick-info">
-                <li><a href="index.html"><i class="fa fa-circle"></i>Home</a></li>
-                <li><a href="#service"><i class="fa fa-circle"></i>Service</a></li>
-                <li><a href="#contact"><i class="fa fa-circle"></i>Appointment</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-md-4 col-sm-4 marb20">
-            <div class="ftr-tle">
-              <h4 class="white no-padding">Follow us</h4>
-            </div>
-            <div class="info-sec">
-              <ul class="social-icon">
-                <li class="bglight-blue"><i class="fa fa-facebook"></i></li>
-                <li class="bgred"><i class="fa fa-google-plus"></i></li>
-                <li class="bgdark-blue"><i class="fa fa-linkedin"></i></li>
-                <li class="bglight-blue"><i class="fa fa-twitter"></i></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="footer-line">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12 text-center">
-            
-            <div class="credits">
-              <!--
-                All the links in the footer should remain intact.
-                You can delete the links only if you purchased the pro version.
-                Licensing information: https://bootstrapmade.com/license/
-                Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Medilab
-              -->
-             
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
+ {% include 'partials/footer.html' %}
   <!--/ footer-->
 
   <script src="asset/js/jquery.min.js"></script>
