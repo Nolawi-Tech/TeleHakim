@@ -76,200 +76,209 @@
             <div id="waiting-text" style="display: none;">
                 <p class="h2 p-5 text-center"></p>
             </div>
-            <div id="about_cough">
-                <p class="h2 p-5 text-center">How would you describe your coughing?</p>
-                <div class="row d-flex justify-content-between">
-                    <div class="col-auto">
-                        <button class="btn btn-success" id="dry">Dry coughing</button>
-                    </div>
-                    <div class="col-auto">
-                        <button class="btn btn-success" id="up-sputum">Coughing up sputum</button>
-                    </div>
-                    <div class="col-auto">
-                        <button class="btn btn-success" id="loud-cry">Coughs followed by breath sound like loud cry</button>
-                    </div>
-                    <div class="col-auto">
-                        <button class="btn btn-success" id="barking-cough">Barking cough</button>
-                    </div>
-                    <br><br>
-                </div>
-            </div>
+            <form method="post">
+                {% csrf_token %}
 
-            <div id="fever" style="display: none;">
-                <div class="row justify-content-between">
-                    <div class="col-8">
-                        <p class="h2 p-5 text-center">Is your cough accompanied by a fever?</p>
-                        <div class="row d-flex justify-content-between">
-                            <div class="col-auto">
-                                <button class="btn btn-success" id="fever_yes">Yes</button>
+                <div id="about_cough">
+                    <p class="h2 p-5 text-center">How would you describe your coughing?</p>
+                    <div class="row d-flex justify-content-between">
+                        <div class="col-auto">
+                            <button class="btn btn-success" type="submit" name="symptom" value="dry" id="dry">Dry coughing</button>
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-success" type="submit" name="symptom" value="up_sputum" id="up-sputum">Coughing up sputum</button>
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-success" type="submit" name="symptom" value="loud_cry" id="loud-cry">Coughs followed by breath sound like loud cry</button>
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-success" type="submit" name="symptom" value="barking_cough" id="barking-cough">Barking cough</button>
+                        </div>
+                        <br><br>
+                    </div>
+                </div>
+
+                <div id="fever" style="display: none;">
+                    <div class="row justify-content-between">
+                        <div class="col-8">
+                            <p class="h2 p-5 text-center">Is your cough accompanied by a fever?</p>
+                            <div class="row d-flex justify-content-between">
+                                <div class="col-auto">
+                                    <button class="btn btn-success" type="submit" name="symptom" value="fever_yes" id="fever_yes">Yes</button>
+                                </div>
+                                <div class="col-auto">
+                                    <button class="btn btn-success" type="submit" name="symptom" value="fever_no" id="fever_no">No</button>
+                                </div>
                             </div>
-                            <div class="col-auto">
-                                <button class="btn btn-success" id="fever_no">No</button>
+                        </div>
+                        <div class="col-4">
+                            <div>
+                                <img class="img img-fluid" src="{% static 'heartcare/images/recommend/symptoms/fever.png' %}" alt="">
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
-                        <div>
-                            <img class="img img-fluid" src="{% static 'heartcare/images/recommend/symptoms/fever.png' %}" alt="">
+                </div>
+
+                <div id="yes_fever" style="display: none;">
+                    <p class="h2 p-5 text-center">Select your fever level</p>
+                    <div class="row d-flex justify-content-between">
+                        <div class="col-auto">
+                            <button class="btn btn-success" type="submit" name="symptom" value="fever_low" id="fever-low">Low</button>
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-success" type="submit" name="symptom" value="fever_medium" id="fever-medium">Medium</button>
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-success" type="submit" name="symptom" value="fever_high" id="fever-high">High</button>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div id="yes_fever" style="display: none;">
-                <p class="h2 p-5 text-center">Select your fever level</p>
-                <div class="row d-flex justify-content-between">
-                    <div class="col-auto">
-                        <button class="btn btn-success" id="fever-low">Low</button>
-                    </div>
-                    <div class="col-auto">
-                        <button class="btn btn-success" id="fever-medium">Medium</button>
-                    </div>
-                    <div class="col-auto">
-                        <button class="btn btn-success" id="fever-high">High</button>
+                <div id="no-fever" style="display: none;">
+                    <p class="h2 p-5 text-center">Is there stomach pain?</p>
+                    <div class="row d-flex justify-content-between">
+                        <div class="col-auto">
+                            <button class="btn btn-success" type="submit" name="symptom" value="stomach_pain_yes" id="stomach-pain-yes">Yes</button>
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-success" type="submit" name="symptom" value="stomach_pain_no" id="stomach-pain-no">No</button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div id="no-fever" style="display: none;">
-                <p class="h2 p-5 text-center">Is there stomach pain?</p>
-                <div class="row d-flex justify-content-between">
-                    <div class="col-auto">
-                        <button class="btn btn-success" id="stomach-pain-yes">Yes</button>
-                    </div>
-                    <div class="col-auto">
-                        <button class="btn btn-success" id="stomach-pain-no">No</button>
-                    </div>
-                </div>
-            </div>
-            <div id="yes-stomach" style="display: none;">
-                <p class="h2 p-5 text-center">Is your stomach pain accompanied by vomiting?</p>
-                <div class="row d-flex justify-content-between">
-                    <div class="col-auto">
-                        <button class="btn btn-success" id="vomiting-yes">Yes</button>
-                    </div>
-                    <div class="col-auto">
-                        <button class="btn btn-success" id="vomiting-no">No</button>
+                <div id="yes-stomach" style="display: none;">
+                    <p class="h2 p-5 text-center">Is your stomach pain accompanied by vomiting?</p>
+                    <div class="row d-flex justify-content-between">
+                        <div class="col-auto">
+                            <button class="btn btn-success" type="submit" name="symptom" value="vomiting_yes" id="vomiting-yes">Yes</button>
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-success" type="submit" name="symptom" value="vomiting_no" id="vomiting-no">No</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div id="yes-vomiting" style="display: none;">
-                <button id="sol" type="submit">show your result</button>
 
-            </div>
-            <div id="no-vomiting" style="display: none;">
-                <button>show your result</button>
+                <div id="yes-vomiting" style="display: none;">
+                    <button id="sol" type="submit">Show your result</button>
+                </div>
 
-            </div>
-        </div>
+                <div id="no-vomiting" style="display: none;">
+                    <button type="submit">Show your result</button>
+                </div>
+            </form>
 
-        <!-- main part -->
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                const coughing = document.querySelectorAll("#dry, #up-sputum, #loud-cry, #barking-cough");
-                const feverYesButton = document.querySelector("#fever_yes");
-                const feverNoButton = document.querySelector("#fever_no");
-                const stomachPainYesButton = document.querySelector("#stomach-pain-yes");
-                const stomachPainNoButton = document.querySelector("#stomach-pain-no");
-                const feverHighButton = document.querySelectorAll("#fever-high, #fever-low, #fever-medium");
-                const vomitingYesButton = document.querySelector("#vomiting-yes");
-                const vomitingNoButton = document.querySelector("#vomiting-no");
-                const waitingText = document.querySelector("#waiting-text");
+            <!-- main part -->
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const coughingButtons = document.querySelectorAll("#dry, #up-sputum, #loud-cry, #barking-cough");
+                    const feverYesButton = document.querySelector("#fever_yes");
+                    const feverNoButton = document.querySelector("#fever_no");
+                    const stomachPainYesButton = document.querySelector("#stomach-pain-yes");
+                    const stomachPainNoButton = document.querySelector("#stomach-pain-no");
+                    const feverButtons = document.querySelectorAll("#fever-high, #fever-low, #fever-medium");
+                    const vomitingYesButton = document.querySelector("#vomiting-yes");
+                    const vomitingNoButton = document.querySelector("#vomiting-no");
+                    const waitingText = document.querySelector("#waiting-text");
 
-                function showWaitingText(message) {
-                    const waitingTextMessage = document.querySelector("#waiting-text p");
-                    waitingTextMessage.textContent = message;
-                    waitingText.style.display = "block";
-                }
+                    function showWaitingText(message) {
+                        const waitingTextMessage = document.querySelector("#waiting-text p");
+                        waitingTextMessage.textContent = message;
+                        waitingText.style.display = "block";
+                    }
 
-                function hideWaitingText() {
-                    waitingText.style.display = "none";
-                }
+                    function hideWaitingText() {
+                        waitingText.style.display = "none";
+                    }
 
-                coughing.forEach(function(button) {
-                    button.addEventListener("click", function() {
-                        const coughSection = document.querySelector("#about_cough");
-                        coughSection.style.display = "none";
+                    coughingButtons.forEach(function(button) {
+                        button.addEventListener("click", function(event) {
+                            event.preventDefault();
+                            const coughSection = document.querySelector("#about_cough");
+                            coughSection.style.display = "none";
+                            showWaitingText("Please wait... Checking fever...");
+                            setTimeout(function() {
+                                hideWaitingText();
+                                const feverSection = document.querySelector("#fever");
+                                feverSection.style.display = "block";
+                            }, 2000);
+                        });
+                    });
+
+                    feverYesButton.addEventListener("click", function(event) {
+                        event.preventDefault();
+                        const feverSection = document.querySelector("#fever");
+                        feverSection.style.display = "none";
                         showWaitingText("Please wait... Checking fever...");
                         setTimeout(function() {
                             hideWaitingText();
-                            const feverSection = document.querySelector("#fever");
-                            feverSection.style.display = "block";
+                            const yesFeverSection = document.querySelector("#yes_fever");
+                            yesFeverSection.style.display = "block";
                         }, 2000);
                     });
-                });
 
-                feverYesButton.addEventListener("click", function() {
-                    const feverSection = document.querySelector("#fever");
-                    feverSection.style.display = "none";
-                    showWaitingText("Please wait... Checking fever...");
-                    setTimeout(function() {
-                        hideWaitingText();
-                        const yesFeverSection = document.querySelector("#yes_fever");
-                        yesFeverSection.style.display = "block";
-                    }, 2000);
-                });
-
-                feverNoButton.addEventListener("click", function() {
-                    const feverSection = document.querySelector("#fever");
-                    feverSection.style.display = "none";
-                    showWaitingText("Please wait... Checking stomach pain...");
-                    setTimeout(function() {
-                        hideWaitingText();
-                        const noFeverSection = document.querySelector("#no-fever");
-                        noFeverSection.style.display = "block";
-                    }, 2000);
-                });
-                stomachPainYesButton.addEventListener("click", function() {
-                    const NofeverSection = document.querySelector('#no-fever');
-                    NofeverSection.style.display = "none"
-                    showWaitingText("Please wait...is there vomiting...");
-                    setTimeout(function() {
-                        hideWaitingText();
-                        const yes_stomach = document.querySelector("#yes-stomach");
-                        yes_stomach.style.display = "block";
-                    }, 2000);
-
-                });
-
-
-                feverHighButton.forEach(function(button) {
-                    button.addEventListener("click", function() {
-                        const feverSection = document.querySelector("#yes_fever");
+                    feverNoButton.addEventListener("click", function(event) {
+                        event.preventDefault();
+                        const feverSection = document.querySelector("#fever");
                         feverSection.style.display = "none";
-                        showWaitingText("Please wait... Checking vomiting...");
+                        showWaitingText("Please wait... Checking stomach pain...");
                         setTimeout(function() {
                             hideWaitingText();
-                            const stomachSection = document.querySelector("#yes-stomach");
-                            stomachSection.style.display = "block";
+                            const noFeverSection = document.querySelector("#no-fever");
+                            noFeverSection.style.display = "block";
+                        }, 2000);
+                    });
+
+                    stomachPainYesButton.addEventListener("click", function(event) {
+                        event.preventDefault();
+                        const noFeverSection = document.querySelector('#no-fever');
+                        noFeverSection.style.display = "none";
+                        showWaitingText("Please wait... Is there vomiting...");
+                        setTimeout(function() {
+                            hideWaitingText();
+                            const yesStomachSection = document.querySelector("#yes-stomach");
+                            yesStomachSection.style.display = "block";
+                        }, 2000);
+                    });
+
+                    feverButtons.forEach(function(button) {
+                        button.addEventListener("click", function(event) {
+                            event.preventDefault();
+                            const feverSection = document.querySelector("#yes_fever");
+                            feverSection.style.display = "none";
+                            showWaitingText("Please wait... Checking vomiting...");
+                            setTimeout(function() {
+                                hideWaitingText();
+                                const stomachSection = document.querySelector("#yes-stomach");
+                                stomachSection.style.display = "block";
+                            }, 2000);
+                        });
+                    });
+
+                    vomitingYesButton.addEventListener("click", function(event) {
+                        event.preventDefault();
+                        const vomitingSection = document.querySelector("#yes-stomach");
+                        vomitingSection.style.display = "none";
+                        showWaitingText("Please wait... Processing...");
+                        setTimeout(function() {
+                            hideWaitingText();
+                            window.location.href = "{% url 'cough_result'%}";
+                        }, 2000);
+                    });
+
+                    vomitingNoButton.addEventListener("click", function(event) {
+                        event.preventDefault();
+                        const vomitingSection = document.querySelector("#yes-stomach");
+                        vomitingSection.style.display = "none";
+                        showWaitingText("Please wait... Processing...");
+                        setTimeout(function() {
+                            hideWaitingText();
+                            const noVomitingSection = document.querySelector("#no-vomiting");
+                            noVomitingSection.style.display = "block";
                         }, 2000);
                     });
                 });
+            </script>
 
-                vomitingYesButton.addEventListener("click", function() {
-                    const vomitingSection = document.querySelector("#yes-stomach");
-                    vomitingSection.style.display = "none";
-                    showWaitingText("Please wait... Processing...");
-                    setTimeout(function() {
-                        hideWaitingText();
-
-                        const noVomitingSection = document.querySelector("#yes-vomiting");
-                        noVomitingSection.style.display = "block";
-                    }, 2000);
-                });
-
-                vomitingNoButton.addEventListener("click", function() {
-                    const vomitingSection = document.querySelector("#yes-stomach");
-                    vomitingSection.style.display = "none";
-                    showWaitingText("Please wait... Processing...");
-                    setTimeout(function() {
-                        hideWaitingText();
-                        const noVomitingSection = document.querySelector("#no-vomiting");
-                        noVomitingSection.style.display = "block";
-                    }, 2000);
-                });
-            });
-        </script>
     </body>
 
     </html>

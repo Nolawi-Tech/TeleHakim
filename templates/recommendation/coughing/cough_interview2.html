@@ -64,12 +64,13 @@
     </section>
 
     <div class="container col-6 main my-5 ">
-        <div class="row  d-flex align-items-center ">
-            <div class="col-lg-12 pt-2">
-                <div class="card bg-primary">
-                    <h3 class="p-2 text-center text-white">please choose from the below that applies to you</h3>
-                </div>
+        <div class="col-lg-12 pt-2">
+            <div class="card bg-success">
+                <h3 class="p-2 text-center text-white">please choose from the below that applies to you</h3>
             </div>
+        </div>
+        <div class="row d-flex align-items-center ">
+
             <div class="col-12 col-md-4 main-text align-item-center ">
                 <div class="image-container text-center">
                     <img class="img " onclick="selectImage('page1.html')" src="{% static 'heartcare/images/recommend/symptoms/cough men.png' %} " alt=" ">
@@ -108,19 +109,22 @@
                     <p class="text-center">fever</p>
                 </div>
             </div>
-            <div class="text-center text-danger" id="message"></div>
-            <div class="container-fluid ">
-                <hr>
-            </div>
 
-            <div class="row justify-content-between pr-5">
-                <div class="col-auto">
-                    <button id="previousButton" class="btn-1 btn-primary">Prev</button>
-                </div>
-                <!-- <h1>{{list}}</h1> -->
-                <div class="col-auto">
-                    <button id="nextButton" class="btn-1 btn-primary ">Next</button>
-                </div>
+        </div>
+        <div class="text-center text-danger" id="message"></div>
+        <div class="container-fluid ">
+            <hr>
+        </div>
+
+        <div class="row d-flex   
+        
+        justify-content-between pr-5">
+            <div class="col-auto">
+                <button id="previousButton" class="btn-1 btn-primary">Prev</button>
+            </div>
+            <!-- <h1>{{list}}</h1> -->
+            <div class="col-auto">
+                <button id="nextButton" class="btn-1 btn-primary ">Next</button>
             </div>
         </div>
 

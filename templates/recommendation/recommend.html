@@ -53,9 +53,9 @@
     </section>
     <form method="POST">
         {% csrf_token %}
-        <div class="row">
-            <h1>Select your Symptoms:</h1>
-            <div class="col">
+        <h1>Select your Symptoms:</h1>
+        <div class="row d-flex justify-content-between">
+            <div class="col-3">
                 {% for item in symptom1 %}
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="symptom" value="{{ item }}" id="symptom{{ forloop.counter }}">
@@ -63,7 +63,7 @@
                 </div>
                 {% endfor %}
             </div>
-            <div class="col">
+            <div class="col-3">
                 {% for item in symptom2 %}
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="symptom" value="{{ item }}" id="symptom{{ forloop.counter }}">
@@ -71,7 +71,7 @@
                 </div>
                 {% endfor %}
             </div>
-            <div class="col">
+            <div class="col-3">
                 {% for item in symptom3 %}
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="symptom" value="{{ item }}" id="symptom{{ forloop.counter }}">
@@ -79,7 +79,7 @@
                 </div>
                 {% endfor %}
             </div>
-            <div class="col">
+            <div class="col-3">
                 {% for item in symptom4 %}
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="symptom" value="{{ item }}" id="symptom{{ forloop.counter }}">

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 import pandas as pd
 import joblib
 import os
@@ -47,7 +47,7 @@ def re_home(request):
 
 def recommend(request):
      # ml_model = joblib.load("../dr_re/ml_model/ml_model_whole.joblib")
-     
+     l=[0]*132
      if request.method == 'POST':
           # when the form is submitted
           selected_symptom = request.POST.getlist('symptom')
@@ -58,22 +58,26 @@ def recommend(request):
           # ml_model = joblib.load("../dr_re/ml_model/ml_model_new1.joblib")
           # # predictions = ml_model.predict(pd.DataFrame(l))
           # predictions = ml_model.predict(l)
+          disease=''
+          if sum(l)==0:
+               disease='please select your symptom'
+          else:
+               # disease = ll[predictions.tolist()[0]]
           
-          # disease = ll[predictions.tolist()[0]]
-          
-          ml_model = joblib.load("../TELEHAKIM/dr_re/ml_model/ml_model_whole.joblib")
+               ml_model = joblib.load("../TELEHAKIM/dr_re/ml_model/ml_model_whole.joblib")
           # predictions = ml_model.predict  (pd.DataFrame(l))
-          predictions = ml_model.predict(l)
+               predictions = ml_model.predict(l)
           
-          disease = diseases[predictions.tolist()[0]]
-          print (predictions) 
+               disease = diseases[predictions.tolist()[0]]
+
           return render(request, 'recommendation/recommend.html', {
                'symptom': symptom,
                'symptom1': symptom1,
                'symptom2': symptom2,
                'symptom3': symptom3,
                'symptom4': symptom4,
-               'disease': disease})
+               'disease': disease,
+               'sum':sum(l)})
 
      return render(request, "recommendation/recommend.html",{
           'symptom': symptom,
@@ -99,5 +103,21 @@ def interview1(request):
 def interview4(request):
      return render(request,"recommendation/interview4.html")
 def cough_interview1(request):
-     l[symptom.index("cough")]=1
-     return render(request,"recommendation/coughing/cough_interview1.html")
+     if request.method == "POST":
+        symptom = request.POST.get("symptom")
+        symptom_list = []
+        if symptom:
+            if symptom.startswith("fever"):
+                symptom_list.append("fever")
+            elif symptom.startswith("stomach_pain"):
+                symptom_list.append("stomach pain")
+            elif symptom.startswith("vomiting"):
+                symptom_list.append("vomiting")
+
+        # Perform further logic or processing with the symptom_list
+        return redirect('cough_result',symptom_list=symptom_list)
+     return render(request, "recommendation/coughing/cough_interview1.html",{'symptom_list':symptom_list})
+def cough_interview2(request):
+     return render(request,"recommendation/coughing/cough_interview2.html")
+def cough_result(request,symptom_list):
+     return render(request,"recommendation/coughing/cough_result.html",{'symptom_list': symptom_list})
