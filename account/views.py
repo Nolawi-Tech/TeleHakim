@@ -1,31 +1,141 @@
+from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect
 from account.models import *
 from account.forms import *
 from django.contrib import messages
+from django.http import QueryDict
+from django.urls import reverse
+
+
 # Create your views here.
 
 def login(request):
-    if request.method == 'POST':
-        email = request.POST['email']
-        password = request.POST['password']
-        try:
-            patient = Patient.objects.get(email=email)
-            if patient.password == password:
+    fg = 'admin'
+    rvk = request.GET.get("revoke")
 
-                request.session['role'] = 'patient'
-                request.session['email'] = patient.email
-
-                messages.success(request, "You are successfully logged in.")
-                return redirect('/')
+    if request.method == "POST":
+        if request.POST.get('email_field') is not None:
+            em = request.POST.get('email')
+            if Revoke.objects.filter(patient__email=em).exists() or Revoke.objects.filter(doctor__email=em).exists():
+                messages.error(request, "Already password revoke is requested check your email.")
+                qd = QueryDict("", mutable=True)
+                qd.update({"revoke": "code", "email": em})
+                return redirect(reverse('account:login') + f'?{qd.urlencode()}')
             else:
-                messages.error(request, "Invalid Password, Please try again.")
-        except:
-            messages.error(request, "Invalid Email, Please try again.")
-    return render(request, 'login.html')
+                try:
+                    pt = Patient.objects.filter(email=em)
+                    dc = Doctor.objects.filter(email=em)
+                    code = ""
+                    us = ''
+                    if len(pt) > 0:
+                        cs = Revoke(patient=pt[0])
+                        code = cs.code
+                        cs.save()
+                        us = 'doctor'
+                    elif len(dc) > 0:
+                        cs = Revoke(doctor=dc[0])
+                        code = cs.code
+                        cs.save()
+                        us = 'patient'
+                    else:
+                        s = 4 / 0
+                    print(code, "code")
+                    qd = QueryDict("", mutable=True)
+                    qd.update({"revoke": "code", "email": em, 'user': us})
+                    messages.success(request, "We have sent a message to your email.")
+                    return redirect(reverse('account:login') + f'?{qd.urlencode()}')
+                except:
+                    messages.error(request, "Your email doesn't Exist in our database.")
+        elif request.POST.get('code') is not None:
+            em = request.GET.get('email')
+            cd = request.POST.get('codechar')
+            rl = request.POST.get('user')
+            try:
+                rv = None
+                if rl == "patient":
+                    rv = Revoke.objects.get(patient__email=em)
+                else:
+                    rv = Revoke.objects.get(doctor__email=em)
+                if cd == rv.code:
+                    messages.success(request, "Good Job please update your password.")
+                    qd = QueryDict("", mutable=True)
+                    qd.update({"revoke": "password", "id": rv.patient.id if rl == "patient" else rv.doctor.id})
+                    # email = EmailMessage("Hello,", f'Here is your code: {rv.code}', to=[em])
+                    # email.send()
+                    rv.delete()
+                    return redirect(reverse('account:login') + f'?{qd.urlencode()}')
+                else:
+                    messages.error(request, "The Code you have entered isn't correct.")
+            except:
+                messages.error(request, "Your email doesn't Exist in our database.")
+        elif request.POST.get('login') is not None:
+            email = request.POST.get('email')
+            password = request.POST.get('password')
+            is_doctor = request.POST.get('is_doctor')
+
+            flag = ""
+
+            if is_doctor is None:
+                if Patient.objects.filter(email=email, password=password).exists():
+                    user = Patient.objects.get(email=email, password=password)
+                    if user.is_admin:
+                        flag = "admin"
+                    else:
+                        flag = "patient"
+                    request.session["user-role"] = flag
+                    request.session["email"] = user.email
+                    messages.success(request, "Successfully logged in to system. welcome!")
+                    return redirect(f'dashboard:{flag}-dashboard')
+                else:
+                    messages.warning(request, "User doesn't exist!, with this credentials.")
+            else:
+                if Doctor.objects.filter(email=email, password=password).exists():
+                    user = Doctor.objects.get(email=email, password=password)
+                    request.session["user-role"] = 'doctor'
+                    request.session["email"] = user.email
+                    messages.success(request, "Successfully logged in to system as a Dr. welcome!")
+                    return redirect(f'dashboard:doctor-dashboard')
+                else:
+                    messages.warning(request, "User doesn't exist!, with this credentials.")
+    context = {
+        'id': request.GET.get("id"),
+        'role': fg,
+        'revoke': rvk,
+    }
+    return render(request, "telehakim/login.html", context)
+
+
+def forgot_password(request):
+    itm = request.GET.get('revoke')
+    qd = QueryDict("", mutable=True)
+    value = "true"
+    if itm == 'true':
+        value = "email"
+    elif itm == "email":
+        value = "code"
+    qd.update({"revoke": value})
+    return redirect(reverse('account:login') + f'?{qd.urlencode()}')
+
+
+def update_password_forgot(request, pk):
+    qd = QueryDict("", mutable=True)
+    if request.method == "POST":
+        np = request.POST.get('new_password')
+        rnp = request.POST.get('renew_password')
+        if np != rnp:
+            messages.warning(request, "Two password aren't match..")
+            qd.update({'revoke': 'password', "id": pk})
+        else:
+            User.objects.filter(id=pk).update(password=np)
+            messages.success(request, "Your password are successfully updated!")
+    return redirect(reverse(f'account:login') + f'?{qd.urlencode()}')
+
 
 def logout(request):
+    request.session.pop("user-role", 0)
+    request.session.pop("email", 0)
+    return redirect('account:login')
 
-    return render(request, 'account/logout.html')
 
 def register(request):
     if request.method == 'POST':
@@ -39,7 +149,8 @@ def register(request):
     context = {
         'form': PatientRegistrationForm()
     }
-    return render(request, 'register.html' , context)
+    return render(request, 'register.html', context)
+
 
 def register_doctor(request):
     if request.method == 'POST':
@@ -54,38 +165,3 @@ def register_doctor(request):
         'form': DoctorRegistrationForm()
     }
     return render(request, 'register_doctor.html', context)
-
-
-def profile(request):
-    if request.session.has_key('email'):
-        email = request.session['email']
-        patient = Patient.objects.get(email=email)
-        context = {
-            'patient': patient
-        }
-        return render(request, 'account/profile.html', context)
-    else:
-        return redirect('account:login')
-
-
-def edit_profile(request):
-    if request.session.has_key('email'):
-        email = request.session['email']
-        patient = Patient.objects.get(email=email)
-        if request.method == 'POST':
-            form = PatientRegistrationForm(request.POST, request.FILES, instance=patient)
-            if form.is_valid():
-                form.save()
-                messages.success(request, "Your profile is successfully updated.")
-                return redirect('account:profile')
-            else:
-                messages.error(request, "Not Valid Form, please fill form accordingly or may account exist.")
-        context = {
-            'form': PatientRegistrationForm(instance=patient)
-        }
-        return render(request, 'account/edit_profile.html', context)
-    else:
-        return redirect('account:login')
-
-
-

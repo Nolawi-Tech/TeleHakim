@@ -4,3 +4,4 @@ from account.models import *
 
 admin.site.register(Patient)
 admin.site.register(Doctor)
+admin.site.register(Revoke)
