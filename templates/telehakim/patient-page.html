@@ -1,0 +1,569 @@
+{% extends 'telehakim/main_base.html' %}
+
+{% block title %}
+    Patient
+{% endblock %}
+
+{% block aside %}
+<aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'dashboard:patient-dashboard' %}">
+                <i class="bi bi-grid"></i>
+                <span>Dashboard</span>
+            </a>
+        </li><!-- End Dashboard Nav -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'dashboard:patient-dashboard' %}?pages=book">
+                <i class="bi bi-calendar-plus-fill"></i><span>Book</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'dashboard:patient-dashboard' %}?pages=search">
+                <i class="bi bi-search"></i><span>Search</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'dashboard:patient-dashboard' %}?pages=write_feedback">
+                <i class="bi bi-pencil-fill"></i><span>Write Feedback</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'dashboard:patient-dashboard' %}?pages=medical_history">
+                <i class="bi bi-collection"></i>
+                <span>Medical History</span>
+            </a>
+        </li>
+    </ul>
+
+</aside><!-- End Sidebar-->
+{% endblock %}
+
+{% block middle_breadcrumb %}
+    patient
+{% endblock %}
+
+{% block active_breadcrumb %}
+    {% if page == None %}
+        dashboard
+    {% elif page == "update_user" %}
+        update account
+    {% elif page == 'profile' %}
+        profile
+    {% elif page == 'book' %}
+        book-appointment
+    {% elif page == 'search' %}
+        search for doctor
+    {% elif page == 'write_feedback' %}
+        write_feedback
+    {% elif page == 'medical_history' %}
+        medical-history
+    {% endif %}
+{% endblock %}
+
+{% block middle %}
+    {% load static %}
+    {% if page == 'book' %}
+        <!-- Start book -->
+        <div class="row contact justify-content-center">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#disablebackdrop">
+                Rate Doctor
+            </button>
+            <div class="modal fade" id="disablebackdrop" tabindex="-1" data-bs-backdrop="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Rate Doctor</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post">
+                                <div>
+                                    <label for="customRange2" class="form-label">Min and max with steps</label>
+                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange2">
+                                </div>
+                                <div class="form-floating mb-3">
+                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
+                                          style="height: 100px;"></textarea>
+                                    <label for="floatingTextarea">Comments</label>
+                                </div>
+                                <input type="submit" value="Rate" class="btn btn-primary float-end">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8">
+                <p class="text-center card-title">book doctor here.</p>
+                <div class="card p-4">
+                    <form class="row g-3">
+                        <div class="col-md-6">
+                            <input type="email" class="form-control" placeholder="Email">
+                        </div>
+                        <div class="col-md-4">
+                            <input type="date" class="form-control" placeholder="date">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-4 mt-2">
+                            <div class="card-title">23/10/2015</div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <a class="btn alert-info sm" href="/schedule/">
+                                        3 - 4 Day
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a class="btn alert-info sm" href="/schedule/">
+                                        3 - 4 Day
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a class="btn alert-info sm" href="/schedule/">
+                                        3 - 4 Day
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a class="btn alert-info sm" href="/schedule/">
+                                        3 - 4 Day
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <div class="card-title">23/10/2015</div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <a class="btn alert-info sm" href="/schedule/">
+                                        3 - 4 Day
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a class="btn alert-info sm" href="/schedule/">
+                                        3 - 4 Day
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a class="btn alert-info sm" href="/schedule/">
+                                        3 - 4 Day
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a class="btn alert-info sm" href="/schedule/">
+                                        3 - 4 Day
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Book -->
+    {% elif page == 'search' %}
+        <!-- Start of Search -->
+        <div class="row contact justify-content-center">
+          <div class="col-xl-8">
+            <p class="text-center small">Filter and search doctor here.</p>
+            <div class="card p-4">
+              <form action="" method="post">
+                <div class="row gy-4">
+                  <div class="col-md-3">
+                    <select id="inputesState" class="form-select">
+                      <option selected>Choose...</option>
+                      <option>...</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-3 ">
+                    <select id="inputseState" class="form-select">
+                      <option selected>Choose...</option>
+                      <option>...</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-3">
+                    <select id="inpsuteState" class="form-select">
+                      <option selected>Choose...</option>
+                      <option>...</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-3 text-center">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                  </div>
+                </div>
+              </form>
+
+              <div class="card mt-3">
+                <div class="row g-0">
+                  <div class="col-md-3">
+                    <img src="{% static 'assets/img/slides-1.jpg' %}" class="img-fluid rounded" alt="...">
+                  </div>
+                  <div class="col-md-9 ps-3">
+                      <h5 class="card-title">First name, Last-name</h5>
+                      <div class=""><i class="bi bi-emoji-heart-eyes-fill"></i> Specialization | 30 Years Exp.</div>
+                      <div class=""><i class="bi bi-currency-dollar"></i> 500 Birr/Hr. online</div>
+                      <div class=""><i class="bi bi-envelope-fill"></i> email@gmail.com</div>
+                      <div class=""><i class="bi bi-calendar-day-fill me-1"></i> <a href="">See all timings.</a></div>
+                      <div class=""><i class="bi bi-award-fill"></i> 340 rate | 95%</div>
+
+                      <div class="col-md-6 text-center p-2">
+                        <a type="submit" class="btn btn-primary">Book</a>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card mt-3">
+                <div class="row g-0">
+                  <div class="col-md-3">
+                    <img src="{% static 'assets/img/slides-2.jpg' %}" class="img-fluid rounded" alt="...">
+                  </div>
+                  <div class="col-md-9 ps-3">
+                      <h5 class="card-title">First name, Last-name</h5>
+                      <div class=""><i class="bi bi-emoji-heart-eyes-fill"></i> Specialization | 30 Years Exp.</div>
+                      <div class=""><i class="bi bi-currency-dollar"></i> 500 Birr/Hr. online</div>
+                      <div class=""><i class="bi bi-calendar-day-fill me-1"></i> <a href="">See all timings.</a></div>
+                      <div class=""><i class="bi bi-award-fill"></i> 340 rate | 95%</div>
+
+                      <div class="col-md-6 text-center p-2">
+                        <a type="submit" class="btn btn-primary">Book</a>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card mt-3">
+                <div class="row g-0">
+                  <div class="col-md-3">
+                    <img src="{% static 'assets/img/slides-3.jpg' %}" class="img-fluid rounded" alt="...">
+                  </div>
+                  <div class="col-md-9 ps-3">
+                      <h5 class="card-title">First name, Last-name</h5>
+                      <div class=""><i class="bi bi-emoji-heart-eyes-fill"></i> Specialization | 30 Years Exp.</div>
+                      <div class=""><i class="bi bi-currency-dollar"></i> 500 Birr/Hr. online</div>
+                      <div class=""><i class="bi bi-calendar-day-fill me-1"></i> <a href="">See all timings.</a></div>
+                      <div class=""><i class="bi bi-award-fill"></i> 340 rate | 95%</div>
+
+                      <div class="col-md-6 text-center p-2">
+                        <a type="submit" class="btn btn-primary">Book</a>
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- End of Search -->
+    {% elif page == 'write_feedback' %}
+        <!-- Start of feedback -->
+        <div class="row contact justify-content-center">
+          <div class="col-xl-6">
+            <h5 class="card-title text-center pb-0 fs-4">Please leave your feadback</h5>
+            <p class="text-center small">Enter your email & subject to submit</p>
+            <div class="card p-4">
+              <form action="" method="post">
+                <div class="row gy-4">
+
+                  <div class="col-md-6">
+                    <input type="text" name="name" class="form-control" placeholder="Your Name" >
+                  </div>
+
+                  <div class="col-md-6 ">
+                    <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+                  </div>
+
+                  <div class="col-md-12">
+                    <input type="text" class="form-control" name="subject" placeholder="Subject">
+                  </div>
+
+                  <div class="col-md-12">
+                    <textarea class="form-control" name="message" rows="6" placeholder="Message" required></textarea>
+                  </div>
+
+                  <div class="col-md-12 text-center">
+
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                  </div>
+
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- End of feedback -->
+    {% elif page == 'medical_history' %}
+        <!-- start of view Medical History -->
+        <div class="row">
+         <div class="col-lg-9">
+           <h5 class="card-title">Medical History</h5>
+           <div class="card">
+             <div class="card-body pt-4">
+               Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+               tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+               quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+               consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+               cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+               proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+             </div>
+             <div class="card-footer">
+               <span style="float: right;margin-right: 20px;">By Esubalew on 2010-34-12</span>
+             </div>
+           </div>
+           <div class="card">
+             <div class="card-body pt-4">
+               Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+               tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+             </div>
+             <div class="card-footer">
+               <span style="float: right;margin-right: 20px;">By Esubalew on 2010-34-12</span>
+             </div>
+           </div>
+         </div>
+        </div>
+        <!-- end view Medical History -->
+    {% elif page == 'profile' %}
+        <div class="row">
+            <div class="col-xl-4">
+                <div class="card">
+                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+                        <img src="{% static 'assets/img/profile-img.jpg' %}" alt="Profile" class="rounded-circle">
+                        <h2>{{ user.first_name|title }} {{ user.last_name|title }}</h2>
+                        <h3>{{user_role|title}}</h3>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-xl-8">
+
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <ul class="nav nav-tabs nav-tabs-bordered">
+
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">
+                                    Overview
+                                </button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit"  onclick="blur_password()">Edit
+                                    Profile
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">
+                                    Change Password
+                                </button>
+                            </li>
+
+                        </ul>
+                        <div class="tab-content pt-2">
+
+                            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+
+                                <h5 class="card-title">Profile Details</h5>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                                    <div class="col-lg-9 col-md-8">{{ user.first_name|title }} {{ user.last_name|title }}</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Company</div>
+                                    <div class="col-lg-9 col-md-8">Telehakim Service company</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Job</div>
+                                    <div class="col-lg-9 col-md-8">{{ user_role|title}}</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Address</div>
+                                    <div class="col-lg-9 col-md-8">{{ user.address }}</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Phone</div>
+                                    <div class="col-lg-9 col-md-8">{{ user.phone }}</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Email</div>
+                                    <div class="col-lg-9 col-md-8">{{ user.email }}</div>
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+
+                                <form method="post" action=" url 'account:update_account' %}">
+                                    {% csrf_token %}
+                                    <div class="row mb-3">
+                                        <label  class="col-md-4 col-lg-3 col-form-label">Profile
+                                            Image</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <img src="{% static 'assets/img/profile-img.jpg' %}" alt="Profile">
+                                            <div class="pt-2">
+                                                <a href="#" class="btn btn-primary btn-sm"
+                                                   title="Upload new profile image"><i class="bi bi-upload"></i></a>
+                                                <a href="#" class="btn btn-danger btn-sm"
+                                                   title="Remove my profile image"><i class="bi bi-trash"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    {% for form in update_form %}
+
+                                        {% if forloop.counter0 == 4 %}
+                                            <div class="row mb-3">
+                                                <div class="col-md-8 col-lg-9">
+                                                    <input type="text" id="id_password" name="password"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <div class="row mb-3">
+                                                <label for="{{ form.id_for_label }}"
+                                                       class="col-md-4 col-lg-3 col-form-label">{{ form.label }}</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    {{ form }}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+
+                                    {% endfor %}
+
+                                    <div class="text-center">
+                                        <button name="update" type="submit" class="btn btn-primary">Save Changes
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            <script>
+                                function blur_password() {
+                                    let pass = document.getElementById('id_password')
+                                    pass.removeAttribute('required')
+                                    pass.setAttribute('type', 'hidden')
+                                    pass.value = "{{user.password}}"
+                                }
+                            </script>
+                            <div class="tab-pane fade pt-3" id="profile-change-password">
+                                <form method="post" action=" url 'account:update_password' user.id %}">
+                                    {% csrf_token %}
+                                    <div class="row mb-3">
+                                        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current
+                                            Password</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="current_password" type="password" class="form-control"
+                                                   id="currentPassword" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New
+                                            Password</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="new_password" type="password" class="form-control"
+                                                   id="newPassword" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="renew_password" class="col-md-4 col-lg-3 col-form-label">Re-enter
+                                            New
+                                            Password</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="renew_password" type="password" class="form-control"
+                                                   id="renewPassword" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <button type="submit" name="password_update" class="btn btn-primary">Change
+                                            Password
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <!-- Start Data table -->
+        <div class="row">
+          <div class="col-lg-12">
+
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Book History</h5>
+                <table class="table datatable">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Position</th>
+                      <th scope="col">Age</th>
+                      <th scope="col">Start Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Brandon Jacob</td>
+                      <td>Designer</td>
+                      <td>28</td>
+                      <td>2016-05-25</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">2</th>
+                      <td>Bridie Kessler</td>
+                      <td>Developer</td>
+                      <td>35</td>
+                      <td>2014-12-05</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">3</th>
+                      <td>Ashleigh Langosh</td>
+                      <td>Finance</td>
+                      <td>45</td>
+                      <td>2011-08-12</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">4</th>
+                      <td>Angus Grady</td>
+                      <td>HR</td>
+                      <td>34</td>
+                      <td>2012-06-11</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">5</th>
+                      <td>Raheem Lehner</td>
+                      <td>Dynamic Division Officer</td>
+                      <td>47</td>
+                      <td>2011-04-19</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+
+              </div>
+            </div></div>
+        </div>
+        <!-- End Data table -->
+    {% endif %}
+{% endblock %}

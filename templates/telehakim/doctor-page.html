@@ -1,0 +1,366 @@
+{% extends 'telehakim/main_base.html' %}
+
+{% block title %}
+    Doctor
+{% endblock %}
+
+{% block aside %}
+<aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'dashboard:doctor-dashboard' %}">
+                <i class="bi bi-grid"></i>
+                <span>Dashboard</span>
+            </a>
+        </li><!-- End Dashboard Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'dashboard:doctor-dashboard' %}?pages=working_day">
+                <i class="bi bi-clock-fill"></i><span>Working Day</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'dashboard:doctor-dashboard' %}?pages=view_rate">
+                <i class="bi bi-star-fill"></i>
+                <span>View Rate</span>
+            </a>
+        </li>
+    </ul>
+
+</aside><!-- End Sidebar-->
+{% endblock %}
+
+{% block middle_breadcrumb %}
+    doctor
+{% endblock %}
+
+{% block active_breadcrumb %}
+    {% if page == None %}
+        dashboard
+    {% elif page == "working_day" %}
+        add_working_day
+    {% elif page == 'profile' %}
+        profile
+    {% elif page == 'view_rate' %}
+        view_rate
+    {% endif %}
+{% endblock %}
+
+{% block middle %}
+    {% load static %}
+    {% if page == "working_day" %}
+        <!-- Start Working day -->
+        <div class="row">
+            <div class="col-lg-9">
+                <h5 class="card-title">Add Working date</h5>
+                <div class="card p-5">
+                    <form action="" method="post" class="row g-3">
+                        <div class="col-12">
+                            <label for="inputDate1" class="form-label">Initial | Specific Date</label>
+                            <input id="inputDate1" type="date" class="form-control">
+                        </div>
+                        <div class="col-12">
+                            <label for="inputDate" class="form-label">Final Date</label>
+                            <input id="inputDate" type="date" class="form-control">
+                        </div>
+                        <div class="col-12">
+                            <label for="floatingTextarea" class="form-label">Free Time</label>
+                            <textarea class="form-control" placeholder="Address" id="floatingTextarea"
+                                      style="height: 100px;"></textarea>
+                        </div>
+
+                        <div class="float-end col-4">
+                            <input type="submit" value="ADD" class="form-control btn btn-primary">
+                        </div>
+                    </form>
+                </div>
+                <div class="card p-5">
+                    <h5 class="card-title">How to fill my work day?</h5>
+                    <p>
+                        Fill in only the initial or specific date if your schedule is different for particular date,
+                        and then fill in the free time in the text area.
+                    </p>
+                    <p>
+                        Fill in the start and end dates if your schedule is the same for the range of dates,
+                        and then fill in the free time in the text box.
+                    </p>
+                    <p>
+                        Use the suggested format: <span style="font-family:monospace; color:red;font-size:19px" >Start-time:end-time:d|n.</span><br>
+                        <span style="font-family:monospace; color:red;font-size:19px">Note:</span> don't use minute here and both n and d are case-insensitive.
+                        <br><br>
+                        3:5:d -> from morning 3:00 to 5:00, d-> refers to day, n->for night <br>
+                        10:12:d -> from 10:00 to 12:00, in afternoon <br>
+                        7:8:N -> from 7:00 to 8:00, in Night <br>
+
+                    </p>
+                    <p>
+                        Please use commas to separate the different time slots, eg. 3:5:d,10:12:d,7:8:N
+                    </p>
+
+                </div>
+            </div>
+        </div>
+        <!-- End Working day -->
+    {% elif page == 'view_rate' %}
+        <!-- start of view Rate -->
+        <div class="row">
+            <div class="col-lg-9">
+                <h5 class="card-title">List of Rate</h5>
+                <div class="card">
+                    <div class="card-body pt-4">
+                        <h5 class="card-title">Total Rate: 150 | 150%</h5>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body pt-4">
+                        <h5 class="card-title">5 rate out of 10</h5>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                    </div>
+                    <div class="card-footer">
+                        <span style="float: right;margin-right: 20px;">By Esubalew on 2010-34-12</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end view Rate -->
+    {% elif page == 'profile' %}
+        <div class="row">
+            <div class="col-xl-4">
+                <div class="card">
+                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+                        <img src="{% static 'assets/img/profile-img.jpg' %}" alt="Profile" class="rounded-circle">
+                        <h2>{{ user.first_name|title }} {{ user.last_name|title }}</h2>
+                        <h3>{{user_role|title}}</h3>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-xl-8">
+
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <ul class="nav nav-tabs nav-tabs-bordered">
+
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">
+                                    Overview
+                                </button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit"  onclick="blur_password()">Edit
+                                    Profile
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">
+                                    Change Password
+                                </button>
+                            </li>
+
+                        </ul>
+                        <div class="tab-content pt-2">
+
+                            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+
+                                <h5 class="card-title">Profile Details</h5>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                                    <div class="col-lg-9 col-md-8">{{ user.first_name|title }} {{ user.last_name|title }}</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Company</div>
+                                    <div class="col-lg-9 col-md-8">Telehakim Service company</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Job</div>
+                                    <div class="col-lg-9 col-md-8">{{ user_role|title}}</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Address</div>
+                                    <div class="col-lg-9 col-md-8">{{ user.address }}</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Phone</div>
+                                    <div class="col-lg-9 col-md-8">{{ user.phone }}</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Email</div>
+                                    <div class="col-lg-9 col-md-8">{{ user.email }}</div>
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+
+                                <form method="post" action=" url 'account:update_account' %}">
+                                    {% csrf_token %}
+                                    <div class="row mb-3">
+                                        <label  class="col-md-4 col-lg-3 col-form-label">Profile
+                                            Image</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <img src="{% static 'assets/img/profile-img.jpg' %}" alt="Profile">
+                                            <div class="pt-2">
+                                                <a href="#" class="btn btn-primary btn-sm"
+                                                   title="Upload new profile image"><i class="bi bi-upload"></i></a>
+                                                <a href="#" class="btn btn-danger btn-sm"
+                                                   title="Remove my profile image"><i class="bi bi-trash"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    {% for form in update_form %}
+
+                                        {% if forloop.counter0 == 4 %}
+                                            <div class="row mb-3">
+                                                <div class="col-md-8 col-lg-9">
+                                                    <input type="text" id="id_password" name="password"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <div class="row mb-3">
+                                                <label for="{{ form.id_for_label }}"
+                                                       class="col-md-4 col-lg-3 col-form-label">{{ form.label }}</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    {{ form }}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+
+                                    {% endfor %}
+
+                                    <div class="text-center">
+                                        <button name="update" type="submit" class="btn btn-primary">Save Changes
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            <script>
+                                function blur_password() {
+                                    let pass = document.getElementById('id_password')
+                                    pass.removeAttribute('required')
+                                    pass.setAttribute('type', 'hidden')
+                                    pass.value = "{{user.password}}"
+                                }
+                            </script>
+                            <div class="tab-pane fade pt-3" id="profile-change-password">
+                                <form method="post" action=" url 'account:update_password' user.id %}">
+                                    {% csrf_token %}
+                                    <div class="row mb-3">
+                                        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current
+                                            Password</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="current_password" type="password" class="form-control"
+                                                   id="currentPassword" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New
+                                            Password</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="new_password" type="password" class="form-control"
+                                                   id="newPassword" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="renew_password" class="col-md-4 col-lg-3 col-form-label">Re-enter
+                                            New
+                                            Password</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="renew_password" type="password" class="form-control"
+                                                   id="renewPassword" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <button type="submit" name="password_update" class="btn btn-primary">Change
+                                            Password
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <!-- Start Data table -->
+         <div class="row">
+          <div class="col-lg-12">
+
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">List of users.</h5>
+
+                <table class="table datatable">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Position</th>
+                      <th scope="col">Age</th>
+                      <th scope="col">Start Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Brandon Jacob</td>
+                      <td>Designer</td>
+                      <td>28</td>
+                      <td>2016-05-25</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">2</th>
+                      <td>Bridie Kessler</td>
+                      <td>Developer</td>
+                      <td>35</td>
+                      <td>2014-12-05</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">3</th>
+                      <td>Ashleigh Langosh</td>
+                      <td>Finance</td>
+                      <td>45</td>
+                      <td>2011-08-12</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">4</th>
+                      <td>Angus Grady</td>
+                      <td>HR</td>
+                      <td>34</td>
+                      <td>2012-06-11</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">5</th>
+                      <td>Raheem Lehner</td>
+                      <td>Dynamic Division Officer</td>
+                      <td>47</td>
+                      <td>2011-04-19</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+
+              </div>
+            </div></div>
+        </div>
+        <!-- End Data table -->
+    {% endif %}
+{% endblock %}
