@@ -87,7 +87,6 @@ def recommend(request):
           'symptom4': symptom4,})
 
 
-
 def vom_interview(request):
      l[symptom.index("vomiting")]=1
      return render(request,"recommendation/vomiting/vom_interview.html",{"list":l})
@@ -102,22 +101,21 @@ def interview1(request):
      return render(request,"recommendation/interview1.html",{})
 def interview4(request):
      return render(request,"recommendation/interview4.html")
-def cough_interview1(request):
+
+symptom_list=['cough']
+def cough_interview1(request): 
+    return render(request, "recommendation/coughing/cough_interview1.html", {'symptom_list': symptom_list})
+
+def cough_result(request):
      if request.method == "POST":
         symptom = request.POST.get("symptom")
-        symptom_list = []
+        
         if symptom:
-            if symptom.startswith("fever"):
-                symptom_list.append("fever")
-            elif symptom.startswith("stomach_pain"):
-                symptom_list.append("stomach pain")
-            elif symptom.startswith("vomiting"):
-                symptom_list.append("vomiting")
-
-        # Perform further logic or processing with the symptom_list
-        return redirect('cough_result',symptom_list=symptom_list)
-     return render(request, "recommendation/coughing/cough_interview1.html",{'symptom_list':symptom_list})
+           symptom_list.append(symptom)
+  
+     return render(request, "recommendation/coughing/cough_result.html" , {'symptom_list':symptom_list})
 def cough_interview2(request):
      return render(request,"recommendation/coughing/cough_interview2.html")
-def cough_result(request,symptom_list):
-     return render(request,"recommendation/coughing/cough_result.html",{'symptom_list': symptom_list})
+
+def headache_interview1(request):
+     return render(request,"recommendation/headache/headache_interview1.html")

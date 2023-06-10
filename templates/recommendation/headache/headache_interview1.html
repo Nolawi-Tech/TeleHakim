@@ -1,0 +1,221 @@
+{% load static %}{% block maincontent %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TeleHakim</title>
+    <meta name="description" content="Free Bootstrap Theme by BootstrapMade.com">
+    <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'https://fonts.googleapis.com/css?family=Open+Sans|Raleway|Candal' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/font-awesome.min.css' %}">
+    <!-- <link href="{% static 'asset/css/recommendation/bootstrap1.min.css' %}" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/recommendation/style.css' %}">
+    <link href="{% static 'asset/css/recommendation/recommend.css'%} " rel="stylesheet">
+    <link href="{% static 'asset/css/recommendation/modified.css'%} " rel="stylesheet">
+
+</head>
+
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+    <!--banner-->
+    <section id="banner" class="banner">
+        <div class="bg-color">
+            <nav class="navbar navbar-default">
+                <div class="container">
+                    <div class="col-md-12">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				      </button>
+                            <a class="navbar-brand" href="#"><img src="{% static 'asset/img/logo.png'%}" class="img-responsive" style="width: 140px; margin-top: -16px;"></a>
+                        </div>
+                        <div class="collapse navbar-collapse navbar-right" id="myNavbar">
+                            <ul class="nav navbar-nav">
+                                <li class=""><a href="{url ''}">Home</a></li>
+                                <li class=""><a href="#service">Services</a></li>
+                                <li class=""><a href="#about">About</a></li>
+                                <li class=""><a href="#testimonial">Testimonial</a></li>
+                                <li class=""><a href="#contact">Contact</a></li>
+                                <li class=""><a href="login.html" class="btn btn-info btn-block">Login</a></li>
+
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </nav>
+        </div>
+    </section>
+    <div class="container col-6 main my-5 ">
+        <div class="col-lg-12 ">
+            <div class="card bg-success color-white">
+                <h3 class="p-2 text-center text-white">From the symptoms below, please selet more that's you the most</h3>
+            </div>
+        </div>
+        <div class="row  d-flex align-items-center ">
+            <div class="col-12 col-lg-4 align-items-center">
+                <div class="image-container">
+                    <input type="checkbox" id="checkbox1" onclick="selectImage('page1.html')">
+                    <label for="checkbox1">
+                        <img class="img img-fluid color-change-image" src="{% static 'asset/img/recommend/symptoms/headache/nausea.png' %}" alt="" onclick="changeImageColor(this)">
+                        <p class="text-center">nausea</p>
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 align-items-center">
+                <div class="image-container">
+                    <input type="checkbox" id="checkbox2" onclick="selectImage('page2.html')">
+                    <label for="checkbox2">
+                        <img class="img img-fluid color-change-image" src="{% static 'asset/img/recommend/symptoms/headache men.png' %}" alt="" onclick="changeImageColor(this)">
+                        <p class="text-center">fever</p>
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 align-items-center">
+                <div class="image-container">
+                    <input type="checkbox" id="checkbox3" onclick="selectImage('page3.html')">
+                    <label for="checkbox3">
+                        <img class="img img-fluid color-change-image" src="{% static 'asset/img/recommend/symptoms/headache/h_vomiting.png' %}" alt=""  onclick="changeImageColor(this)">
+                        <p class="text-center">vomiting</p>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row  d-flex align-items-center ">
+            <div class="col-12 col-lg-4 align-items-center">
+                <div class="image-container">
+                    <input type="checkbox" id="checkbox5" onclick="selectImage('page5.html')">
+                    <label for="checkbox5">
+                        <img class="img img-fluid color-change-image" src="{% static 'asset/img/recommend/symptoms/fatigue.png' %}" alt=""  onclick="changeImageColor(this)">
+                        <p class="text-center">fatigue/tired</p>
+                    </label>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 align-items-center">
+                <div class="image-container">
+                    <input type="checkbox" id="checkbox4" onclick="selectImage('page4.html')">
+                    <label for="checkbox4">
+                        <img class="img img-fluid color-change-image" src="{% static 'asset/img/recommend/symptoms/headache/indigestion.png' %}" alt=""  onclick="changeImageColor(this)">
+                        <p class= "text-center" >Indigestion</p>
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 align-items-center">
+                <div class="image-container">
+                    <input type="checkbox" id="checkbox6" onclick="selectImage('page6.html')">
+                    <label for="checkbox6">
+                        <img class="img img-fluid " src="{% static 'asset/img/recommend/symptoms/headache/chestpain.png' %}" alt=""  onclick="changeImageColor(this)">
+                        <p class="text-center">chest pain</p>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="text-center text-danger" id="message"></div>
+    <div class="container-fluid ">
+        <hr>
+    </div>
+
+    <div class="row  d-flex justify-content-between pr-5">
+        <div class="col-auto">
+            <button id="previousButton" class="btn-1 btn-primary">Prev</button>
+        </div>
+
+        <div class="col-auto">
+            <button id="nextButton" class="btn-1 btn-primary ">Next</button>
+        </div>
+    </div>
+
+
+    <script>
+        var page1 = {
+            clicked: false
+        };
+        var page2 = {
+            clicked: false
+        };
+        var page3 = {
+            clicked: false
+        };
+        var page4 = {
+            clicked: false
+        };
+        var page5 = {
+            clicked: false
+        };
+        var page6 = {
+            clicked: false
+        };
+
+
+        function selectImage(page) {
+            var page1 = document.getElementById('checkbox1').checked;
+            var page2 = document.getElementById('checkbox2').checked;
+            var page3 = document.getElementById('checkbox3').checked;
+            var page4 = document.getElementById('checkbox4').checked;
+            var page5 = document.getElementById('checkbox5').checked;
+            var page6 = document.getElementById('checkbox6').checked;
+
+            if (page1 || page2 || page3 || page4 || page5 || page6) {
+                document.getElementById('nextButton').disabled = false;
+            } else {
+                document.getElementById('nextButton').disabled = true;
+            }
+        }
+
+        var previousButton = document.getElementById('previousButton');
+        previousButton.addEventListener('click', function() {
+            window.location.href = "{% url 'interview3' %}";
+        });
+
+        var nextButton = document.getElementById('nextButton');
+        nextButton.addEventListener('click', function() {
+            var page1 = document.getElementById('checkbox1').checked;
+            var page2 = document.getElementById('checkbox2').checked;
+            var page3 = document.getElementById('checkbox3').checked;
+            var page4 = document.getElementById('checkbox4').checked;
+            var page5 = document.getElementById('checkbox5').checked;
+            var page6 = document.getElementById('checkbox6').checked;
+
+            if (page1 && page2 && page3 && page4) {
+                window.location.href = "{% url 'cough_interview2' %}";
+            } else if (page2) {
+                window.location.href = "{% url 'headache_interview1' %}";
+            } else if (page3) {
+                window.location.href = "{% url 'vom_interview' %}";
+            } else if (page4) {
+                window.location.href = "{% url 'interview4' %}";
+            } else if (page5) {
+                window.location.href = "{% url 'interview1' %}";
+            } else if (page6) {
+                window.location.href = "{% url 'interview2' %}";
+            } else {
+                message.innerText = "Please select a symptom.";
+            }
+        });
+
+
+        function changeImageColor(checkboxId) {
+            var checkbox = document.getElementById(checkboxId);
+            var image = document.querySelector('label[for="' + checkboxId + '"] img');
+
+            if (checkbox.checked) {
+                image.classList.add('color-change-image');
+            } else {
+                image.classList.remove('color-change-image');
+            }
+        }
+    </script>
+</body> {% endblock maincontent%}
