@@ -119,3 +119,5 @@ def cough_interview2(request):
 
 def headache_interview1(request):
      return render(request,"recommendation/headache/headache_interview1.html")
+def headache_interview2(request):
+     return render(request,'recommendation/headache/headache_interview2.html')

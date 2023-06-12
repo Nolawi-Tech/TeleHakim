@@ -18,5 +18,6 @@ urlpatterns = [
     
     #headache
     path("headache_interview1",headache_interview1,name='headache_interview1'),
+    path("headache_interview2",headache_interview2,name='headache_interview2'),
     path("recommend",recommend,name='recommend'),
 ]
