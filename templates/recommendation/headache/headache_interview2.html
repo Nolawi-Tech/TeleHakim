@@ -158,6 +158,13 @@
             }
         }
 
+        function showWaitingText(message) {
+            const waitingTextMessage = document.querySelector("#waiting-text p");
+            waitingTextMessage.textContent = message;
+            waitingText.style.display = "block";
+        }
+
+
         var previousButton = document.getElementById('previousButton');
         previousButton.addEventListener('click', function() {
             window.location.href = "{% url 'interview3' %}";
