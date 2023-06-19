@@ -1,5 +1,4 @@
 {% load static %}
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -56,14 +55,13 @@
     <div class="d-flex align-items-center justify-content-between">
         <a href="#" class="logo d-flex align-items-center">
             <img src="{% static 'assets/img/post.jpg' %}" alt="">
-            <span class="d-none d-lg-block">OPIMS</span>
+            <span class="d-none d-lg-block">TELEHAKIM</span>
         </a>
     </div><!-- End Logo -->
-
-
     <nav class="header-nav ms-auto pe-3">
-        <a href=" url 'account:login' " class="btn  btn-outline-dark">Login</a>
-        <a href=" url 'account:register' 'customer'" class="btn  btn-outline-success" title="For Clients use only.">Register</a>
+        <a href="{% url 'account:login' %}" class="btn  btn-outline-dark">Login</a>
+        <a href="{% url 'account:register-patient' 'index'%}" class="btn  btn-outline-success" title="For patient use only.">Register</a>
+        <a href="{% url 'account:register-doctor' 'index'%}" class="btn  btn-outline-warning" title="For doctor use only.">Register(Dr.)</a>
     </nav><!-- End Icons Navigation -->
 
 </header><!-- End Header -->

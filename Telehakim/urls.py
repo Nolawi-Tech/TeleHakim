@@ -8,7 +8,9 @@ app_name = 'telehakim'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('payment/', include('payment.urls')),
+    path('chat/', include('webrtc.urls')),
     path('dashboard/', include('dashboard.urls')),
+    path('appointment/', include('appointment.urls')),
     path('', include('account.urls')),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

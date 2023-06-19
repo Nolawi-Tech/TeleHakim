@@ -11,7 +11,7 @@ class Patient(models.Model):
     password = models.CharField(max_length=100)
     address = models.CharField(max_length=100, null=True, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
-    photo = models.ImageField(upload_to='media/patient_photo', blank=True)
+    photo = models.ImageField(upload_to='patient_photo', blank=True, default='user_avatar.png')
 
     is_admin = models.BooleanField(max_length=5, default=False)
     is_patient = models.BooleanField(max_length=5, default=False)
@@ -21,17 +21,35 @@ class Patient(models.Model):
 
 
 class Doctor(models.Model):
+    SPECIALITY_CHOICES = [
+        ('Dermatologist', 'Dermatologist'),
+        ('Dentist', 'Dentist'),
+        ('Sexologist', 'Sexologist'),
+        ('Dietitian/Nutritionist', 'Dietitian/Nutritionist'),
+        ('General Physician', 'General Physician'),
+        ('Orthopedist', 'Orthopedist'),
+        ('Gynaecologist', 'Gynaecologist'),
+        ('Pediatrics', 'Pediatrics'),
+        ('Psychologist', 'Psychologist'),
+    ]
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100, unique=True)
     phone = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
-    date_of_birth = models.DateField()
-    specilization = models.CharField(max_length=100)
-    document = models.FileField(upload_to='media/doctor_document')
-    photo = models.ImageField(upload_to='media/doctor_photo', blank=True)
+    date_of_birth = models.DateField(blank=True, null=True)
+    specialization = models.CharField(max_length=100, choices=SPECIALITY_CHOICES)
+    document = models.FileField(upload_to='doctor_document')
+    photo = models.ImageField(upload_to='doctor_photo', blank=True, default='user_avatar.png')
     is_verified = models.BooleanField(default=False)
+
+    degree = models.CharField(max_length=100, null=True, blank=True)
+    experience = models.CharField(max_length=100, default='0')
+    about = models.TextField(max_length=500, null=True, blank=True)
+    fee = models.IntegerField(default=0)
+    hospital = models.CharField(max_length=100, null=True, blank=True)
+    account_number = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return self.first_name
@@ -41,28 +59,10 @@ class Revoke(models.Model):
     ran = ''.join(random.sample(string.ascii_letters + string.digits, k=5))
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, null=True)
-    code = models.CharField(max_length=15, blank=True, default=f'TeleHakim:{ran}')
+    # code = models.CharField(max_length=15, blank=True, default=f'TeleHakim:{ran}')
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.code
 
 
-class Appointment(models.Model):
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-    date = models.DateField()
-    time = models.TimeField()
-    status = models.CharField(max_length=100, default='pending')
-
-    def __str__(self):
-        return self.patient.first_name + ' ' + self.doctor.first_name
-
-
-class RateDoctor(models.Model):
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-    rate = models.IntegerField()
-
-    def __str__(self):
-        return self.patient.first_name + ' ' + self.doctor.first_name

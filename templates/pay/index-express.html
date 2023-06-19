@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+{% load static %}
 <html>
 <head>
     <title>Payment Page</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -11,7 +11,7 @@
                 <div class="card">
                     <div class="card-body text-center">
                         <h1 class="mb-4">Payment Page</h1>
-                            <a href="{% url 'home' %}" class="btn btn-primary mb-4">Home</a>            
+                            <a href="{% url 'payment:home' %}" class="btn btn-primary mb-4">Home</a>
                             <form action="https://test.yenepay.com/" method="POST">
                                 {% csrf_token %}
                                 {% for x, y in obj.items %}

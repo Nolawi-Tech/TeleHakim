@@ -1,8 +1,10 @@
 from django.shortcuts import render
 import requests
 
+
 def home(request):
-    return render(request, 'index.html')
+    return render(request, 'pay/home.html')
+
 
 def payment_with_cart(request):
     obj = {
@@ -21,34 +23,22 @@ def payment_with_cart(request):
     }
     cart = {
         "cartitems": [
-
-        {
-
-            "itemId":"sku-01",
-
-            "itemName":"sample item",
-
-            "unitPrice":2300,
-
-            "quantity":1
-
-        },
-
-        {
-
-            "itemId":"sku-02",
-
-            "itemName":"sample item 2",
-
-            "unitPrice":2300,
-
-            "quantity":2
-
-        }
-
+            {
+                "itemId": "sku-01",
+                "itemName": "sample item",
+                "unitPrice": 2300,
+                "quantity": 1
+            },
+            {
+                "itemId": "sku-02",
+                "itemName": "sample item 2",
+                "unitPrice": 2300,
+                "quantity": 2
+            }
         ]
     }
     return render(request, 'pay/index-cart.html', {'obj': obj, 'cart': cart})
+
 
 def payment_with_express(request):
     obj = {
@@ -71,8 +61,9 @@ def payment_with_express(request):
     }
     return render(request, 'pay/index-express.html', {'obj': obj})
 
+
 def success(request):
-    ii= request.GET.get('itemId')
+    ii = request.GET.get('itemId')
     total = request.GET.get('TotalAmount')
     moi = request.GET.get('MerchantOrderId')
     ti = request.GET.get('TransactionId')
@@ -89,10 +80,12 @@ def success(request):
         print("It's Paid")
     else:
         print('Invalid payment process')
-    return render(request, 'pay/success.html', {'total': total, 'status': status,})
+    return render(request, 'pay/success.html', {'total': total, 'status': status, })
+
 
 def cancel(request):
     return render(request, 'pay/cancel.html')
+
 
 def ipn(request):
     return render(request, 'pay/ipn.html')
