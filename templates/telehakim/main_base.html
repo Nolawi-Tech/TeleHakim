@@ -16,6 +16,9 @@
     <link href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
           rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 
     <!-- Vendor CSS Files -->
     <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -24,6 +27,9 @@
 
     <!-- Template Main CSS File -->
     <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/main_chat.css' %}">
+    <link rel="stylesheet" href="{% static 'css/video.css' %}">
+
 </head>
 
 <body onload="post_none()">
@@ -116,7 +122,7 @@
             <li class="nav-item dropdown pe-3">
 
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                    <img src="{% static 'assets/img/profile-img.jpg' %}" alt="Profile" class="rounded-circle">
+                    <img src="{{ user.photo.url }}" alt="Profile" class="rounded-circle">
                     <span class="d-none d-md-block dropdown-toggle ps-2">{{ user.first_name|title }}. {{ user.last_name|first|capfirst }}</span>
                 </a><!-- End Profile Image Icon -->
 
@@ -208,7 +214,8 @@
 <script src="{% static 'assets/vendor/simple-datatables/simple-datatables.js' %}"></script>
 <script src="{% static 'assets/vendor/tinymce/tinymce.min.js' %}"></script>
 
-<script src="{% static 'assets/js/main.js' %}"></script>
+<!--<script src="{% static 'js/AgoraRTC_N-4.14.0.js' %}"></script>-->
+<!--<script src="{% static 'js/streams.js' %}"></script>-->
 
 </body>
 

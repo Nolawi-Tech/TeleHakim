@@ -8,6 +8,7 @@ from django.urls import reverse
 
 
 # Create your views here.
+qd = QueryDict("", mutable=True)
 
 def login(request):
     fg = 'admin'
@@ -137,31 +138,60 @@ def logout(request):
     return redirect('account:login')
 
 
-def register(request):
+def register_patient(request, _to):
+    form = PatientRegistrationForm()
+    is_patient = True
     if request.method == 'POST':
         form = PatientRegistrationForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            instance = form.save(commit=False)
             messages.success(request, "Welcome, you are successfully registered.")
-            return redirect('account:login')
+            if _to == 'admin':
+                instance.is_admin = True
+            else:
+                instance.is_patient = True
+            instance.save()
+
+            if _to == 'index':
+                return redirect('account:login')
+
+            qd.update({'pages': f'{_to}s'})
+            return redirect(reverse('dashboard:admin-dashboard')+f'?{qd.urlencode()}')
         else:
             messages.error(request, "Not Valid Form, please fill form accordingly or may account exist.")
-    context = {
-        'form': PatientRegistrationForm()
-    }
-    return render(request, 'register.html', context)
+    if _to == 'index':
+        return render(request, 'telehakim/register_patient.html', {'patient_form': form})
+    qd.clear()
+    qd.update({'pages': f'register_{_to}'})
+    return redirect(reverse('dashboard:admin-dashboard') + f'?{qd.urlencode()}')
 
 
-def register_doctor(request):
+def register_doctor(request, _from):
     if request.method == 'POST':
         form = DoctorRegistrationForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, "Welcome, you are successfully registered.")
-            return redirect('account:login')
+            if _from == 'index':
+                return redirect('account:login')
+            qd.update({'pages': 'doctors_waiting'})
+            return redirect(reverse('dashboard:admin-dashboard') + f'?{qd.urlencode()}')
         else:
             messages.error(request, "Not Valid Form, please fill form accordingly or may account exist.")
-    context = {
-        'form': DoctorRegistrationForm()
-    }
-    return render(request, 'register_doctor.html', context)
+    if _from == 'index':
+        return render(request, 'telehakim/register_doctor.html', {'doctor_form': DoctorRegistrationForm()})
+    qd.clear()
+    qd.update({'pages': 'register_doctor'})
+    return redirect(reverse('dashboard:admin-dashboard') + f'?{qd.urlencode()}')
+
+
+def delete_user(request, pk, role):
+    print('notifies', pk, role)
+    return redirect('dashboard:admin-dashboard')
+    # try:
+    #     us = User.objects.get(id=pk)
+    #     us.delete()
+    #     messages.success(request, "User successfully deleted!")
+    # except:
+    #     messages.error(request, "User doesn't exist!")
+    # return redirect(f'post:{user_status(request)}-dashboard')

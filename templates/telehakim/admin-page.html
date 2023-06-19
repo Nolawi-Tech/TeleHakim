@@ -31,6 +31,11 @@
               <i class="bi bi-circle"></i><span>Register Doctor</span>
             </a>
           </li>
+            <li>
+            <a href="{% url 'dashboard:admin-dashboard' %}?pages=register_admin">
+              <i class="bi bi-circle"></i><span>Register Admin</span>
+            </a>
+          </li>
         </ul>
       </li><!-- End Components Nav -->
 
@@ -39,7 +44,11 @@
           <i class="bi bi-people-fill"></i><span>Patients</span>
         </a>
       </li>
-
+        <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'dashboard:admin-dashboard' %}?pages=admins">
+          <i class="bi bi-people-fill"></i><span>Admins</span>
+        </a>
+      </li>
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-people-fill"></i><span>Doctors</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -79,14 +88,22 @@
         update account
     {% elif page == 'profile' %}
         profile
-    {% elif page|slice:':7' == 'doctors'%}
-        list_of_doctors
+    {% elif page == 'doctors_waiting'%}
+        doctors_waiting
+    {% elif page == 'doctors_unverified'%}
+        unverified_list_of_doctors
     {% elif page == 'patients' %}
         list_of_patients
+    {% elif page == 'admins' %}
+        list_of_admins
     {% elif page == 'view_feedback' %}
         view_feedback
     {% elif page == 'register_patient' %}
         register_patient
+    {% elif page == 'register_admin' %}
+        register_admin
+    {% elif page|slice:":4" == 'chat' %}
+        chatting
     {% elif page == 'register_doctor' %}
         register_doctor
     {% endif %}
@@ -94,163 +111,258 @@
 
 {% block middle %}
     {% load static %}
-    {% if page|slice:':7' == 'doctors'%}
-        <!-- Start Data table -->
-       <div class="row">
-        <div class="col-lg-12">
-
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">List of users.</h5>
-
-              <table class="table datatable">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Start Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Brandon Jacob</td>
-                    <td>Designer</td>
-                    <td>28</td>
-                    <td>2016-05-25</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Bridie Kessler</td>
-                    <td>Developer</td>
-                    <td>35</td>
-                    <td>2014-12-05</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Ashleigh Langosh</td>
-                    <td>Finance</td>
-                    <td>45</td>
-                    <td>2011-08-12</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">4</th>
-                    <td>Angus Grady</td>
-                    <td>HR</td>
-                    <td>34</td>
-                    <td>2012-06-11</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">5</th>
-                    <td>Raheem Lehner</td>
-                    <td>Dynamic Division Officer</td>
-                    <td>47</td>
-                    <td>2011-04-19</td>
-                  </tr>
-                </tbody>
-              </table>
-
-
+    {% if page == 'doctors_waiting'%}
+    {% elif page == 'doctors_unverified'%}
+        <div class="our-custom-model card m-auto d-none">
+            <div class="modal-header">
+                <h5 class="modal-title font-monospace ">Are you sure you want to delete the selected user?</h5>
             </div>
-          </div></div>
-      </div>
-      <!-- End Data table -->
+            <div class="modal-footer">
+                <a href="#" id="iamsure" class="btn btn-danger">Yes, I’m sure</a>
+                <a href="#" onclick="rm()" id="notsure" class="btn btn-secondary">No, take me back</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title pl-3">List of doctors.</h5>
+                        <table class="table datatable">
+                            <thead>
+                            <tr>
+                                <th scope="col">id</th>
+                                <th scope="col">Full name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">specialization</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Address</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for doctor in doctors %}
+                                {% if not doctor.is_verified%}
+                                   <tr>
+                                    <th scope="row">{{ doctor.id }}</th>
+                                    <td>{{ doctor.first_name }} {{ doctor.last_name }}</td>
+                                    <td>{{ doctor.email }}</td>
+                                    <td>{{ doctor.specialization }}</td>
+                                    <td>{{ doctor.phone }}</td>
+                                    <td>{{ doctor.address }}</td>
+                                    <td>
+                                        <a href="{% url 'dashboard:admin-dashboard' %}?pages=update_user&id={{ user.id }}"
+                                           class="btn btn-sm btn-primary">Update</a>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-danger" onclick="dume(this)"
+                                                value="{{ doctor.id }}">Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% endif %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <script>
+                    function rm() {
+                        let ds = document.getElementsByClassName('our-custom-model')[0]
+                        ds.classList.add('d-none')
+                    }
+
+                    function dume(btn) {
+                        let ds = document.getElementsByClassName('our-custom-model')[0]
+                        let a_sure = document.getElementById('iamsure')
+
+                        a_sure.setAttribute('href', '/delete/' + btn.value + '/' + 0 +'/')
+
+                        ds.classList.toggle('d-none')
+                    }
+                </script>
+            </div>
+        </div>
+    {% elif page|slice:":4" == 'chat' %}
+        {% if page == 'chatting' %}
+            {% include 'chat/room.html' %}
+        {% else %}
+            {% include 'chat/index.html' %}
+        {% endif %}
     {% elif page == 'patients' %}
         <!-- Start Data table -->
-      <div class="row">
-        <div class="col-lg-12">
-
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">List of users.</h5>
-
-              <table class="table datatable">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Start Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Brandon Jacob</td>
-                    <td>Designer</td>
-                    <td>28</td>
-                    <td>2016-05-25</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Bridie Kessler</td>
-                    <td>Developer</td>
-                    <td>35</td>
-                    <td>2014-12-05</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Ashleigh Langosh</td>
-                    <td>Finance</td>
-                    <td>45</td>
-                    <td>2011-08-12</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">4</th>
-                    <td>Angus Grady</td>
-                    <td>HR</td>
-                    <td>34</td>
-                    <td>2012-06-11</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">5</th>
-                    <td>Raheem Lehner</td>
-                    <td>Dynamic Division Officer</td>
-                    <td>47</td>
-                    <td>2011-04-19</td>
-                  </tr>
-                </tbody>
-              </table>
-
-
+      <div class="our-custom-model card m-auto d-none">
+            <div class="modal-header">
+                <h5 class="modal-title font-monospace ">Are you sure you want to delete the selected user?</h5>
             </div>
-          </div></div>
-      </div>
+            <div class="modal-footer">
+                <a href="#" id="iamsure" class="btn btn-danger">Yes, I’m sure</a>
+                <a href="#" onclick="rm()" id="notsure" class="btn btn-secondary">No, take me back</a>
+            </div>
+        </div>
+      <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title pl-3">List of patients.</h5>
+                        <table class="table datatable">
+                            <thead>
+                            <tr>
+                                <th scope="col">id</th>
+                                <th scope="col">Full name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">date_of_birth</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Address</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for patient in patients %}
+
+                                <tr>
+                                    <th scope="row">{{ patient.id }}</th>
+                                    <td>{{ patient.first_name }} {{ patient.last_name }}</td>
+                                    <td>{{ patient.email }}</td>
+                                    <td>{{ patient.date_of_birth }}</td>
+                                    <td>{{ patient.phone }}</td>
+                                    <td>{{ patient.address }}</td>
+                                    <td>
+                                        <a href="{% url 'dashboard:admin-dashboard' %}?pages=update_user&id={{ user.id }}"
+                                           class="btn btn-sm btn-primary">Update</a>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-danger" onclick="dume(this)"
+                                                value="{{ patient.id }}">Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <script>
+                    function rm() {
+                        let ds = document.getElementsByClassName('our-custom-model')[0]
+                        ds.classList.add('d-none')
+                    }
+
+                    function dume(btn) {
+                        let ds = document.getElementsByClassName('our-custom-model')[0]
+                        let a_sure = document.getElementById('iamsure')
+
+                        a_sure.setAttribute('href', '/delete/' + btn.value + '/' + 1 +'/')
+
+                        ds.classList.toggle('d-none')
+                    }
+                </script>
+            </div>
+        </div>
+      <!-- End Data table -->
+    {% elif page == 'admins' %}
+        <!-- Start Data table -->
+      <div class="our-custom-model card m-auto d-none">
+            <div class="modal-header">
+                <h5 class="modal-title font-monospace ">Are you sure you want to delete the selected user?</h5>
+            </div>
+            <div class="modal-footer">
+                <a href="#" id="iamsure" class="btn btn-danger">Yes, I’m sure</a>
+                <a href="#" onclick="rm()" id="notsure" class="btn btn-secondary">No, take me back</a>
+            </div>
+        </div>
+      <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title pl-3">List of admins.</h5>
+                        <table class="table datatable">
+                            <thead>
+                            <tr>
+                                <th scope="col">id</th>
+                                <th scope="col">Full name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">date_of_birth</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Address</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for admin in admins %}
+
+                                <tr>
+                                    <th scope="row">{{ admin.id }}</th>
+                                    <td>{{ admin.first_name }} {{ admin.last_name }}</td>
+                                    <td>{{ admin.email }}</td>
+                                    <td>{{ admin.date_of_birth }}</td>
+                                    <td>{{ admin.phone }}</td>
+                                    <td>{{ admin.address }}</td>
+                                    <td>
+                                        <a href="{% url 'dashboard:admin-dashboard' %}?pages=update_user&id={{ user.id }}"
+                                           class="btn btn-sm btn-primary">Update</a>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-danger" onclick="dume(this)"
+                                                value="{{ admin.id }}">Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <script>
+                    function rm() {
+                        let ds = document.getElementsByClassName('our-custom-model')[0]
+                        ds.classList.add('d-none')
+                    }
+
+                    function dume(btn) {
+                        let ds = document.getElementsByClassName('our-custom-model')[0]
+                        let a_sure = document.getElementById('iamsure')
+
+                        a_sure.setAttribute('href', '/delete/' + btn.value + '/' + 1 +'/')
+
+                        ds.classList.toggle('d-none')
+                    }
+                </script>
+            </div>
+        </div>
       <!-- End Data table -->
     {% elif page == 'view_feedback' %}
         <!-- start of view feedback -->
       <div class="row">
         <div class="col-lg-9">
           <h5 class="card-title">Feedback</h5>
+          {% for feedback in feedbacks %}
           <div class="card">
             <div class="card-body pt-4">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-              consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-              proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              {{ feedback.body }}
             </div>
             <div class="card-footer">
-              <span style="float: right;margin-right: 20px;">By Esubalew on 2010-34-12</span>
+              <span style="float: right;margin-right: 20px;">By {{ feedback.name }} on {{ feedback.date }}</span>
             </div>
           </div>
+          {% endfor %}
         </div></div>
       <!-- end view feedback -->
     {% elif page == 'register_patient' %}
-        {% include 'telehakim/register_patient.html' %}
+        {% include 'telehakim/partials/patient_form.html' %}
+    {% elif page == 'register_admin' %}
+        {% include 'telehakim/partials/patient_form.html' %}
     {% elif page == 'register_doctor' %}
-        {% include 'telehakim/register_doctor.html' %}
+        {% include 'telehakim/partials/doctor_form.html' %}
     {% elif page == 'profile' %}
         <div class="row">
             <div class="col-xl-4">
                 <div class="card">
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                        <img src="{% static 'assets/img/profile-img.jpg' %}" alt="Profile" class="rounded-circle">
+                        <img src="{{ user.photo.url }}" alt="Profile" class="rounded-circle" width="200" height="200">
                         <h2>{{ user.first_name|title }} {{ user.last_name|title }}</h2>
                         <h3>{{user_role|title}}</h3>
                     </div>
@@ -420,66 +532,76 @@
         </div>
     {% else %}
       <!-- Start Data table -->
-       <div class="row">
-        <div class="col-lg-12">
-
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">List of users.</h5>
-
-              <table class="table datatable">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Start Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Brandon Jacob</td>
-                    <td>Designer</td>
-                    <td>28</td>
-                    <td>2016-05-25</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Bridie Kessler</td>
-                    <td>Developer</td>
-                    <td>35</td>
-                    <td>2014-12-05</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Ashleigh Langosh</td>
-                    <td>Finance</td>
-                    <td>45</td>
-                    <td>2011-08-12</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">4</th>
-                    <td>Angus Grady</td>
-                    <td>HR</td>
-                    <td>34</td>
-                    <td>2012-06-11</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">5</th>
-                    <td>Raheem Lehner</td>
-                    <td>Dynamic Division Officer</td>
-                    <td>47</td>
-                    <td>2011-04-19</td>
-                  </tr>
-                </tbody>
-              </table>
-
-
+       <div class="our-custom-model card m-auto d-none">
+            <div class="modal-header">
+                <h5 class="modal-title font-monospace ">Are you sure you want to delete the selected user?</h5>
             </div>
-          </div></div>
-      </div>
+            <div class="modal-footer">
+                <a href="#" id="iamsure" class="btn btn-danger">Yes, I’m sure</a>
+                <a href="#" onclick="rm()" id="notsure" class="btn btn-secondary">No, take me back</a>
+            </div>
+        </div>
+       <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title pl-3">List of doctors.</h5>
+                        <table class="table datatable">
+                            <thead>
+                            <tr>
+                                <th scope="col">id</th>
+                                <th scope="col">Full name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">specialization</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Address</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for doctor in doctors %}
+                                {% if doctor.is_verified %}
+                                   <tr>
+                                    <th scope="row">{{ doctor.id }}</th>
+                                    <td>{{ doctor.first_name }} {{ doctor.last_name }}</td>
+                                    <td>{{ doctor.email }}</td>
+                                    <td>{{ doctor.specialization }}</td>
+                                    <td>{{ doctor.phone }}</td>
+                                    <td>{{ doctor.address }}</td>
+                                    <td>
+                                        <a href="{% url 'dashboard:admin-dashboard' %}?pages=update_user&id={{ user.id }}"
+                                           class="btn btn-sm btn-primary">Update</a>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-danger" onclick="dume(this)"
+                                                value="{{ doctor.id }}">Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% endif %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <script>
+                    function rm() {
+                        let ds = document.getElementsByClassName('our-custom-model')[0]
+                        ds.classList.add('d-none')
+                    }
+
+                    function dume(btn) {
+                        let ds = document.getElementsByClassName('our-custom-model')[0]
+                        let a_sure = document.getElementById('iamsure')
+
+                        a_sure.setAttribute('href', '/delete/' + btn.value + '/' + 0 +'/')
+
+                        ds.classList.toggle('d-none')
+                    }
+                </script>
+            </div>
+        </div>
       <!-- End Data table -->
-      {% endif %}
+    {% endif %}
 {% endblock %}

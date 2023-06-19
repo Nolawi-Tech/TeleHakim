@@ -1,3 +1,7 @@
 from django.contrib import admin
+from dashboard.models import *
 
-# Register your models here.
+admin.site.register(Feedback)
+admin.site.register(Rate)
+admin.site.register(Prescription)
+admin.site.register(MedicalHistory)

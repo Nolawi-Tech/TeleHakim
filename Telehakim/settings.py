@@ -7,9 +7,7 @@ SECRET_KEY = 'django-insecure-5tzupl#d@sea(h7c@@=x$876qo*$0(3_u3unb@&%!$9a4dxb30
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
-
+ALLOWED_HOSTS = ['127.0.0.1', '.ngrok-free.app']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -22,9 +20,13 @@ INSTALLED_APPS = [
     'payment',
     'account',
     'dashboard',
+    'appointment',
+    'webrtc',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # new
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -54,14 +56,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Telehakim.wsgi.application'
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -77,16 +77,20 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+CORS_ALLOW_ALL_ORIGINS = True
+CSRF_TRUSTED_ORIGINS = [
+    'https://dcf3-196-189-182-118.ngrok-free.app'
+]
+CORS_ALLOWED_ORIGINS = [
+    'https://dcf3-196-189-182-118.ngrok-free.app'
+]
 
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
 
 USE_TZ = True
-
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
@@ -95,8 +99,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
