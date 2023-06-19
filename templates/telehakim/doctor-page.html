@@ -27,6 +27,12 @@ Doctor
                 <span>View Rate</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'dashboard:doctor-dashboard' %}?pages=remove_day">
+                <i class="bi bi-trash-fill"></i>
+                <span>Remove Work Dy</span>
+            </a>
+        </li>
     </ul>
 
 </aside><!-- End Sidebar-->
@@ -43,6 +49,8 @@ dashboard
     chatting
 {% elif page == "working_day" %}
     add_working_day
+{% elif page == "remove_day" %}
+    remove_working_day
 {% elif page == 'profile' %}
 profile
 {% elif page == 'view_rate' %}
@@ -91,23 +99,74 @@ view_rate
                 and then fill in the free time in the text box.
             </p>
             <p>
-                Use the suggested format: <span style="font-family:monospace; color:red;font-size:19px">Start-time:end-time:d|n.</span><br>
+                Use the suggested format: <span style="font-family:monospace; color:red;font-size:19px">Start-time - end-time:d|n.</span><br>
                 <span style="font-family:monospace; color:red;font-size:19px">Note:</span> don't use minute here and
                 both n and d are case-insensitive.
                 <br><br>
-                3:5:d -> from morning 3:00 to 5:00, d-> refers to day, n->for night <br>
-                10:12:d -> from 10:00 to 12:00, in afternoon <br>
-                7:8:N -> from 7:00 to 8:00, in Night <br>
+                3-5:d -> from morning 3:00 to 5:00, d-> refers to day, n->for night <br>
+                10-12:d -> from 10:00 to 12:00, in afternoon <br>
+                7-8:N -> from 7:00 to 8:00, in Night <br>
 
             </p>
             <p>
-                Please use commas to separate the different time slots, eg. 3:5:d,10:12:d,7:8:N
+                Please use commas to separate the different time slots, eg. 3-5:d,10-12:d,7-8:N
             </p>
 
         </div>
     </div>
 </div>
 <!-- End Working day -->
+{% elif page == 'remove_day' %}
+    <div class="row contact justify-content-center">
+    <div class="col-xl-8">
+        <p class="text-center card-title">Select and remove your work-day.</p>
+        <div class="card p-4">
+            <form class="row g-3" action="" method="get">
+                <input type="hidden" name="pages" value="remove_day">
+                <div class="col-md-4">
+                    <input type="date" name="date" class="form-control" placeholder="date">
+                </div>
+                <div class="col-md-2">
+                    <input type="submit" name="list_date" class="form-control btn btn-primary" value="Submit">
+                </div>
+            </form>
+            <hr>
+            <div class="row">
+                <div class="">
+                    <div class="row">
+                        {% for date in book_info.dates %}
+                        <div class="col col-xl-3 col-xl-4">
+                            <div class="card-title">{{ date }}</div>
+                            {% for schedule in book_info.schedules %}
+                            {% if schedule.date == date %}
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <a class="btn alert-danger sm"
+                                       title="Remove this date!"
+                                       href="{% url 'dashboard:delete-item' schedule.id 'working_day' %}">
+                                        {{ schedule.schedule }}
+                                    </a>
+                                </li>
+                            </ul>
+                            {% endif %}
+
+                            {% endfor %}
+                        </div>
+
+                        {% empty %}
+                        <div class="col">
+                            <div class="btn sm">
+                                No Schedule
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
 {% elif page == 'view_rate' %}
 <!-- start of view Rate -->
 <div class="row">

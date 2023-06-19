@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from account.models import *
 from dashboard.models import *
 from appointment.models import *
@@ -6,8 +6,84 @@ from django.contrib import messages
 from account.include import user_info, user_role as u_role
 from account.forms import PatientRegistrationForm, DoctorRegistrationForm
 
-
+from datetime import date as dt
 # Create your views here.
+
+
+def delete(request, pk, identity):
+    if identity == "patient":
+        try:
+            patient = Patient.objects.get(id=pk)
+            patient.delete()
+            messages.success(request, "Patient deleted successfully.")
+            return redirect('dashboard:admin-dashboard')
+        except:
+            messages.error(request, "Sorry, we can't delete patient.")
+            return redirect('dashboard:admin-dashboard')
+    elif identity == "doctor":
+        try:
+            doctor = Doctor.objects.get(id=pk)
+            doctor.delete()
+            messages.success(request, "Doctor deleted successfully.")
+            return redirect('dashboard:admin-dashboard')
+        except:
+            messages.error(request, "Sorry, we can't delete doctor.")
+            return redirect('dashboard:admin-dashboard')
+    elif identity == "admin":
+        try:
+            patient = Patient.objects.get(id=pk)
+            patient.is_admin = False
+            patient.save()
+            messages.success(request, "Admin removed successfully.")
+            return redirect('dashboard:admin-dashboard')
+        except:
+            messages.error(request, "Sorry, we can't remove admin.")
+            return redirect('dashboard:admin-dashboard')
+    elif identity == "feedback":
+        try:
+            feedback = Feedback.objects.get(id=pk)
+            feedback.delete()
+            messages.success(request, "Feedback deleted successfully.")
+            return redirect('dashboard:admin-dashboard')
+        except:
+            messages.error(request, "Sorry, we can't delete feedback.")
+            return redirect('dashboard:admin-dashboard')
+    elif identity == "appointment":
+        try:
+            appointment = Appointment.objects.get(id=pk)
+            appointment.delete()
+            messages.success(request, "Appointment deleted successfully.")
+            return redirect('dashboard:patient-dashboard')
+        except:
+            messages.error(request, "Sorry, we can't delete appointment.")
+            return redirect('dashboard:patient-dashboard')
+    elif identity == "prescription":
+        try:
+            prescription = Prescription.objects.get(id=pk)
+            prescription.delete()
+            messages.success(request, "Prescription deleted successfully.")
+            return redirect('dashboard:patient-dashboard')
+        except:
+            messages.error(request, "Sorry, we can't delete prescription.")
+            return redirect('dashboard:patient-dashboard')
+    elif identity == "medical_history":
+        try:
+            medical_history = MedicalHistory.objects.get(id=pk)
+            medical_history.delete()
+            messages.success(request, "Medical history deleted successfully.")
+            return redirect('dashboard:patient-dashboard')
+        except:
+            messages.error(request, "Sorry, we can't delete medical history.")
+            return redirect('dashboard:patient-dashboard')
+    elif identity == "working_day":
+        try:
+            working_day = WorkingDay.objects.get(id=pk)
+            working_day.delete()
+            messages.success(request, "Working day deleted successfully.")
+            return redirect(reverse('dashboard:doctor-dashboard') + "?pages=remove_day")
+        except:
+            messages.error(request, "Sorry, we can't delete working day.")
+            return redirect(reverse('dashboard:doctor-dashboard') + "?pages=remove_day")
 
 
 def admin_dashboard(request):
@@ -79,7 +155,7 @@ def patient_dashboard(request):
         date = request.GET.get('date')
         try:
             doctor = Doctor.objects.get(email=email)
-            list_schedule = WorkingDay.objects.filter(doctor=doctor).filter(is_booked=False)
+            list_schedule = WorkingDay.objects.filter(doctor=doctor, date__gte=dt.today()).filter(is_booked=False)
             if date != "":
                 list_schedule = list_schedule.filter(date=date)
 
@@ -113,9 +189,11 @@ def doctor_dashboard(request):
     user_role = u_role(request)
     rates = Rate.objects.all()
 
+    list_schedule = []
+    unique_dates = []
+
     if request.method == "POST":
         if request.POST.get('set_md_history') is not None:
-            # set to MedicalHistory model find patient with id, and doctor is current user
             id = request.POST.get('id')
             is_shown = request.POST.get('is_shown')
             md_history = request.POST.get('md_history')
@@ -142,6 +220,18 @@ def doctor_dashboard(request):
                 return redirect('dashboard:doctor-dashboard')
             except:
                 messages.error(request, "Sorry, we can't add your prescription.")
+    if request.GET.get('list_date'):
+        date = request.GET.get('date')
+        try:
+            list_schedule = WorkingDay.objects.filter(doctor=user).filter(is_booked=False)
+            if date != "":
+                list_schedule = list_schedule.filter(date=date)
+
+            for sch in list_schedule:
+                if not sch.date in unique_dates:
+                    unique_dates.append(sch.date)
+        except:
+            messages.error(request, "Sorry, we can't find any doctor or provide email.")
     context = {
         'page': page,
         'user': user,
@@ -150,6 +240,11 @@ def doctor_dashboard(request):
         'rate_info': {
             'rates': rates,
             'total_percent': ((sum(obj.rate for obj in rates)+0.01) / ((10 * len(rates))+0.01)) * 100,
+        },
+        'book_info': {
+            'dates': sorted(unique_dates)[:6],
+            'schedules': list_schedule,
+            'doc_email': user.email,
         },
         'doctor_form': DoctorRegistrationForm(),
     }

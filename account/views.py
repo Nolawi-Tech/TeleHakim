@@ -6,9 +6,9 @@ from django.contrib import messages
 from django.http import QueryDict
 from django.urls import reverse
 
-
 # Create your views here.
 qd = QueryDict("", mutable=True)
+
 
 def login(request):
     fg = 'admin'
@@ -156,7 +156,7 @@ def register_patient(request, _to):
                 return redirect('account:login')
 
             qd.update({'pages': f'{_to}s'})
-            return redirect(reverse('dashboard:admin-dashboard')+f'?{qd.urlencode()}')
+            return redirect(reverse('dashboard:admin-dashboard') + f'?{qd.urlencode()}')
         else:
             messages.error(request, "Not Valid Form, please fill form accordingly or may account exist.")
     if _to == 'index':

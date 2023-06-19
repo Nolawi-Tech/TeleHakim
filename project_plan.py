@@ -1,5 +1,6 @@
 from typing import List
 
+
 # passed date must be filtered and not show to user.
 # Some medical History may or may not be seen by User.
 # doctor must be able to remove his working day.
@@ -17,7 +18,7 @@ class Admin:
     dashboard: List = doctors
 
     add_some_info_about = False
-    info:List = ['approve', 'update many', 'experience', ]
+    info: List = ['approve', 'update many', 'experience', ]
 
 
 class Doctor:
@@ -48,3 +49,9 @@ class General:
 
     video_calling = False
 
+
+def return_date(dt):
+    print(dt)
+
+
+return_date("2AM")
