@@ -257,13 +257,14 @@
         }
         sensoriumPainYesButton.addEventListener("click", function(event) {
             event.preventDefault();
-            const vomitingSection = document.querySelector('#one');
-            noFeverSection.style.display = "none";
-            showWaitingText("Please wait... checking your disease...");
+            const heading = document.querySelector("#one");
+            heading.style.display = "none";
+
+            showWaitingText("Please wait... Checking  vomiting...");
             setTimeout(function() {
                 hideWaitingText();
-                const yesStomachSection = document.querySelector("#one_one");
-                yesStomachSection.style.display = "block";
+                const vomiting = document.querySelector("#one_one");
+                vomiting.style.display = "block";
             }, 2000);
         });
         weaknessPainYesButton.addEventListener("click", function(event) {
@@ -271,7 +272,7 @@
             showWaitingText("Please wait... checking your disease...");
             setTimeout(function() {
                 hideWaitingText();
-                window.href.location = "{% url 'interview2' %}";
+                window.location.href = "{% url 'interview2' %}";
             }, 2000);
         });
 
