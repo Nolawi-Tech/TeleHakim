@@ -20,7 +20,7 @@
 
 </head>
 
-<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+<div id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
     <!--banner-->
     <section id="banner" class="banner">
         <div class="bg-color">
@@ -54,55 +54,98 @@
             </nav>
         </div>
     </section>
+
     <div class="container col-6 main my-5 ">
-        <div class="col-lg-12 ">
-            <div class="card bg-success color-white">
-                <h3 class="p-2 text-center text-white">From the symptoms below, please selet more that's you the most</h3>
-            </div>
+
+        <div id="waiting-text" style="display: none;">
+            <p class="h2 p-5 text-center"></p>
         </div>
-        <div class="row  d-flex align-items-center ">
-            <div class="col-12 col-lg-6 align-items-center">
-                <div class="image-container">
-                    <input type="checkbox" id="checkbox1" onclick="selectImage('page1.html')">
-                    <label for="checkbox1">
+        <div id="heading">
+            <div class="col-lg-12 ">
+                <div class="card bg-success color-white">
+                    <h3 class="p-2 text-center text-white">From the symptoms below, please selet more that's you the most</h3>
+                </div>
+            </div>
+            <div class="row  d-flex align-items-center ">
+                <div class="col-12 col-lg-6 align-items-center">
+                    <div class="image-container">
+                        <input type="checkbox" id="checkbox1" onclick="selectImage('page1.html')">
+                        <label for="checkbox1">
                         <img class="img img-fluid color-change-image" src="{% static 'asset/img/recommend/symptoms/headache/abdominalpain.png' %}" alt="" onclick="changeImageColor(this)">
                         <p class="text-center">abdominalpain</p>
                     </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-12 col-lg-6 align-items-center">
-                <div class="image-container">
-                    <input type="checkbox" id="checkbox2" onclick="selectImage('page2.html')">
-                    <label for="checkbox2">
+                <div class="col-12 col-lg-6 align-items-center">
+                    <div class="image-container">
+                        <input type="checkbox" id="checkbox2" onclick="selectImage('page2.html')">
+                        <label for="checkbox2">
                         <img class="img img-fluid color-change-image" src="{% static 'asset/img/recommend/symptoms/headache men.png' %}" alt="" onclick="changeImageColor(this)">
                         <p class="text-center">bellypain</p>
                     </label>
+                    </div>
                 </div>
+
+
             </div>
-
-
-        </div>
-        <div class="row  d-flex align-items-center ">
-            <div class="col-12 col-lg-6 align-items-center">
-                <div class="image-container">
-                    <input type="checkbox" id="checkbox3" onclick="selectImage('page3.html')">
-                    <label for="checkbox3">
+            <div class="row  d-flex align-items-center ">
+                <div class="col-12 col-lg-6 align-items-center">
+                    <div class="image-container">
+                        <input type="checkbox" id="checkbox3" onclick="selectImage('page3.html')">
+                        <label for="checkbox3">
                         <img class="img img-fluid color-change-image" src="{% static 'asset/img/recommend/symptoms/headache/constipation.png' %}" alt=""  onclick="changeImageColor(this)">
                         <p class="text-center">constipation</p>
                     </label>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12 col-lg-6 align-items-center">
-                <div class="image-container">
-                    <input type="checkbox" id="checkbox5" onclick="selectImage('page5.html')">
-                    <label for="checkbox5">
+                <div class="col-12 col-lg-6 align-items-center">
+                    <div class="image-container">
+                        <input type="checkbox" id="checkbox4" onclick="selectImage('page5.html')">
+                        <label for="checkbox4">
                         <img class="img img-fluid color-change-image" src="{% static 'asset/img/recommend/symptoms/headache/redspot on body.png' %}" alt=""  onclick="changeImageColor(this)">
                         <p class="text-center">red spot on body</p>
                     </label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div id="one" style="display: none;">
+            <div class="row d-flex justify-content-between">
+                <div class="col">
+                    <p class="h2 p-5 text-center">Is your redspot on body accompanied one of these pains?</p>
                 </div>
             </div>
+            <div class="row d-flex justify-content-between">
+                <div class="col-4">
+                    <div>
+                        <img class="img img-fluid" src="{% static 'asset/img/recommend/symptoms/headache/backpain.png' %}" alt="">
+                        <p>back pain</p>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div>
+                        <img class="img img-fluid" src="{% static 'asset/img/recommend/symptoms/headache/jointpain.png' %}" alt=""> p
+                        <p>joint pain</p>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div>
+                        <img class="img img-fluid" src="{% static 'asset/img/recommend/symptoms/headache/painbehindeye.png' %}" alt="">
+                        <p>pain behind the eye</p>
+                    </div>
+                </div>
 
+            </div>
+            <div class="row d-flex justify-content-between">
+                <div class="col-auto">
+                    <button class="btn btn-success" type="submit" name="symptom" value="sensorium_yes" id="sensorium_yes">Yes</button>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-success" type="submit" name="symptom" value="sensorium_no" id="sensorium_no">No</button>
+                </div>
+            </div>
         </div>
     </div>
     <br>
@@ -135,12 +178,7 @@
         var page4 = {
             clicked: false
         };
-        var page5 = {
-            clicked: false
-        };
-        var page6 = {
-            clicked: false
-        };
+
 
 
         function selectImage(page) {
@@ -148,10 +186,9 @@
             var page2 = document.getElementById('checkbox2').checked;
             var page3 = document.getElementById('checkbox3').checked;
             var page4 = document.getElementById('checkbox4').checked;
-            var page5 = document.getElementById('checkbox5').checked;
-            var page6 = document.getElementById('checkbox6').checked;
 
-            if (page1 || page2 || page3 || page4 || page5 || page6) {
+
+            if (page1 || page2 || page3 || page4) {
                 document.getElementById('nextButton').disabled = false;
             } else {
                 document.getElementById('nextButton').disabled = true;
@@ -167,7 +204,7 @@
 
         var previousButton = document.getElementById('previousButton');
         previousButton.addEventListener('click', function() {
-            window.location.href = "{% url 'interview3' %}";
+            window.location.href = "{% url 'headache_interview1' %}";
         });
 
         var nextButton = document.getElementById('nextButton');
@@ -176,21 +213,23 @@
             var page2 = document.getElementById('checkbox2').checked;
             var page3 = document.getElementById('checkbox3').checked;
             var page4 = document.getElementById('checkbox4').checked;
-            var page5 = document.getElementById('checkbox5').checked;
-            var page6 = document.getElementById('checkbox6').checked;
 
-            if (page1 && page2 && page3 && page4) {
-                window.location.href = "{% url 'cough_interview2' %}";
-            } else if (page2) {
-                window.location.href = "{% url 'headache_interview1' %}";
-            } else if (page3) {
-                window.location.href = "{% url 'vom_interview' %}";
+
+            if ((page1 || page2 || page3) && !page4) {
+                var url = "{% url 'headache_result' %}";
+                var key = "typhoyd";
+                window.location.href = url + "?key=" + key;
             } else if (page4) {
-                window.location.href = "{% url 'interview4' %}";
-            } else if (page5) {
-                window.location.href = "{% url 'interview1' %}";
-            } else if (page6) {
-                window.location.href = "{% url 'interview2' %}";
+                const heading = document.querySelector("#heading");
+                heading.style.display = "none";
+
+                showWaitingText("Please wait... Checking vomiting...");
+                setTimeout(function() {
+                    hideWaitingText();
+                    const vomiting = document.querySelector("#one");
+                    vomiting.style.display = "block";
+                }, 2000);
+
             } else {
                 message.innerText = "Please select a symptom.";
             }
@@ -208,4 +247,4 @@
             }
         }
     </script>
-</body> {% endblock maincontent%}
+    </body> {% endblock maincontent%}
