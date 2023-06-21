@@ -54,26 +54,25 @@
             </nav>
         </div>
     </section>
-    <div class="container col-6 main my-5 ">
+    <div class="container col-6 main my-5">
         <div id="waiting-text" style="display: none;">
             <p class="h2 p-5 text-center"></p>
         </div>
         <div id="heading">
-            <div class="col-lg-12 ">
+            <div class="col-lg-12">
                 <div class="card bg-success color-white">
-                    <h3 class="p-2 text-center text-white">From the symptoms below, please selet more that's you the most</h3>
+                    <h3 class="p-2 text-center text-white">From the symptoms below, please select the ones that apply to you the most</h3>
                 </div>
             </div>
 
-
-            <div class="row  d-flex align-items-center ">
+            <div class="row d-flex align-items-center">
                 <div class="col-12 col-lg-4 align-items-center">
                     <div class="image-container">
                         <input type="checkbox" id="checkbox1" onclick="selectImage()">
                         <label for="checkbox1">
-                            <img class="img img-fluid color-change-image" src="{% static 'asset/img/recommend/symptoms/headache/nausea.png' %}" alt="" onclick="changeImageColor(this)">
-                            <p class="text-center">nausea</p>
-                        </label>
+                        <img class="img img-fluid color-change-image" src="{% static 'asset/img/recommend/symptoms/headache/nausea.png' %}" alt="" onclick="changeImageColor(this)">
+                        <p class="text-center">nausea</p>
+                    </label>
                     </div>
                 </div>
 
@@ -81,9 +80,9 @@
                     <div class="image-container">
                         <input type="checkbox" id="checkbox2" onclick="selectImage()">
                         <label for="checkbox2">
-                            <img class="img img-fluid color-change-image" src="{% static 'asset/img/recommend/symptoms/headache men.png' %}" alt="" onclick="changeImageColor(this)">
-                            <p class="text-center">fever</p>
-                        </label>
+                        <img class="img img-fluid color-change-image" src="{% static 'asset/img/recommend/symptoms/headache men.png' %}" alt="" onclick="changeImageColor(this)">
+                        <p class="text-center">fever</p>
+                    </label>
                     </div>
                 </div>
 
@@ -91,29 +90,29 @@
                     <div class="image-container">
                         <input type="checkbox" id="checkbox3" onclick="selectImage()">
                         <label for="checkbox3">
-                            <img class="img img-fluid color-change-image" src="{% static 'asset/img/recommend/symptoms/headache/h_vomiting.png' %}" alt=""  onclick="changeImageColor(this)">
-                            <p class="text-center">vomiting</p>
-                        </label>
+                        <img class="img img-fluid color-change-image" src="{% static 'asset/img/recommend/symptoms/headache/h_vomiting.png' %}" alt="" onclick="changeImageColor(this)">
+                        <p class="text-center">vomiting</p>
+                    </label>
                     </div>
                 </div>
             </div>
-            <div class="row  d-flex align-items-center ">
+            <div class="row d-flex align-items-center">
                 <div class="col-12 col-lg-4 align-items-center">
                     <div class="image-container">
                         <input type="checkbox" id="checkbox4" onclick="selectImage()">
                         <label for="checkbox4">
-                            <img class="img img-fluid color-change-image" src="{% static 'asset/img/recommend/symptoms/fatigue.png' %}" alt=""  onclick="changeImageColor(this)">
-                            <p class="text-center">fatigue/tired</p>
-                        </label>
+                        <img class="img img-fluid color-change-image" src="{% static 'asset/img/recommend/symptoms/fatigue.png' %}" alt="" onclick="changeImageColor(this)">
+                        <p class="text-center">fatigue/tired</p>
+                    </label>
                     </div>
                 </div>
                 <div class="col-12 col-lg-4 align-items-center">
                     <div class="image-container">
                         <input type="checkbox" id="checkbox5" onclick="selectImage()">
                         <label for="checkbox5">
-                            <img class="img img-fluid color-change-image" src="{% static 'asset/img/recommend/symptoms/headache/indigestion.png' %}" alt=""  onclick="changeImageColor(this)">
-                            <p class= "text-center" >Indigestion</p>
-                        </label>
+                        <img class="img img-fluid color-change-image" src="{% static 'asset/img/recommend/symptoms/headache/indigestion.png' %}" alt="" onclick="changeImageColor(this)">
+                        <p class="text-center">Indigestion</p>
+                    </label>
                     </div>
                 </div>
 
@@ -121,7 +120,7 @@
                     <div class="image-container">
                         <input type="checkbox" id="checkbox6" onclick="selectImage()">
                         <label for="checkbox6">
-                        <img class="img img-fluid " src="{% static 'asset/img/recommend/symptoms/headache/chestpain.png' %}" alt=""  onclick="changeImageColor(this)">
+                        <img class="img img-fluid" src="{% static 'asset/img/recommend/symptoms/headache/chestpain.png' %}" alt="" onclick="changeImageColor(this)">
                         <p class="text-center">chest pain</p>
                     </label>
                     </div>
@@ -129,17 +128,17 @@
             </div>
             <br>
 
-            <div class="container-fluid ">
+            <div class="container-fluid">
                 <hr>
             </div>
 
-            <div class="row  d-flex justify-content-between pr-5">
+            <div class="row d-flex justify-content-between pr-5">
                 <div class="col-auto">
                     <button id="previousButton" class="btn-1 btn-primary">Prev</button>
                 </div>
 
                 <div class="col-auto">
-                    <button id="nextButton" class="btn-1 btn-primary ">Next</button>
+                    <button id="nextButton" class="btn-1 btn-primary">Next</button>
                 </div>
             </div>
         </div>
@@ -147,16 +146,13 @@
         <div id="one" style="display: none;">
             <div class="row d-flex justify-content-between">
                 <div class="col-8">
-                    <p class="h2 p-5 text-center">Is your vomiting accompanied by altered sensorium</p>
-
+                    <p class="h2 p-5 text-center">Is your vomiting accompanied by altered sensorium?</p>
                 </div>
                 <div class="col-4">
                     <div>
                         <img class="img img-fluid" src="{% static 'asset/img/recommend/symptoms/headache/altered sensorium.png' %}" alt="">
                     </div>
                 </div>
-
-
             </div>
             <div class="row d-flex justify-content-between">
                 <div class="col-auto">
@@ -170,16 +166,13 @@
         <div id="one_one" style="display: none;">
             <div class="row d-flex justify-content-between">
                 <div class="col-8">
-                    <p class="h2 p-5 text-center">Is there a weakness or deficiency on one side of the body</p>
-
+                    <p class="h2 p-5 text-center">Is there weakness or deficiency on one side of the body?</p>
                 </div>
                 <div class="col-4">
                     <div>
                         <img class="img img-fluid" src="{% static 'asset/img/recommend/symptoms/headache/weakness of body side.png' %}" alt="">
                     </div>
                 </div>
-
-
             </div>
             <div class="row d-flex justify-content-between">
                 <div class="col-auto">
@@ -193,8 +186,6 @@
 
     </div>
 
-
-
     <script>
         var page1 = document.getElementById('checkbox1');
         var page2 = document.getElementById('checkbox2');
@@ -206,17 +197,17 @@
         const sensoriumPainYesButton = document.querySelector("#sensorium_yes");
         const weaknessPainYesButton = document.querySelector("#weakness_yes");
 
+        function showWaitingText(message) {
+            const waitingTextMessage = document.querySelector("#waiting-text p");
+            waitingTextMessage.textContent = message;
+            waitingText.style.display = "block";
+        }
+
+        function hideWaitingText() {
+            waitingText.style.display = "none";
+        }
+
         function selectImage(page) {
-            function showWaitingText(message) {
-                const waitingTextMessage = document.querySelector("#waiting-text p");
-                waitingTextMessage.textContent = message;
-                waitingText.style.display = "block";
-            }
-
-            function hideWaitingText() {
-                waitingText.style.display = "none";
-            }
-
 
 
 
@@ -235,13 +226,12 @@
                     const heading = document.querySelector("#heading");
                     heading.style.display = "none";
 
-                    showWaitingText("Please wait... Checking  vomiting...");
+                    showWaitingText("Please wait... Checking vomiting...");
                     setTimeout(function() {
                         hideWaitingText();
                         const vomiting = document.querySelector("#one");
                         vomiting.style.display = "block";
                     }, 2000);
-
                 } else if (page4.checked) {
                     window.location.href = "{% url 'interview4' %}";
                 } else if (page5.checked) {
@@ -252,15 +242,14 @@
                     var message = document.getElementById('message');
                     message.innerText = "Please select a symptom.";
                 }
-
             });
         }
         sensoriumPainYesButton.addEventListener("click", function(event) {
             event.preventDefault();
-            const heading = document.querySelector("#one");
-            heading.style.display = "none";
+            const heading1 = document.querySelector("#one");
+            heading1.style.display = "none";
 
-            showWaitingText("Please wait... Checking  vomiting...");
+            showWaitingText("Please wait... Checking vomiting...");
             setTimeout(function() {
                 hideWaitingText();
                 const vomiting = document.querySelector("#one_one");
@@ -268,12 +257,10 @@
             }, 2000);
         });
         weaknessPainYesButton.addEventListener("click", function(event) {
-            event.preventDefault();
-            showWaitingText("Please wait... checking your disease...");
-            setTimeout(function() {
-                hideWaitingText();
-                window.location.href = "{% url 'interview2' %}";
-            }, 2000);
+            var url = "{% url 'headache_result' %}";
+            var key = 4;
+            window.location.href = url + "?key=" + key;
+
         });
 
         function changeImageColor(checkboxId) {
@@ -287,4 +274,4 @@
             }
         }
     </script>
-</body> {% endblock maincontent%}
+    {% endblock maincontent %}
