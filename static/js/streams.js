@@ -4,6 +4,7 @@ const CHANNEL_NAME = sessionStorage.getItem("room")
 const TOKEN = sessionStorage.getItem("token")
 let UID = sessionStorage.getItem("uid");
 let username = sessionStorage.getItem("name");
+let app_id = sessionStorage.getItem("app_id");
 
 const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" })
 
@@ -26,6 +27,8 @@ let joinAndDisplayLS = async () => {
     localTracks = await AgoraRTC.createMicrophoneAndCameraTracks()
     
     let member = await createMember()
+    let s = await changeStatus('in')
+    console.log(s)
 
     let player = `<div class="video-container" id="user-container-${UID}">
         <div class="video-player" id="user-${UID}"></div>
@@ -36,6 +39,7 @@ let joinAndDisplayLS = async () => {
     localTracks[1].play(`user-${UID}`)
 
     await client.publish([localTracks[0], localTracks[1]])
+
 }
 
 let handledUserJoined = async (user, mediaType) =>{
@@ -79,6 +83,7 @@ let leaveAndRemoveLS = async () => {
     await client.leave()
     //This is somewhat of an issue because if user leaves without actaull pressing leave button, it will not trigger
     deleteMember()
+    let s = await changeStatus('out')
     window.open('/chat/', '_self')
 } 
 
@@ -125,14 +130,16 @@ let deleteMember = async () => {
      let data = await response.json()
  }
 let getMember = async (user) => {
-    const hostname = window.location.hostname;
-    const protocol = window.location.protocol;
     let response = await fetch('/chat/get_member/?uid=' + user.uid + '&room_name=' + CHANNEL_NAME)
-
     let data = await response.json()
     return data
 }
-    
+
+let changeStatus = async (option) => {
+    let response = await fetch('/appointment/change_status/'+app_id + '/'+option)
+    let data = await response.json()
+    return data
+}
 
 joinAndDisplayLS()
 

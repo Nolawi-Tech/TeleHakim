@@ -152,7 +152,7 @@
                                     <td>{{ doctor.address }}</td>
                                     <td>
                                         <a href="{% url 'dashboard:admin-dashboard' %}?pages=update_user&id={{ user.id }}"
-                                           class="btn btn-sm btn-primary">Update</a>
+                                           class="btn btn-sm btn-info">Update</a>
                                     </td>
                                     <td>
                                         <button class="btn btn-sm btn-danger" onclick="dume(this)"
@@ -196,8 +196,8 @@
                 <h5 class="modal-title font-monospace ">Are you sure you want to delete the selected user?</h5>
             </div>
             <div class="modal-footer">
-                <a href="#" id="iamsure" class="btn btn-danger">Yes, I’m sure</a>
-                <a href="#" onclick="rm()" id="notsure" class="btn btn-secondary">No, take me back</a>
+                <a href="#" id="iamsure3" class="btn btn-danger">Yes, I’m sure</a>
+                <a href="#" onclick="rm()" id="notsure3" class="btn btn-secondary">No, take me back</a>
             </div>
         </div>
       <div class="row">
@@ -229,10 +229,6 @@
                                     <td>{{ patient.phone }}</td>
                                     <td>{{ patient.address }}</td>
                                     <td>
-                                        <a href="{% url 'dashboard:admin-dashboard' %}?pages=update_user&id={{ user.id }}"
-                                           class="btn btn-sm btn-primary">Update</a>
-                                    </td>
-                                    <td>
                                         <button class="btn btn-sm btn-danger" onclick="dume(this)"
                                                 value="{{ patient.id }}">Delete
                                         </button>
@@ -251,9 +247,9 @@
 
                     function dume(btn) {
                         let ds = document.getElementsByClassName('our-custom-model')[0]
-                        let a_sure = document.getElementById('iamsure')
+                        let a_sure = document.getElementById('iamsure3')
 
-                        a_sure.setAttribute('href', '/delete/' + btn.value + '/' + 1 +'/')
+                        a_sure.setAttribute('href', '/dashboard/delete/' + btn.value + '/patient/?pages=patients')
 
                         ds.classList.toggle('d-none')
                     }
@@ -268,8 +264,8 @@
                 <h5 class="modal-title font-monospace ">Are you sure you want to delete the selected user?</h5>
             </div>
             <div class="modal-footer">
-                <a href="#" id="iamsure" class="btn btn-danger">Yes, I’m sure</a>
-                <a href="#" onclick="rm()" id="notsure" class="btn btn-secondary">No, take me back</a>
+                <a href="#" id="iamsure2" class="btn btn-danger">Yes, I’m sure</a>
+                <a href="#" onclick="rm()" id="notsure2" class="btn btn-secondary">No, take me back</a>
             </div>
         </div>
       <div class="row">
@@ -300,10 +296,7 @@
                                     <td>{{ admin.date_of_birth }}</td>
                                     <td>{{ admin.phone }}</td>
                                     <td>{{ admin.address }}</td>
-                                    <td>
-                                        <a href="{% url 'dashboard:admin-dashboard' %}?pages=update_user&id={{ user.id }}"
-                                           class="btn btn-sm btn-primary">Update</a>
-                                    </td>
+
                                     <td>
                                         <button class="btn btn-sm btn-danger" onclick="dume(this)"
                                                 value="{{ admin.id }}">Delete
@@ -323,10 +316,8 @@
 
                     function dume(btn) {
                         let ds = document.getElementsByClassName('our-custom-model')[0]
-                        let a_sure = document.getElementById('iamsure')
-
-                        a_sure.setAttribute('href', '/delete/' + btn.value + '/' + 1 +'/')
-
+                        let a_sure = document.getElementById('iamsure2')
+                        a_sure.setAttribute('href', '/dashboard/delete/' + btn.value + '/admin/?pages=admins')
                         ds.classList.toggle('d-none')
                     }
                 </script>
@@ -537,8 +528,8 @@
                 <h5 class="modal-title font-monospace ">Are you sure you want to delete the selected user?</h5>
             </div>
             <div class="modal-footer">
-                <a href="#" id="iamsure" class="btn btn-danger">Yes, I’m sure</a>
-                <a href="#" onclick="rm()" id="notsure" class="btn btn-secondary">No, take me back</a>
+                <a href="#" id="iamsure4" class="btn btn-danger">Yes, I’m sure</a>
+                <a href="#" onclick="rm()" id="notsure4" class="btn btn-secondary">No, take me back</a>
             </div>
         </div>
        <div class="row">
@@ -570,8 +561,8 @@
                                     <td>{{ doctor.phone }}</td>
                                     <td>{{ doctor.address }}</td>
                                     <td>
-                                        <a href="{% url 'dashboard:admin-dashboard' %}?pages=update_user&id={{ user.id }}"
-                                           class="btn btn-sm btn-primary">Update</a>
+                                        <a href="{% url 'dashboard:deactivate' doctor.id %}"
+                                           class="btn btn-sm btn-info">Deactivate</a>
                                     </td>
                                     <td>
                                         <button class="btn btn-sm btn-danger" onclick="dume(this)"
@@ -593,9 +584,9 @@
 
                     function dume(btn) {
                         let ds = document.getElementsByClassName('our-custom-model')[0]
-                        let a_sure = document.getElementById('iamsure')
+                        let a_sure = document.getElementById('iamsure4')
 
-                        a_sure.setAttribute('href', '/delete/' + btn.value + '/' + 0 +'/')
+                        a_sure.setAttribute('href', '/dashboard/delete/' + btn.value + '/doctor')
 
                         ds.classList.toggle('d-none')
                     }

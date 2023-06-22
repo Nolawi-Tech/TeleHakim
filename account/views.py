@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.http import QueryDict
 from django.urls import reverse
 
-# Create your views here.
+
 qd = QueryDict("", mutable=True)
 
 
@@ -118,7 +118,7 @@ def forgot_password(request):
     return redirect(reverse('account:login') + f'?{qd.urlencode()}')
 
 
-def update_password_forgot(request, pk):
+def update_password_forgot(request, pk, role):
     qd = QueryDict("", mutable=True)
     if request.method == "POST":
         np = request.POST.get('new_password')
@@ -188,10 +188,3 @@ def register_doctor(request, _from):
 def delete_user(request, pk, role):
     print('notifies', pk, role)
     return redirect('dashboard:admin-dashboard')
-    # try:
-    #     us = User.objects.get(id=pk)
-    #     us.delete()
-    #     messages.success(request, "User successfully deleted!")
-    # except:
-    #     messages.error(request, "User doesn't exist!")
-    # return redirect(f'post:{user_status(request)}-dashboard')

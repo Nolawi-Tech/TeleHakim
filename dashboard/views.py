@@ -3,42 +3,46 @@ from account.models import *
 from dashboard.models import *
 from appointment.models import *
 from django.contrib import messages
-from account.include import user_info, user_role as u_role
+from account.include import user_info, user_role as u_role, automate_email, send_email
 from account.forms import PatientRegistrationForm, DoctorRegistrationForm
 
 from datetime import date as dt
+
+
 # Create your views here.
 
 
 def delete(request, pk, identity):
+    page = request.GET.get('pages', '')
+
     if identity == "patient":
         try:
+            print(page)
             patient = Patient.objects.get(id=pk)
             patient.delete()
             messages.success(request, "Patient deleted successfully.")
-            return redirect('dashboard:admin-dashboard')
+            return redirect(reverse('dashboard:admin-dashboard') + "?pages=" + page)
         except:
             messages.error(request, "Sorry, we can't delete patient.")
-            return redirect('dashboard:admin-dashboard')
+            return redirect(reverse('dashboard:admin-dashboard') + "?pages=" + page)
     elif identity == "doctor":
         try:
             doctor = Doctor.objects.get(id=pk)
             doctor.delete()
             messages.success(request, "Doctor deleted successfully.")
-            return redirect('dashboard:admin-dashboard')
+            return redirect(reverse('dashboard:admin-dashboard') + "?pages=" + page)
         except:
             messages.error(request, "Sorry, we can't delete doctor.")
-            return redirect('dashboard:admin-dashboard')
+            return redirect(reverse('dashboard:admin-dashboard') + "?pages=" + page)
     elif identity == "admin":
         try:
             patient = Patient.objects.get(id=pk)
-            patient.is_admin = False
             patient.save()
             messages.success(request, "Admin removed successfully.")
-            return redirect('dashboard:admin-dashboard')
+            return redirect(reverse('dashboard:admin-dashboard') + "?pages=" + page)
         except:
             messages.error(request, "Sorry, we can't remove admin.")
-            return redirect('dashboard:admin-dashboard')
+            return redirect(reverse('dashboard:admin-dashboard') + "?pages=" + page)
     elif identity == "feedback":
         try:
             feedback = Feedback.objects.get(id=pk)
@@ -86,6 +90,19 @@ def delete(request, pk, identity):
             return redirect(reverse('dashboard:doctor-dashboard') + "?pages=remove_day")
 
 
+def deactivate(request, id):
+    page = request.GET.get('pages', '')
+    try:
+        dr = Doctor.objects.get(id=id)
+        dr.is_verified = False
+        dr.save()
+        messages.success(request, "Doctor deactivated successfully.")
+        return redirect(reverse('dashboard:admin-dashboard') + "?pages=" + page)
+    except:
+        messages.error(request, "Sorry, we can't deactivate Doctor.")
+        return redirect(reverse('dashboard:admin-dashboard') + "?pages=" + page)
+
+
 def admin_dashboard(request):
     page = request.GET.get('pages')
     user = user_info(request)
@@ -103,6 +120,7 @@ def admin_dashboard(request):
         'patient_form': PatientRegistrationForm(),
         'doctor_form': DoctorRegistrationForm(),
     }
+    automate_email(request)
     return render(request, 'telehakim/admin-page.html', context)
 
 
@@ -180,14 +198,16 @@ def patient_dashboard(request):
         },
         'patient_form': PatientRegistrationForm(),
     }
+    automate_email(request)
     return render(request, 'telehakim/patient-page.html', context)
 
 
 def doctor_dashboard(request):
     page = request.GET.get('pages')
+    app_id = request.GET.get('app_id')
     user = user_info(request)
     user_role = u_role(request)
-    rates = Rate.objects.all()
+    rates = Rate.objects.filter(doctor=user)
 
     list_schedule = []
     unique_dates = []
@@ -232,20 +252,27 @@ def doctor_dashboard(request):
                     unique_dates.append(sch.date)
         except:
             messages.error(request, "Sorry, we can't find any doctor or provide email.")
+
     context = {
         'page': page,
         'user': user,
         'user_role': user_role,
+        'app_id': app_id,
         'histories': Appointment.objects.filter(doctor=user).order_by('status'),
         'rate_info': {
             'rates': rates,
-            'total_percent': ((sum(obj.rate for obj in rates)+0.01) / ((10 * len(rates))+0.01)) * 100,
+            'total_percent': ((sum(obj.rate for obj in rates) + 0.01) / ((10 * len(rates)) + 0.01)) * 100,
         },
         'book_info': {
             'dates': sorted(unique_dates)[:6],
             'schedules': list_schedule,
             'doc_email': user.email,
         },
+        'notifications': [
+            a for a in Appointment.objects.filter(doctor=user) if
+            (a.left_time.total_seconds() > 0) and (a.left_time.total_seconds() <= 1800)
+        ],
         'doctor_form': DoctorRegistrationForm(),
     }
+    automate_email(request)
     return render(request, 'telehakim/doctor-page.html', context)

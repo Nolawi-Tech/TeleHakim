@@ -46,11 +46,11 @@ doctor
 {% if page == None %}
 dashboard
 {% elif page|slice:":4" == 'chat' %}
-    chatting
+chatting
 {% elif page == "working_day" %}
-    add_working_day
+add_working_day
 {% elif page == "remove_day" %}
-    remove_working_day
+remove_working_day
 {% elif page == 'profile' %}
 profile
 {% elif page == 'view_rate' %}
@@ -117,7 +117,7 @@ view_rate
 </div>
 <!-- End Working day -->
 {% elif page == 'remove_day' %}
-    <div class="row contact justify-content-center">
+<div class="row contact justify-content-center">
     <div class="col-xl-8">
         <p class="text-center card-title">Select and remove your work-day.</p>
         <div class="card p-4">
@@ -174,7 +174,9 @@ view_rate
         <h5 class="card-title">List of Rate</h5>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Total: {{ rate_info.rates|length }} rate{{ rate_info.rates|pluralize }} | {{ rate_info.total_percent|floatformat:2 }}% success </h5>
+                <h5 class="card-title">
+                    Total: {{rate_info.rates|length}} rate{{rate_info.rates|pluralize}}
+                    | {{rate_info.total_percent|floatformat:2 }}% success </h5>
             </div>
         </div>
 
@@ -195,11 +197,11 @@ view_rate
 </div>
 <!-- end view Rate -->
 {% elif page|slice:":4" == 'chat' %}
-    {% if page == 'chatting' %}
-        {% include 'chat/room.html' %}
-    {% else %}
-        {% include 'chat/index.html' %}
-    {% endif %}
+{% if page == 'chatting' %}
+{% include 'chat/room.html' %}
+{% else %}
+{% include 'chat/index.html' %}
+{% endif %}
 {% elif page == 'profile' %}
 <div class="row">
     <div class="col-xl-4">
@@ -334,6 +336,8 @@ view_rate
 
 
 
+
+
                     </script>
                     <div class="tab-pane fade pt-3" id="profile-change-password">
                         <form method="post" action=" url 'account:update_password' user.id %}">
@@ -379,6 +383,7 @@ view_rate
     </div>
 </div>
 {% else %}
+{% load mathfilters %}
 <!-- Start Data table -->
 <!-- Prescription modal -->
 <div class="modal fade" id="disablebackdrop" tabindex="-1" data-bs-backdrop="false">
@@ -393,7 +398,8 @@ view_rate
                     {% csrf_token %}
                     <input type="hidden" id="input_id_pr" name="id" value="">
                     <div class="form-floating mb-3 mt-3">
-                                <textarea class="form-control" required placeholder="Leave a comment here" name="prescription"
+                                <textarea class="form-control" required placeholder="Leave a comment here"
+                                          name="prescription"
                                           id="floatingTextareapr"
                                           style="height: 100px;"></textarea>
                         <label for="floatingTextarea">Write Prescription here....</label>
@@ -425,7 +431,8 @@ view_rate
                         </div>
                     </div>
                     <div class="form-floating mb-3 mt-3">
-                                <textarea class="form-control" required placeholder="Leave a comment here" name="md_history"
+                                <textarea class="form-control" required placeholder="Leave a comment here"
+                                          name="md_history"
                                           id="floatingTextarea2" style="height: 100px;"></textarea>
                         <label for="floatingTextarea2">Write Medical History here...</label>
                     </div>
@@ -442,18 +449,18 @@ view_rate
                 <h5 class="card-title pl-3">Book history.</h5>
                 <table class="table datatable">
                     <thead>
-                        <tr>
-                            <th scope="col">id</th>
-                            <th scope="col">Patient name</th>
-                            <th scope="col">Patient Email</th>
-                            <th scope="col">Your Email</th>
-                            <th scope="col">Time</th>
-                            <th scope="col">ROOM_ID</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Action</th>
-                            <th scope="col">Left Time</th>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">Patient name</th>
+                        <th scope="col">Patient Email</th>
+                        <th scope="col">Your Email</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">ROOM_ID</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                        <th scope="col">Left Time</th>
 
-                        </tr>
+                    </tr>
                     </thead>
                     <tbody>
                     {% for history in histories %}
@@ -465,17 +472,20 @@ view_rate
                         <td>{{ history.doctor.email }}</td>
                         <td>{{ history.schedule.schedule }}</td>
                         <td>STRDVJb</td>
-                        {% if history.status == 1 %}
+                        {% if history.get_status == 1 %}
                         <td><a href="#" class="btn btn-sm btn-primary">Pending</a></td>
-                        {% elif history.status == 0 %}
+                        {% elif history.get_status == 0 %}
                         <td><a href="#" class="btn btn-sm btn-success">Ongoing</a></td>
+                        {% elif history.get_status == 3 %}
+                            <td><a href="#" class="btn btn-sm btn-info">Waiting</a></td>
                         {% else %}
                         <td><a href="#" class="btn btn-sm btn-danger">Passed</a></td>
                         {% endif %}
 
-                        {% if history.status == 1 %}
-                        <td><a href="{% url 'dashboard:doctor-dashboard'%}?pages=chat" class="btn btn-sm btn-outline-info">CALL</a></td>
-                        {% elif history.status == 0 %}
+                        {% if history.get_status == 1 %}
+                        <td><a href="{% url 'dashboard:doctor-dashboard'%}?pages=chat&app_id={{ history.id }}"
+                               class="btn btn-sm btn-outline-info">CALL</a></td>
+                        {% elif history.get_status == 0 %}
                         <td>
                             <button type="button" onclick="set_id_pr({{ history.patient.id }})"
                                     class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
@@ -488,12 +498,16 @@ view_rate
                                 Medical H.
                             </button>
                         </td>
+                        {% elif history.get_status == 3 %}
+                        <td>-</td>
                         {% else %}
-                        <td><a href="#" class="btn btn-sm btn-danger">Passed</a></td>
+                        <td>-</td>
                         {% endif %}
 
                         <td>
-                            30 Min
+                            {% with tm=history.left_time %}
+                                {{tm.days}} Days, {{ tm.seconds|intdiv:3600 }} Hr, {{ tm.seconds|mod:3600|intdiv:60 }} Min
+                            {% endwith %}
                         </td>
                     </tr>
                     {% endfor %}
@@ -523,6 +537,8 @@ view_rate
                     'max-height':'100%'
                 });
             });
+
+
 
 
         </script>

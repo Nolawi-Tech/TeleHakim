@@ -1,14 +1,25 @@
 from typing import List
 
+'''
 
-# passed date must be filtered and not show to user.
-# Some medical History may or may not be seen by User.
-# doctor must be able to remove his working day.
+    Admin can interview the doctors,viewing CV, accept or reject, fill some info.
+    System's can withhold doctors from working based on 5 user rates.
+    Personal profile update, password reset.
+    Admin delete User and some unnecessary actions.
+    In email using threading.
+    
+    Timing and Notification sent to user before clock is ticking.
+    
+    Payment integration.
+    Integration b/n prediction and other system -> suggest doctor based on specialization.
+    Amaric language support. 
+'''
+
 
 # 0 -> Ongoing
 # 1 -> Pending
 # 2 -> passed
-
+# 3 -> waiting
 
 class Admin:
     manage_account = True
@@ -37,7 +48,7 @@ class Patient:
     book = True
     rate_doctor = True
 
-    view_his_feedback_a_delete = False
+    view_his_feedback_and_delete = False
 
 
 class General:
@@ -47,7 +58,7 @@ class General:
     profile = True or False
     reset = True or False
 
-    video_calling = False
+    video_calling = True
 
 
 def return_date(dt):

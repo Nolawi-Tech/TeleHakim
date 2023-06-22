@@ -1,7 +1,37 @@
-from django.shortcuts import redirect, reverse
+from datetime import datetime, timedelta
+
+from django.http import JsonResponse
+from django.shortcuts import redirect, reverse, render
 from django.contrib import messages
+from django.views.decorators.csrf import csrf_exempt
+
 from appointment.models import *
 from account.include import user_info
+
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+
+
+def test(request):
+
+    return render(request, 'telehakim/addinfo_doctor.html')
+
+    # return JsonResponse({'token': 'adfasd', 'uid': 'sdfs'}, safe=False)
+
+
+@csrf_exempt
+def change_status(request, id, option):
+    try:
+        app = Appointment.objects.get(id=id)
+        if option == "in":
+            app.status = 0
+        else:
+            app.status = 1
+        app.save()
+        return JsonResponse({'response': "Data saved!"}, safe=False)
+    except:
+        return JsonResponse({'response': "Data not saved!"}, safe=False)
 
 
 def date_spliter(date_list, spliter=60, ):
