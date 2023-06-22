@@ -121,7 +121,9 @@ def headache_interview1(request):
      return render(request,"recommendation/headache/headache_interview1.html")
 def headache_interview2(request):
      return render(request,'recommendation/headache/headache_interview2.html')
+def headache_interview3(request):
+     return render(request,'recommendation/headache/headache_interview3.html')
 def headache_result(request):
      key_value = request.GET.get('key')   
      print(key_value)   
-     return render(request,"recommendation/headache/headache_result.html")
+     return render(request,"recommendation/headache/headache_result.html",{'result':key_value})

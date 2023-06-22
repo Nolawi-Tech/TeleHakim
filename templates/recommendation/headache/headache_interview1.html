@@ -80,7 +80,7 @@
                     <div class="image-container">
                         <input type="checkbox" id="checkbox2" onclick="selectImage()">
                         <label for="checkbox2">
-                        <img class="img img-fluid color-change-image" src="{% static 'asset/img/recommend/symptoms/headache men.png' %}" alt="" onclick="changeImageColor(this)">
+                        <img class="img img-fluid color-change-image" src="{% static 'asset/img/recommend/symptoms/headache/fever (2).png' %}" alt="" onclick="changeImageColor(this)">
                         <p class="text-center">fever</p>
                     </label>
                     </div>
@@ -154,7 +154,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row d-flex justify-content-between">
+            <div class="row d-flex justify-content-between p-5">
                 <div class="col-auto">
                     <button class="btn btn-success" type="submit" name="symptom" value="sensorium_yes" id="sensorium_yes">Yes</button>
                 </div>
@@ -166,7 +166,7 @@
         <div id="one_one" style="display: none;">
             <div class="row d-flex justify-content-between">
                 <div class="col-8">
-                    <p class="h2 p-5 text-center">Is there weakness or deficiency on one side of the body?</p>
+                    <p class="h2 p-5 text-center">Is there weakness or deficiency on one side of your body?</p>
                 </div>
                 <div class="col-4">
                     <div>
@@ -174,7 +174,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row d-flex justify-content-between">
+            <div class="row d-flex justify-content-between p-5">
                 <div class="col-auto">
                     <button class="btn btn-success" type="submit" name="symptom" value="weakness_yes" id="weakness_yes">Yes</button>
                 </div>
@@ -207,43 +207,42 @@
             waitingText.style.display = "none";
         }
 
-        function selectImage(page) {
 
+        var previousButton = document.getElementById('previousButton');
+        previousButton.addEventListener('click', function() {
+            window.location.href = "{% url 'interview4' %}";
+        });
 
+        var nextButton = document.getElementById('nextButton');
+        nextButton.addEventListener('click', function() {
+            if (page1.checked && page2.checked && page3.checked && page4.checked && !page5.checked && !page6.checked) {
+                window.location.href = "{% url 'headache_interview3' %}";
+            } else if (page1.checked && !page4.checked && !page5.checked && !page6.checked) {
+                window.location.href = "{% url 'headache_interview2' %}";
 
-            var previousButton = document.getElementById('previousButton');
-            previousButton.addEventListener('click', function() {
+            } else if (!page1.checked && !page2.checked && page3.checked && !page4.checked && !page5.checked && !page6.checked) {
+                const heading = document.querySelector("#heading");
+                heading.style.display = "none";
+
+                showWaitingText("Please wait... Checking vomiting...");
+                setTimeout(function() {
+                    hideWaitingText();
+                    const vomiting = document.querySelector("#one");
+                    vomiting.style.display = "block";
+                }, 2000);
+            } else if (page4.checked) {
                 window.location.href = "{% url 'interview4' %}";
-            });
+            } else if (page5.checked) {
+                window.location.href = "{% url 'interview1' %}";
+            } else if (page6.checked) {
+                window.location.href = "{% url 'interview2' %}";
+            } else {
+                var message = document.getElementById('message');
+                message.innerText = "Please select a symptom.";
+            }
+        });
 
-            var nextButton = document.getElementById('nextButton');
-            nextButton.addEventListener('click', function() {
-                if (page1.checked && page2.checked && page3.checked && page4.checked) {
-                    window.location.href = "{% url 'headache_interview2' %}";
-                } else if (page2.checked) {
-                    window.location.href = "{% url 'headache_interview1' %}";
-                } else if (page3.checked) {
-                    const heading = document.querySelector("#heading");
-                    heading.style.display = "none";
 
-                    showWaitingText("Please wait... Checking vomiting...");
-                    setTimeout(function() {
-                        hideWaitingText();
-                        const vomiting = document.querySelector("#one");
-                        vomiting.style.display = "block";
-                    }, 2000);
-                } else if (page4.checked) {
-                    window.location.href = "{% url 'interview4' %}";
-                } else if (page5.checked) {
-                    window.location.href = "{% url 'interview1' %}";
-                } else if (page6.checked) {
-                    window.location.href = "{% url 'interview2' %}";
-                } else {
-                    var message = document.getElementById('message');
-                    message.innerText = "Please select a symptom.";
-                }
-            });
-        }
         sensoriumPainYesButton.addEventListener("click", function(event) {
             event.preventDefault();
             const heading1 = document.querySelector("#one");
@@ -258,7 +257,7 @@
         });
         weaknessPainYesButton.addEventListener("click", function(event) {
             var url = "{% url 'headache_result' %}";
-            var key = 4;
+            var key = "Paralysis(brain hemorrhage)";
             window.location.href = url + "?key=" + key;
 
         });

@@ -60,7 +60,7 @@
                 <h3 class="p-2 text-center text-white">From the symptoms below, please pick one that's you the most</h3>
             </div>
         </div>
-        <div class="row  d-flex align-items-center ">
+        <div v class="row  d-flex align-items-center ">
             <div class="col-12 col-lg-4 main-text align-item-center ">
                 <div class="image-container text-center">
                     <img class="img img-fluid " onclick="selectImage('page1.html')" src="{% static 'asset/img/recommend/symptoms/cough men.png' %} " alt=" ">
@@ -95,6 +95,8 @@
             </div>
 
         </div>
+
+
         <br>
         <div class="text-center text-danger" id="message"></div>
         <div class="container-fluid ">
@@ -113,6 +115,11 @@
 
     </div>
     <script>
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted) {
+                location.reload();
+            }
+        });
         var page1 = {
             clicked: false
         };
@@ -178,8 +185,6 @@
             }
             if (page6.clicked) {
                 window.location.href = "{% url 'interview2'%}";
-            } else {
-                message.innerText = "Please select symptom.";
             }
         });
     </script>
