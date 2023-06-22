@@ -109,11 +109,20 @@ def admin_dashboard(request):
     user = user_info(request)
     user_role = u_role(request)
 
+    if request.method == "POST":
+        if request.POST.get('update') is not None:
+            update_form = PatientRegistrationForm(request.POST, request.FILES, instance=user)
+            if update_form.is_valid():
+                request.session["email"] = request.POST.get('email')
+                update_form.save()
+                messages.success(request, "Thank you, for updating your profile.")
+            else:
+                messages.error(request, "Sorry, we can't update your profile.")
     context = {
         'page': page,
         'user': user,
         'user_role': user_role,
-
+        'update_form': PatientRegistrationForm(instance=user),
         'patients': Patient.objects.all(),
         'doctors': Doctor.objects.all(),
         'admins': Patient.objects.filter(is_admin=True),
@@ -135,6 +144,14 @@ def patient_dashboard(request):
     doctors = Doctor.objects.all()
 
     if request.method == "POST":
+        if request.POST.get('update') is not None:
+            update_form = PatientRegistrationForm(request.POST, request.FILES, instance=user)
+            if update_form.is_valid():
+                request.session["email"] = request.POST.get('email')
+                update_form.save()
+                messages.success(request, "Thank you, for updating your profile.")
+            else:
+                messages.error(request, "Sorry, we can't update your profile.")
         if request.POST.get('feedback') is not None:
             name = request.POST.get('name')
             email = request.POST.get('email')
@@ -189,6 +206,7 @@ def patient_dashboard(request):
         'user': user,
         'user_role': user_role,
         'doctors': doctors,
+        'update_form': PatientRegistrationForm(instance=user),
         'histories': Appointment.objects.filter(patient=user).order_by('status'),
         'prescriptions': Prescription.objects.filter(patient=user),
         'medical_histories': MedicalHistory.objects.filter(patient=user, is_shown=True),

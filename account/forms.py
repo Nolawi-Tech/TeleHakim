@@ -6,6 +6,7 @@ class PatientRegistrationForm(forms.ModelForm):
     class Meta:
         model = Patient
         fields = '__all__'
+        exclude = ['is_admin', 'is_patient']
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
@@ -55,7 +56,7 @@ class DoctorUpdateForm(forms.ModelForm):
     class Meta:
         model = Doctor
         fields = '__all__'
-        exclude = ['document', 'is_verified']
+        exclude = ['is_verified']
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
@@ -68,6 +69,7 @@ class DoctorUpdateForm(forms.ModelForm):
             'degree': forms.TextInput(attrs={'class': 'form-control'}),
             'experience': forms.NumberInput(attrs={'class': 'form-control'}),
             'about': forms.TextInput(attrs={'class': 'form-control'}),
+            'document': forms.FileInput(attrs={'class': 'form-control', 'accept': "application/pdf"}),
             'fee': forms.NumberInput(attrs={'class': 'form-control'}),
             'hospital': forms.TextInput(attrs={'class': 'form-control'}),
             'account_number': forms.NumberInput(attrs={'class': 'form-control'}),
