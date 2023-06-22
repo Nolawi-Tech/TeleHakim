@@ -283,21 +283,6 @@ view_rate
 
                         <form method="post" action=" url 'account:update_account' %}">
                             {% csrf_token %}
-                            <div class="row mb-3">
-                                <label class="col-md-4 col-lg-3 col-form-label">Profile
-                                    Image</label>
-                                <div class="col-md-8 col-lg-9">
-                                    <img src="{% static 'assets/img/profile-img.jpg' %}" alt="Profile">
-                                    <div class="pt-2">
-                                        <a href="#" class="btn btn-primary btn-sm"
-                                           title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                                        <a href="#" class="btn btn-danger btn-sm"
-                                           title="Remove my profile image"><i class="bi bi-trash"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-
-
                             {% for form in update_form %}
 
                             {% if forloop.counter0 == 4 %}
@@ -326,21 +311,15 @@ view_rate
                         </form>
                     </div>
                     <script>
-                                function blur_password() {
-                                    let pass = document.getElementById('id_password')
-                                    pass.removeAttribute('required')
-                                    pass.setAttribute('type', 'hidden')
-                                    pass.value = "{{user.password}}"
-                                }
-
-
-
-
-
-
+                            function blur_password() {
+                                let pass = document.getElementById('id_password')
+                                pass.removeAttribute('required')
+                                pass.setAttribute('type', 'hidden')
+                                pass.value = "{{user.password}}"
+                            }
                     </script>
                     <div class="tab-pane fade pt-3" id="profile-change-password">
-                        <form method="post" action=" url 'account:update_password' user.id %}">
+                        <form method="post" action="{% url 'account:update_password' user.id user_role%}">
                             {% csrf_token %}
                             <div class="row mb-3">
                                 <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current
@@ -356,7 +335,7 @@ view_rate
                                     Password</label>
                                 <div class="col-md-8 col-lg-9">
                                     <input name="new_password" type="password" class="form-control"
-                                           id="newPassword" required>
+                                           id="newPassword" minlength="4" required>
                                 </div>
                             </div>
 
@@ -366,7 +345,7 @@ view_rate
                                     Password</label>
                                 <div class="col-md-8 col-lg-9">
                                     <input name="renew_password" type="password" class="form-control"
-                                           id="renewPassword" required>
+                                           id="renew_password" required>
                                 </div>
                             </div>
 

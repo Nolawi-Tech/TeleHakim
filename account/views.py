@@ -1,11 +1,10 @@
-from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect
 from account.models import *
 from account.forms import *
 from django.contrib import messages
 from django.http import QueryDict
 from django.urls import reverse
-
+from account.include import *
 
 qd = QueryDict("", mutable=True)
 
@@ -130,6 +129,34 @@ def update_password_forgot(request, pk, role):
             User.objects.filter(id=pk).update(password=np)
             messages.success(request, "Your password are successfully updated!")
     return redirect(reverse(f'account:login') + f'?{qd.urlencode()}')
+
+
+def update_password(request, pk, role):
+    cp = request.POST.get('current_password')
+    np = request.POST.get('new_password')
+    rnp = request.POST.get('renew_password')
+    print(cp, np, rnp)
+    if request.method == "POST":
+        cp = request.POST.get('current_password')
+        np = request.POST.get('new_password')
+        rnp = request.POST.get('renew_password')
+        if np != rnp:
+            messages.warning(request, "Your new and re-enter password aren't much.")
+        else:
+
+            if role == "doctor":
+                us = Doctor.objects.get(id=pk)
+            else:
+                us = Patient.objects.get(id=pk)
+            if us.password != cp:
+                messages.warning(request, "Your new and old password aren't much.")
+            else:
+                us.password = np
+                us.save()
+                messages.success(request, "Your password are successfully updated!")
+    qd.update({'pages': 'profile'})
+    flag = user_role(request)
+    return redirect(reverse(f'dashboard:{flag}-dashboard') + f'?pages=profile')
 
 
 def logout(request):

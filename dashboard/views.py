@@ -3,6 +3,7 @@ from account.models import *
 from dashboard.models import *
 from appointment.models import *
 from django.contrib import messages
+from account.forms import PatientRegistrationForm, DoctorRegistrationForm, AddInfoDoctorForm
 from account.include import user_info, user_role as u_role, automate_email, send_email
 from account.forms import PatientRegistrationForm, DoctorRegistrationForm
 
