@@ -3,7 +3,7 @@ from account.models import *
 from dashboard.models import *
 from appointment.models import *
 from django.contrib import messages
-from account.forms import PatientRegistrationForm, DoctorRegistrationForm, AddInfoDoctorForm
+from account.forms import *
 from account.include import user_info, user_role as u_role, automate_email, send_email
 from account.forms import PatientRegistrationForm, DoctorRegistrationForm
 
@@ -209,6 +209,7 @@ def doctor_dashboard(request):
     user = user_info(request)
     user_role = u_role(request)
     rates = Rate.objects.filter(doctor=user)
+    update_form = DoctorUpdateForm(instance=user)
 
     list_schedule = []
     unique_dates = []
@@ -241,6 +242,14 @@ def doctor_dashboard(request):
                 return redirect('dashboard:doctor-dashboard')
             except:
                 messages.error(request, "Sorry, we can't add your prescription.")
+        if request.POST.get('update') is not None:
+            update_form = DoctorUpdateForm(request.POST, request.FILES, instance=user)
+            if update_form.is_valid():
+                request.session["email"] = request.POST.get('email')
+                update_form.save()
+                messages.success(request, "Thank you, for updating your profile.")
+            else:
+                messages.error(request, "Sorry, we can't update your profile.")
     if request.GET.get('list_date'):
         date = request.GET.get('date')
         try:
@@ -274,6 +283,7 @@ def doctor_dashboard(request):
             (a.left_time.total_seconds() > 0) and (a.left_time.total_seconds() <= 1800)
         ],
         'doctor_form': DoctorRegistrationForm(),
+        'update_form': update_form,
     }
     automate_email(request)
     return render(request, 'telehakim/doctor-page.html', context)

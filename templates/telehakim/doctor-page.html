@@ -281,32 +281,29 @@ view_rate
                     <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
 
-                        <form method="post" action=" url 'account:update_account' %}">
+                        <form method="post" action="" enctype="multipart/form-data">
                             {% csrf_token %}
                             {% for form in update_form %}
-
-                            {% if forloop.counter0 == 4 %}
-                            <div class="row mb-3">
-                                <div class="col-md-8 col-lg-9">
-                                    <input type="text" id="id_password" name="password"
-                                           class="form-control">
+                                {% if forloop.counter0 == 4 %}
+                                <div class="row mb-3">
+                                    <div class="col-md-8 col-lg-9">
+                                        <input type="text" id="id_password" name="password"
+                                               class="form-control">
+                                    </div>
                                 </div>
-                            </div>
-                            {% else %}
-                            <div class="row mb-3">
-                                <label for="{{ form.id_for_label }}"
-                                       class="col-md-4 col-lg-3 col-form-label">{{ form.label }}</label>
-                                <div class="col-md-8 col-lg-9">
-                                    {{ form }}
+                                {% else %}
+                                <div class="row mb-3">
+                                    <label for="{{ form.id_for_label }}"
+                                           class="col-md-4 col-lg-3 col-form-label">{{ form.label }}</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        {{ form }}
+                                    </div>
                                 </div>
-                            </div>
-                            {% endif %}
-
+                                {% endif %}
                             {% endfor %}
 
                             <div class="text-center">
-                                <button name="update" type="submit" class="btn btn-primary">Save Changes
-                                </button>
+                                <input name="update" type="submit" class="btn btn-primary" value="Save Changes">
                             </div>
                         </form>
                     </div>
