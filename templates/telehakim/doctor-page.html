@@ -27,6 +27,12 @@ Doctor
                 <span>View Rate</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'dashboard:doctor-dashboard' %}?pages=remove_day">
+                <i class="bi bi-trash-fill"></i>
+                <span>Remove Work Dy</span>
+            </a>
+        </li>
     </ul>
 
 </aside><!-- End Sidebar-->
@@ -40,9 +46,11 @@ doctor
 {% if page == None %}
 dashboard
 {% elif page|slice:":4" == 'chat' %}
-    chatting
+chatting
 {% elif page == "working_day" %}
-    add_working_day
+add_working_day
+{% elif page == "remove_day" %}
+remove_working_day
 {% elif page == 'profile' %}
 profile
 {% elif page == 'view_rate' %}
@@ -91,23 +99,74 @@ view_rate
                 and then fill in the free time in the text box.
             </p>
             <p>
-                Use the suggested format: <span style="font-family:monospace; color:red;font-size:19px">Start-time:end-time:d|n.</span><br>
+                Use the suggested format: <span style="font-family:monospace; color:red;font-size:19px">Start-time - end-time:d|n.</span><br>
                 <span style="font-family:monospace; color:red;font-size:19px">Note:</span> don't use minute here and
                 both n and d are case-insensitive.
                 <br><br>
-                3:5:d -> from morning 3:00 to 5:00, d-> refers to day, n->for night <br>
-                10:12:d -> from 10:00 to 12:00, in afternoon <br>
-                7:8:N -> from 7:00 to 8:00, in Night <br>
+                3-5:d -> from morning 3:00 to 5:00, d-> refers to day, n->for night <br>
+                10-12:d -> from 10:00 to 12:00, in afternoon <br>
+                7-8:N -> from 7:00 to 8:00, in Night <br>
 
             </p>
             <p>
-                Please use commas to separate the different time slots, eg. 3:5:d,10:12:d,7:8:N
+                Please use commas to separate the different time slots, eg. 3-5:d,10-12:d,7-8:N
             </p>
 
         </div>
     </div>
 </div>
 <!-- End Working day -->
+{% elif page == 'remove_day' %}
+<div class="row contact justify-content-center">
+    <div class="col-xl-8">
+        <p class="text-center card-title">Select and remove your work-day.</p>
+        <div class="card p-4">
+            <form class="row g-3" action="" method="get">
+                <input type="hidden" name="pages" value="remove_day">
+                <div class="col-md-4">
+                    <input type="date" name="date" class="form-control" placeholder="date">
+                </div>
+                <div class="col-md-2">
+                    <input type="submit" name="list_date" class="form-control btn btn-primary" value="Submit">
+                </div>
+            </form>
+            <hr>
+            <div class="row">
+                <div class="">
+                    <div class="row">
+                        {% for date in book_info.dates %}
+                        <div class="col col-xl-3 col-xl-4">
+                            <div class="card-title">{{ date }}</div>
+                            {% for schedule in book_info.schedules %}
+                            {% if schedule.date == date %}
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <a class="btn alert-danger sm"
+                                       title="Remove this date!"
+                                       href="{% url 'dashboard:delete-item' schedule.id 'working_day' %}">
+                                        {{ schedule.schedule }}
+                                    </a>
+                                </li>
+                            </ul>
+                            {% endif %}
+
+                            {% endfor %}
+                        </div>
+
+                        {% empty %}
+                        <div class="col">
+                            <div class="btn sm">
+                                No Schedule
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
 {% elif page == 'view_rate' %}
 <!-- start of view Rate -->
 <div class="row">
@@ -115,7 +174,9 @@ view_rate
         <h5 class="card-title">List of Rate</h5>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Total: {{ rate_info.rates|length }} rate{{ rate_info.rates|pluralize }} | {{ rate_info.total_percent|floatformat:2 }}% success </h5>
+                <h5 class="card-title">
+                    Total: {{rate_info.rates|length}} rate{{rate_info.rates|pluralize}}
+                    | {{rate_info.total_percent|floatformat:2 }}% success </h5>
             </div>
         </div>
 
@@ -136,190 +197,15 @@ view_rate
 </div>
 <!-- end view Rate -->
 {% elif page|slice:":4" == 'chat' %}
-    {% if page == 'chatting' %}
-        {% include 'chat/room.html' %}
-    {% else %}
-        {% include 'chat/index.html' %}
-    {% endif %}
-{% elif page == 'profile' %}
-<div class="row">
-    <div class="col-xl-4">
-        <div class="card">
-            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                <img src="{{ user.photo.url }}" alt="Profile" class="rounded-circle" width="200" height="200">
-                <h2>{{ user.first_name|title }} {{ user.last_name|title }}</h2>
-                <h3>{{user_role|title}}</h3>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="col-xl-8">
-
-        <div class="card">
-            <div class="card-body pt-3">
-                <ul class="nav nav-tabs nav-tabs-bordered">
-
-                    <li class="nav-item">
-                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">
-                            Overview
-                        </button>
-                    </li>
-
-                    <li class="nav-item">
-                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit"
-                                onclick="blur_password()">Edit
-                            Profile
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">
-                            Change Password
-                        </button>
-                    </li>
-
-                </ul>
-                <div class="tab-content pt-2">
-
-                    <div class="tab-pane fade show active profile-overview" id="profile-overview">
-
-                        <h5 class="card-title">Profile Details</h5>
-
-                        <div class="row">
-                            <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                            <div class="col-lg-9 col-md-8">{{ user.first_name|title }} {{ user.last_name|title }}</div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-3 col-md-4 label">Company</div>
-                            <div class="col-lg-9 col-md-8">Telehakim Service company</div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-3 col-md-4 label">Job</div>
-                            <div class="col-lg-9 col-md-8">{{ user_role|title}}</div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-3 col-md-4 label">Address</div>
-                            <div class="col-lg-9 col-md-8">{{ user.address }}</div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-3 col-md-4 label">Phone</div>
-                            <div class="col-lg-9 col-md-8">{{ user.phone }}</div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-3 col-md-4 label">Email</div>
-                            <div class="col-lg-9 col-md-8">{{ user.email }}</div>
-                        </div>
-
-                    </div>
-
-                    <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-
-
-                        <form method="post" action=" url 'account:update_account' %}">
-                            {% csrf_token %}
-                            <div class="row mb-3">
-                                <label class="col-md-4 col-lg-3 col-form-label">Profile
-                                    Image</label>
-                                <div class="col-md-8 col-lg-9">
-                                    <img src="{% static 'assets/img/profile-img.jpg' %}" alt="Profile">
-                                    <div class="pt-2">
-                                        <a href="#" class="btn btn-primary btn-sm"
-                                           title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                                        <a href="#" class="btn btn-danger btn-sm"
-                                           title="Remove my profile image"><i class="bi bi-trash"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            {% for form in update_form %}
-
-                            {% if forloop.counter0 == 4 %}
-                            <div class="row mb-3">
-                                <div class="col-md-8 col-lg-9">
-                                    <input type="text" id="id_password" name="password"
-                                           class="form-control">
-                                </div>
-                            </div>
-                            {% else %}
-                            <div class="row mb-3">
-                                <label for="{{ form.id_for_label }}"
-                                       class="col-md-4 col-lg-3 col-form-label">{{ form.label }}</label>
-                                <div class="col-md-8 col-lg-9">
-                                    {{ form }}
-                                </div>
-                            </div>
-                            {% endif %}
-
-                            {% endfor %}
-
-                            <div class="text-center">
-                                <button name="update" type="submit" class="btn btn-primary">Save Changes
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <script>
-                                function blur_password() {
-                                    let pass = document.getElementById('id_password')
-                                    pass.removeAttribute('required')
-                                    pass.setAttribute('type', 'hidden')
-                                    pass.value = "{{user.password}}"
-                                }
-
-
-
-
-                    </script>
-                    <div class="tab-pane fade pt-3" id="profile-change-password">
-                        <form method="post" action=" url 'account:update_password' user.id %}">
-                            {% csrf_token %}
-                            <div class="row mb-3">
-                                <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current
-                                    Password</label>
-                                <div class="col-md-8 col-lg-9">
-                                    <input name="current_password" type="password" class="form-control"
-                                           id="currentPassword" required>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New
-                                    Password</label>
-                                <div class="col-md-8 col-lg-9">
-                                    <input name="new_password" type="password" class="form-control"
-                                           id="newPassword" required>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label for="renew_password" class="col-md-4 col-lg-3 col-form-label">Re-enter
-                                    New
-                                    Password</label>
-                                <div class="col-md-8 col-lg-9">
-                                    <input name="renew_password" type="password" class="form-control"
-                                           id="renewPassword" required>
-                                </div>
-                            </div>
-
-                            <div class="text-center">
-                                <button type="submit" name="password_update" class="btn btn-primary">Change
-                                    Password
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+{% if page == 'chatting' %}
+{% include 'chat/room.html' %}
 {% else %}
+{% include 'chat/index.html' %}
+{% endif %}
+{% elif page == 'profile' %}
+    {% include 'telehakim/partials/profile.html' %}
+{% else %}
+{% load mathfilters %}
 <!-- Start Data table -->
 <!-- Prescription modal -->
 <div class="modal fade" id="disablebackdrop" tabindex="-1" data-bs-backdrop="false">
@@ -334,7 +220,8 @@ view_rate
                     {% csrf_token %}
                     <input type="hidden" id="input_id_pr" name="id" value="">
                     <div class="form-floating mb-3 mt-3">
-                                <textarea class="form-control" required placeholder="Leave a comment here" name="prescription"
+                                <textarea class="form-control" required placeholder="Leave a comment here"
+                                          name="prescription"
                                           id="floatingTextareapr"
                                           style="height: 100px;"></textarea>
                         <label for="floatingTextarea">Write Prescription here....</label>
@@ -366,7 +253,8 @@ view_rate
                         </div>
                     </div>
                     <div class="form-floating mb-3 mt-3">
-                                <textarea class="form-control" required placeholder="Leave a comment here" name="md_history"
+                                <textarea class="form-control" required placeholder="Leave a comment here"
+                                          name="md_history"
                                           id="floatingTextarea2" style="height: 100px;"></textarea>
                         <label for="floatingTextarea2">Write Medical History here...</label>
                     </div>
@@ -383,18 +271,18 @@ view_rate
                 <h5 class="card-title pl-3">Book history.</h5>
                 <table class="table datatable">
                     <thead>
-                        <tr>
-                            <th scope="col">id</th>
-                            <th scope="col">Patient name</th>
-                            <th scope="col">Patient Email</th>
-                            <th scope="col">Your Email</th>
-                            <th scope="col">Time</th>
-                            <th scope="col">ROOM_ID</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Action</th>
-                            <th scope="col">Left Time</th>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">Patient name</th>
+                        <th scope="col">Patient Email</th>
+                        <th scope="col">Your Email</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">ROOM_ID</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                        <th scope="col">Left Time</th>
 
-                        </tr>
+                    </tr>
                     </thead>
                     <tbody>
                     {% for history in histories %}
@@ -406,17 +294,20 @@ view_rate
                         <td>{{ history.doctor.email }}</td>
                         <td>{{ history.schedule.schedule }}</td>
                         <td>STRDVJb</td>
-                        {% if history.status == 1 %}
+                        {% if history.get_status == 1 %}
                         <td><a href="#" class="btn btn-sm btn-primary">Pending</a></td>
-                        {% elif history.status == 0 %}
+                        {% elif history.get_status == 0 %}
                         <td><a href="#" class="btn btn-sm btn-success">Ongoing</a></td>
+                        {% elif history.get_status == 3 %}
+                            <td><a href="#" class="btn btn-sm btn-info">Waiting</a></td>
                         {% else %}
                         <td><a href="#" class="btn btn-sm btn-danger">Passed</a></td>
                         {% endif %}
 
-                        {% if history.status == 1 %}
-                        <td><a href="{% url 'dashboard:doctor-dashboard'%}?pages=chat" class="btn btn-sm btn-outline-info">CALL</a></td>
-                        {% elif history.status == 0 %}
+                        {% if history.get_status == 1 %}
+                        <td><a href="{% url 'dashboard:doctor-dashboard'%}?pages=chat&app_id={{ history.id }}"
+                               class="btn btn-sm btn-outline-info">CALL</a></td>
+                        {% elif history.get_status == 0 %}
                         <td>
                             <button type="button" onclick="set_id_pr({{ history.patient.id }})"
                                     class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
@@ -429,12 +320,16 @@ view_rate
                                 Medical H.
                             </button>
                         </td>
+                        {% elif history.get_status == 3 %}
+                        <td>-</td>
                         {% else %}
-                        <td><a href="#" class="btn btn-sm btn-danger">Passed</a></td>
+                        <td>-</td>
                         {% endif %}
 
                         <td>
-                            30 Min
+                            {% with tm=history.left_time %}
+                                {{tm.days}} Days, {{ tm.seconds|intdiv:3600 }} Hr, {{ tm.seconds|mod:3600|intdiv:60 }} Min
+                            {% endwith %}
                         </td>
                     </tr>
                     {% endfor %}
@@ -464,6 +359,8 @@ view_rate
                     'max-height':'100%'
                 });
             });
+
+
 
 
         </script>

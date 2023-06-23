@@ -130,6 +130,7 @@ medical-history
 </div>
 <!-- End Book -->
 {% elif page == 'search' %}
+{% load mathfilters %}
 <!-- Start of Search -->
 <div class="row contact justify-content-center">
     <div class="col-xl-8">
@@ -188,11 +189,39 @@ medical-history
                         <div class=""><i class="bi bi-calendar-day-fill me-1"></i> <a
                                 href="?pages=book&doc_email={{ doctor.email }}&date=&list_date=Submit">See all
                             timings.</a></div>
-                        <div class=""><i class="bi bi-award-fill"></i> 340 rate | 95%</div>
-
-                        <div class="col-md-6 text-center p-2">
-                            <a type="submit" class="btn btn-primary">Rate Info | o</a>
+                        <div class=""><i class="bi bi-award-fill"></i> 340 rate | 95%
+                        {% with total_rate=doctor.doctor_rate.all|add:"rate" %}
+                            Total Rate: {{ total_rate }}
+                        {% endwith %}
                         </div>
+
+                        <button type="button" class="btn btn-primary m-2 text-center" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable">
+                            View rate
+                          </button>
+                          <div class="modal fade mt-5" id="modalDialogScrollable" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title">View rate given by patients</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  {% for rate in doctor.doctor_rate.all %}
+                                    {% if rate.doctor.email == doctor.email %}
+                                        <p>By <b class="text-danger fw-bold">{{ rate.user.first_name }}/{{rate.doctor.email}}/{{doctor.email}}</b> | {{ rate.rate }} rates</p>
+                                        <p>
+                                            {{ rate.comment }}
+                                        </p>
+                                        <hr>
+                                    {% endif %}
+                                    {% empty %}
+                                        <p>No rate yet</p>
+                                  {% endfor %}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
                     </div>
                 </div>
             </div>
@@ -282,191 +311,9 @@ medical-history
     </div>
 </div>
 {% elif page == 'profile' %}
-<div class="row">
-    <div class="col-xl-4">
-        <div class="card">
-            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-
-                <img src="{{ user.photo.url }}" alt="Profile" class="rounded-circle" width="200" height="200">
-                <h2>{{ user.first_name|title }} {{ user.last_name|title }}</h2>
-                <h3>{{user_role|title}}</h3>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="col-xl-8">
-
-        <div class="card">
-            <div class="card-body pt-3">
-                <ul class="nav nav-tabs nav-tabs-bordered">
-
-                    <li class="nav-item">
-                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">
-                            Overview
-                        </button>
-                    </li>
-
-                    <li class="nav-item">
-                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit"
-                                onclick="blur_password()">Edit
-                            Profile
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">
-                            Change Password
-                        </button>
-                    </li>
-
-                </ul>
-                <div class="tab-content pt-2">
-
-                    <div class="tab-pane fade show active profile-overview" id="profile-overview">
-
-                        <h5 class="card-title">Profile Details</h5>
-
-                        <div class="row">
-                            <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                            <div class="col-lg-9 col-md-8">{{ user.first_name|title }} {{ user.last_name|title }}</div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-3 col-md-4 label">Company</div>
-                            <div class="col-lg-9 col-md-8">Telehakim Service company</div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-3 col-md-4 label">Job</div>
-                            <div class="col-lg-9 col-md-8">{{ user_role|title}}</div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-3 col-md-4 label">Address</div>
-                            <div class="col-lg-9 col-md-8">{{ user.address }}</div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-3 col-md-4 label">Phone</div>
-                            <div class="col-lg-9 col-md-8">{{ user.phone }}</div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-3 col-md-4 label">Email</div>
-                            <div class="col-lg-9 col-md-8">{{ user.email }}</div>
-                        </div>
-
-                    </div>
-
-                    <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-
-
-                        <form method="post" action=" url 'account:update_account' %}">
-                            {% csrf_token %}
-                            <div class="row mb-3">
-                                <label class="col-md-4 col-lg-3 col-form-label">Profile
-                                    Image</label>
-                                <div class="col-md-8 col-lg-9">
-                                    <img src="{% static 'assets/img/profile-img.jpg' %}" alt="Profile">
-                                    <div class="pt-2">
-                                        <a href="#" class="btn btn-primary btn-sm"
-                                           title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                                        <a href="#" class="btn btn-danger btn-sm"
-                                           title="Remove my profile image"><i class="bi bi-trash"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            {% for form in update_form %}
-
-                            {% if forloop.counter0 == 4 %}
-                            <div class="row mb-3">
-                                <div class="col-md-8 col-lg-9">
-                                    <input type="text" id="id_password" name="password"
-                                           class="form-control">
-                                </div>
-                            </div>
-                            {% else %}
-                            <div class="row mb-3">
-                                <label for="{{ form.id_for_label }}"
-                                       class="col-md-4 col-lg-3 col-form-label">{{ form.label }}</label>
-                                <div class="col-md-8 col-lg-9">
-                                    {{ form }}
-                                </div>
-                            </div>
-                            {% endif %}
-
-                            {% endfor %}
-
-                            <div class="text-center">
-                                <button name="update" type="submit" class="btn btn-primary">Save Changes
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <script>
-                                function blur_password() {
-                                    let pass = document.getElementById('id_password')
-                                    pass.removeAttribute('required')
-                                    pass.setAttribute('type', 'hidden')
-                                    pass.value = "{{user.password}}"
-                                }
-
-
-
-
-
-
-
-
-
-
-                    </script>
-                    <div class="tab-pane fade pt-3" id="profile-change-password">
-                        <form method="post" action=" url 'account:update_password' user.id %}">
-                            {% csrf_token %}
-                            <div class="row mb-3">
-                                <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current
-                                    Password</label>
-                                <div class="col-md-8 col-lg-9">
-                                    <input name="current_password" type="password" class="form-control"
-                                           id="currentPassword" required>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New
-                                    Password</label>
-                                <div class="col-md-8 col-lg-9">
-                                    <input name="new_password" type="password" class="form-control"
-                                           id="newPassword" required>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label for="renew_password" class="col-md-4 col-lg-3 col-form-label">Re-enter
-                                    New
-                                    Password</label>
-                                <div class="col-md-8 col-lg-9">
-                                    <input name="renew_password" type="password" class="form-control"
-                                           id="renewPassword" required>
-                                </div>
-                            </div>
-
-                            <div class="text-center">
-                                <button type="submit" name="password_update" class="btn btn-primary">Change
-                                    Password
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+    {% include 'telehakim/partials/profile.html' %}
 {% else %}
+{% load mathfilters %}
 <!-- Start Data table -->
 <div class="modal fade" id="disablebackdrop" tabindex="-1" data-bs-backdrop="false">
     <div class="modal-dialog resizable">
@@ -527,23 +374,27 @@ medical-history
                         <td>{{ history.patient.email }}</td>
                         <td>{{ history.schedule.schedule }}</td>
                         <td>STRDVJb</td>
-                        {% if history.status == 1 %}
+                        {% if history.get_status == 1 %}
                         <td><a href="" class="btn btn-sm btn-primary">Pending</a></td>
-                        {% elif history.status == 0 %}
+                        {% elif history.get_status == 0 %}
                         <td><a href="" class="btn btn-sm btn-success">Ongoing</a></td>
+                        {% elif history.get_status == 3 %}
+                        <td><a href="" class="btn btn-sm btn-success">Waiting</a></td>
                         {% else %}
                         <td><a href="" class="btn btn-sm btn-danger">Passed</a></td>
                         {% endif %}
 
-                        {% if history.status == 0 %}
+                        {% if history.get_status == 0 %}
                         <td>
                             <button type="button" onclick="set_email({{ history.doctor.id }})" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal"
                                     data-bs-target="#disablebackdrop">
                                 Rate Doctor
                             </button>
                         </td>
-                        {% elif history.status == 1 %}
-                        <td><a href="{% url 'dashboard:patient-dashboard'%}?pages=chat" class="btn btn-sm btn-outline-info">CALL</a></td>
+                        {% elif history.get_status == 1 %}
+                        <td><a href="{% url 'dashboard:patient-dashboard'%}?pages=chat&app_id={{ history.id }}" class="btn btn-sm btn-outline-info">CALL</a></td>
+                        {% elif history.get_status == 3 %}
+                        <td> - </td>
                         {% else %}
                         <td>
                             <button type="button" onclick="set_email({{ history.doctor.id }})" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal"
@@ -554,7 +405,9 @@ medical-history
                         {% endif %}
 
                         <td>
-                            30 Min
+                            {% with tm=history.left_time %}
+                                {{tm.days}} Days, {{ tm.seconds|intdiv:3600 }} Hr, {{ tm.seconds|mod:3600|intdiv:60 }} Min
+                            {% endwith %}
                         </td>
                     </tr>
                     {% endfor %}

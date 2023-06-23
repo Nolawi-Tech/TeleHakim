@@ -1,14 +1,13 @@
-from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect
 from account.models import *
 from account.forms import *
 from django.contrib import messages
 from django.http import QueryDict
 from django.urls import reverse
+from account.include import *
 
-
-# Create your views here.
 qd = QueryDict("", mutable=True)
+
 
 def login(request):
     fg = 'admin'
@@ -118,7 +117,7 @@ def forgot_password(request):
     return redirect(reverse('account:login') + f'?{qd.urlencode()}')
 
 
-def update_password_forgot(request, pk):
+def update_password_forgot(request, pk, role):
     qd = QueryDict("", mutable=True)
     if request.method == "POST":
         np = request.POST.get('new_password')
@@ -130,6 +129,34 @@ def update_password_forgot(request, pk):
             User.objects.filter(id=pk).update(password=np)
             messages.success(request, "Your password are successfully updated!")
     return redirect(reverse(f'account:login') + f'?{qd.urlencode()}')
+
+
+def update_password(request, pk, role):
+    cp = request.POST.get('current_password')
+    np = request.POST.get('new_password')
+    rnp = request.POST.get('renew_password')
+    print(cp, np, rnp)
+    if request.method == "POST":
+        cp = request.POST.get('current_password')
+        np = request.POST.get('new_password')
+        rnp = request.POST.get('renew_password')
+        if np != rnp:
+            messages.warning(request, "Your new and re-enter password aren't much.")
+        else:
+
+            if role == "doctor":
+                us = Doctor.objects.get(id=pk)
+            else:
+                us = Patient.objects.get(id=pk)
+            if us.password != cp:
+                messages.warning(request, "Your new and old password aren't much.")
+            else:
+                us.password = np
+                us.save()
+                messages.success(request, "Your password are successfully updated!")
+    qd.update({'pages': 'profile'})
+    flag = user_role(request)
+    return redirect(reverse(f'dashboard:{flag}-dashboard') + f'?pages=profile')
 
 
 def logout(request):
@@ -156,7 +183,7 @@ def register_patient(request, _to):
                 return redirect('account:login')
 
             qd.update({'pages': f'{_to}s'})
-            return redirect(reverse('dashboard:admin-dashboard')+f'?{qd.urlencode()}')
+            return redirect(reverse('dashboard:admin-dashboard') + f'?{qd.urlencode()}')
         else:
             messages.error(request, "Not Valid Form, please fill form accordingly or may account exist.")
     if _to == 'index':
@@ -188,10 +215,3 @@ def register_doctor(request, _from):
 def delete_user(request, pk, role):
     print('notifies', pk, role)
     return redirect('dashboard:admin-dashboard')
-    # try:
-    #     us = User.objects.get(id=pk)
-    #     us.delete()
-    #     messages.success(request, "User successfully deleted!")
-    # except:
-    #     messages.error(request, "User doesn't exist!")
-    # return redirect(f'post:{user_status(request)}-dashboard')

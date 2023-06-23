@@ -78,36 +78,35 @@
 
                 <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                     <i class="bi bi-bell"></i>
-                    {% if notify|length != 0 %}
-                        <span class="badge bg-primary badge-number">{{ notify|length }}</span>
+                    {% if notifications|length != 0 %}
+                        <span class="badge bg-primary badge-number">{{ notifications|length }}</span>
                     {% endif %}
                 </a><!-- End Notification Icon -->
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
                     <li class="dropdown-header">
-                        You have {{ notify|length }} new notifications
+                        You have {{ notifications|length }} new notifications
                         {% if notify|length != 0 %}
-                            <a href="{% url 'post:all-or-one-to-seen' 'none' %}"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+<!--                            <a href="{% url 'all-or-one-to-seen' 'none' %}"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>-->
                         {% endif %}
                     </li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
 
-                    {% for post in notify %}
+                    {% for notification in notifications %}
                         <li class="notification-item">
                             <i class="bi bi-info-circle text-primary"></i>
                             <div>
                                 <h4>
-                                    {% if post.is_sender_member %}
-                                        From: {{ post.sender.first_name|title }} {{ post.sender.middle_name|title }}
-                                    {% else %}
-                                        From: {{ post.sender_full_name }}
-                                    {% endif %}
+                                    Hi Dr. {{ user.first_name }}, <br><br>
+
+                                    You have schedule today with <b>{{ notification.patient.first_name }} </b>that starts in less than 30 minutes.
+                                    <br>
+
                                 </h4>
-                                <p>Come up with your id and take your post <b>@Post Office</b> or call
+                                <p> TeleHakim <b>@telehakim</b> or call
                                     +25191102034565 </p>
-                                <p>{{ post.date_send|timesince }} ago. <a href="{% url 'post:all-or-one-to-seen' post.id %}" class="font-monospace text-xl-right bg-info">Ok, i got.</a></p>
                             </div>
                         </li>
                         <li>

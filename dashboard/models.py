@@ -20,8 +20,8 @@ class Feedback(models.Model):
 class Rate(models.Model):
     class Meta:
         ordering = ('date',)
-    user = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True)
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True, related_name='user_rate')
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, null=True, related_name='doctor_rate')
     rate = models.IntegerField(default=0)
     comment = models.CharField(max_length=200, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True, null=True)
