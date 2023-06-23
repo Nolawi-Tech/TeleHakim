@@ -20,6 +20,13 @@ urlpatterns = [
     path("headache_interview1",headache_interview1,name='headache_interview1'),
     path("headache_interview2",headache_interview2,name='headache_interview2'),
     path("headache_interview3",headache_interview3,name='headache_interview3'),
+    path("headache_interview4",headache_interview4,name='headache_interview4'),
+    path("headache_interview5",headache_interview5,name='headache_interview5'),
     path("headache_result",headache_result,name="headache_result"),
+    #fever
+    path("fever_interview1",fever_interview1,name='fever_interview1'),
+    path("fever_interview2",fever_interview2,name='fever_interview2'),
+    path("fever_interview3",fever_interview3,name='fever_interview3'),
+    path("fever_interview4",fever_interview4,name='fever_interview4'),
     path("recommend",recommend,name='recommend'),
 ]

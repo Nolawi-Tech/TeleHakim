@@ -117,13 +117,32 @@ def cough_result(request):
 def cough_interview2(request):
      return render(request,"recommendation/coughing/cough_interview2.html")
 
+
+# headache
 def headache_interview1(request):
      return render(request,"recommendation/headache/headache_interview1.html")
 def headache_interview2(request):
      return render(request,'recommendation/headache/headache_interview2.html')
 def headache_interview3(request):
      return render(request,'recommendation/headache/headache_interview3.html')
+def headache_interview4(request):
+     return render(request,'recommendation/headache/headache_interview4.html')
+def headache_interview5(request):
+     return render(request,'recommendation/headache/headache_interview5.html')
 def headache_result(request):
      key_value = request.GET.get('key')   
      print(key_value)   
      return render(request,"recommendation/headache/headache_result.html",{'result':key_value})
+#fever
+def fever_interview1(request):
+     return render(request,"recommendation/fever/fever_interview1.html")
+def fever_interview2(request):
+     return render(request,"recommendation/fever/fever_interview2.html")
+def fever_interview3(request):
+     return render(request,"recommendation/fever/fever_interview3.html")
+def fever_interview4(request):
+     return render(request,"recommendation/fever/fever_interview4.html")
+def fever_result(request):
+     key_value = request.GET.get('key')   
+     print(key_value)   
+     return render(request,"recommendation/fever/fever_result.html",{'result':key_value})

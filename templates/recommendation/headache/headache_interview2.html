@@ -66,7 +66,7 @@
                     <h3 class="p-2 text-center text-white">From the symptoms below, please selet more that's you the most</h3>
                 </div>
             </div>
-            <div class="row  d-flex align-items-center ">
+            <div class="row  d-flex justify-content-between ">
                 <div class="col-12 col-lg-6 align-items-center">
                     <div class="image-container">
                         <input type="checkbox" id="checkbox1" onclick="selectImage('page1.html')">
@@ -89,7 +89,7 @@
                 </div>
 
             </div>
-            <div class="row  d-flex align-items-center ">
+            <div class="row  d-flex justify-content-between ">
                 <div class="col-12 col-lg-6 align-items-center">
                     <div class="image-container">
                         <input type="checkbox" id="checkbox3" onclick="selectImage('page3.html')">
@@ -262,7 +262,7 @@
 
         var nextButton = document.getElementById('nextButton');
         nextButton.addEventListener('click', function() {
-            if (page1.checked && page2.checked && !page3.checked && !page4.checked) {
+            if (page1.checked && !page2.checked && !page3.checked && !page4.checked) {
                 const heading = document.querySelector("#heading");
                 heading.style.display = "none";
 
@@ -272,7 +272,17 @@
                     const vomiting = document.querySelector("#two");
                     vomiting.style.display = "block";
                 }, 2000);
-            } else if (page1.checked && !page2.checked && page3.checked && !page4.checked) {
+            } else if (page2.checked && !page3.checked && !page4.checked) {
+                const heading = document.querySelector("#heading");
+                heading.style.display = "none";
+
+                showWaitingText("Please wait... Checking your disease...");
+                setTimeout(function() {
+                    hideWaitingText();
+                    const vomiting = document.querySelector("#two");
+                    vomiting.style.display = "block";
+                }, 2000);
+            } else if (!page2.checked && page3.checked && !page4.checked) {
                 const heading = document.querySelector("#heading");
                 heading.style.display = "none";
 
@@ -283,7 +293,8 @@
                     vomiting.style.display = "block";
                 }, 2000);
 
-            } else if (!page1.checked && !page2.checked && !page3.checked && page4.checked) {
+            } else
+            if (!page1.checked && !page2.checked && !page3.checked && page4.checked) {
                 const heading = document.querySelector("#heading");
                 heading.style.display = "none";
 
@@ -306,7 +317,7 @@
             const heading1 = document.querySelector("#two");
             heading1.style.display = "none";
 
-            showWaitingText("Please wait... Checking vomiting...");
+            showWaitingText("Please wait... Checking ...");
             setTimeout(function() {
                 hideWaitingText();
                 const vomiting = document.querySelector("#two_one");
