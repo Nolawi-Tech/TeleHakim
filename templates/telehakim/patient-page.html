@@ -130,6 +130,7 @@ medical-history
 </div>
 <!-- End Book -->
 {% elif page == 'search' %}
+{% load mathfilters %}
 <!-- Start of Search -->
 <div class="row contact justify-content-center">
     <div class="col-xl-8">
@@ -188,11 +189,39 @@ medical-history
                         <div class=""><i class="bi bi-calendar-day-fill me-1"></i> <a
                                 href="?pages=book&doc_email={{ doctor.email }}&date=&list_date=Submit">See all
                             timings.</a></div>
-                        <div class=""><i class="bi bi-award-fill"></i> 340 rate | 95%</div>
-
-                        <div class="col-md-6 text-center p-2">
-                            <a type="submit" class="btn btn-primary">Rate Info | o</a>
+                        <div class=""><i class="bi bi-award-fill"></i> 340 rate | 95%
+                        {% with total_rate=doctor.doctor_rate.all|add:"rate" %}
+                            Total Rate: {{ total_rate }}
+                        {% endwith %}
                         </div>
+
+                        <button type="button" class="btn btn-primary m-2 text-center" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable">
+                            View rate
+                          </button>
+                          <div class="modal fade mt-5" id="modalDialogScrollable" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title">View rate given by patients</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  {% for rate in doctor.doctor_rate.all %}
+                                    {% if rate.doctor.email == doctor.email %}
+                                        <p>By <b class="text-danger fw-bold">{{ rate.user.first_name }}/{{rate.doctor.email}}/{{doctor.email}}</b> | {{ rate.rate }} rates</p>
+                                        <p>
+                                            {{ rate.comment }}
+                                        </p>
+                                        <hr>
+                                    {% endif %}
+                                    {% empty %}
+                                        <p>No rate yet</p>
+                                  {% endfor %}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
                     </div>
                 </div>
             </div>
@@ -284,6 +313,7 @@ medical-history
 {% elif page == 'profile' %}
     {% include 'telehakim/partials/profile.html' %}
 {% else %}
+{% load mathfilters %}
 <!-- Start Data table -->
 <div class="modal fade" id="disablebackdrop" tabindex="-1" data-bs-backdrop="false">
     <div class="modal-dialog resizable">
@@ -344,23 +374,27 @@ medical-history
                         <td>{{ history.patient.email }}</td>
                         <td>{{ history.schedule.schedule }}</td>
                         <td>STRDVJb</td>
-                        {% if history.status == 1 %}
+                        {% if history.get_status == 1 %}
                         <td><a href="" class="btn btn-sm btn-primary">Pending</a></td>
-                        {% elif history.status == 0 %}
+                        {% elif history.get_status == 0 %}
                         <td><a href="" class="btn btn-sm btn-success">Ongoing</a></td>
+                        {% elif history.get_status == 3 %}
+                        <td><a href="" class="btn btn-sm btn-success">Waiting</a></td>
                         {% else %}
                         <td><a href="" class="btn btn-sm btn-danger">Passed</a></td>
                         {% endif %}
 
-                        {% if history.status == 0 %}
+                        {% if history.get_status == 0 %}
                         <td>
                             <button type="button" onclick="set_email({{ history.doctor.id }})" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal"
                                     data-bs-target="#disablebackdrop">
                                 Rate Doctor
                             </button>
                         </td>
-                        {% elif history.status == 1 %}
-                        <td><a href="{% url 'dashboard:patient-dashboard'%}?pages=chat" class="btn btn-sm btn-outline-info">CALL</a></td>
+                        {% elif history.get_status == 1 %}
+                        <td><a href="{% url 'dashboard:patient-dashboard'%}?pages=chat&app_id={{ history.id }}" class="btn btn-sm btn-outline-info">CALL</a></td>
+                        {% elif history.get_status == 3 %}
+                        <td> - </td>
                         {% else %}
                         <td>
                             <button type="button" onclick="set_email({{ history.doctor.id }})" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal"
@@ -371,7 +405,9 @@ medical-history
                         {% endif %}
 
                         <td>
-                            30 Min
+                            {% with tm=history.left_time %}
+                                {{tm.days}} Days, {{ tm.seconds|intdiv:3600 }} Hr, {{ tm.seconds|mod:3600|intdiv:60 }} Min
+                            {% endwith %}
                         </td>
                     </tr>
                     {% endfor %}

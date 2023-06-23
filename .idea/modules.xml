@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../Django_WebRTC/.idea/Django_WebRTC.iml" filepath="$PROJECT_DIR$/../Django_WebRTC/.idea/Django_WebRTC.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/TeleHakim.iml" filepath="$PROJECT_DIR$/.idea/TeleHakim.iml" />
     </modules>
   </component>

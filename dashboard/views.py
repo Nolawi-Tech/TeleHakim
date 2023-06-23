@@ -137,6 +137,7 @@ def admin_dashboard(request):
 def patient_dashboard(request):
     page = request.GET.get('pages')
     user = user_info(request)
+    app_id = request.GET.get('app_id')
     user_role = u_role(request)
 
     unique_dates = []
@@ -205,6 +206,7 @@ def patient_dashboard(request):
         'page': page,
         'user': user,
         'user_role': user_role,
+        'app_id': app_id,
         'doctors': doctors,
         'update_form': PatientRegistrationForm(instance=user),
         'histories': Appointment.objects.filter(patient=user).order_by('status'),
@@ -289,6 +291,7 @@ def doctor_dashboard(request):
         'histories': Appointment.objects.filter(doctor=user).order_by('status'),
         'rate_info': {
             'rates': rates,
+            'total_rate': sum(obj.rate for obj in rates),
             'total_percent': ((sum(obj.rate for obj in rates) + 0.01) / ((10 * len(rates)) + 0.01)) * 100,
         },
         'book_info': {
