@@ -61,7 +61,7 @@
                         </form>
                     {% elif revoke == "password" %}
                         <div class="">
-                            <form method="post" action="{% url 'account:update_password_forgot' id %}">
+                            <form method="post" action="{% url 'account:update_password_forgot' id user_role %}">
                                 {% csrf_token %}
                                 <div class="row mb-3">
                                     <div class="col-md-12 mb-3">

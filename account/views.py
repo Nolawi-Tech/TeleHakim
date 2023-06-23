@@ -62,7 +62,7 @@ def login(request):
                     qd.update({"revoke": "password", "id": rv.patient.id if rl == "patient" else rv.doctor.id})
                     # email = EmailMessage("Hello,", f'Here is your code: {rv.code}', to=[em])
                     # email.send()
-                    rv.delete()
+                    # rv.delete()
                     return redirect(reverse('account:login') + f'?{qd.urlencode()}')
                 else:
                     messages.error(request, "The Code you have entered isn't correct.")
