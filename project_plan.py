@@ -5,9 +5,9 @@ from typing import List
     Admin can interview the doctors,viewing CV, accept or reject, fill some info.
     System's can withhold doctors from working based on 5 user rates.
     Personal profile update, password reset.
-    Admin delete User and some unnecessary actions.
     In email using threading.
     
+    Admin delete User and some unnecessary actions.
     Timing and Notification sent to user before clock is ticking.
     
     Payment integration.

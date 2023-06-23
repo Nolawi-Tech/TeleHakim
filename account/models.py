@@ -56,10 +56,10 @@ class Doctor(models.Model):
 
 
 class Revoke(models.Model):
-    ran = ''.join(random.sample(string.ascii_letters + string.digits, k=5))
+    ran = ''.join(random.sample(string.digits, k=6))
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, null=True)
-    # code = models.CharField(max_length=15, blank=True, default=f'TeleHakim:{ran}')
+    code = models.CharField(max_length=15, blank=True, default=ran)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
