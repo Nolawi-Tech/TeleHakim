@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
-from account.models import *
 from account.forms import *
 from django.contrib import messages
 from django.http import QueryDict
 from django.urls import reverse
 from account.include import *
+from account.models import Patient, Doctor
 
 qd = QueryDict("", mutable=True)
 
@@ -19,27 +19,20 @@ def login(request):
             if Revoke.objects.filter(patient__email=em).exists() or Revoke.objects.filter(doctor__email=em).exists():
                 messages.error(request, "Already password revoke is requested check your email.")
                 qd = QueryDict("", mutable=True)
-                qd.update({"revoke": "code", "email": em})
+                us = "patient"
+                if Doctor.objects.filter(email=em).exists():
+                    us = "doctor"
+                qd.update({"revoke": "code", "email": em, 'user': us})
                 return redirect(reverse('account:login') + f'?{qd.urlencode()}')
             else:
                 try:
-                    pt = Patient.objects.filter(email=em)
-                    dc = Doctor.objects.filter(email=em)
-                    code = ""
-                    us = ''
-                    if len(pt) > 0:
-                        cs = Revoke(patient=pt[0])
-                        code = cs.code
-                        cs.save()
-                        us = 'doctor'
-                    elif len(dc) > 0:
-                        cs = Revoke(doctor=dc[0])
-                        code = cs.code
-                        cs.save()
-                        us = 'patient'
+                    us = "patient"
+                    if Doctor.objects.filter(email=em).exists():
+                        us = "doctor"
+                        rv = Revoke.objects.create(doctor=Doctor.objects.get(email=em))
                     else:
-                        s = 4 / 0
-                    print(code, "code")
+                        rv = Revoke.objects.create(patient=Patient.objects.get(email=em))
+                    send_email('email/password_reset.html', [em], {'name': em, 'otp_code': rv.code})
                     qd = QueryDict("", mutable=True)
                     qd.update({"revoke": "code", "email": em, 'user': us})
                     messages.success(request, "We have sent a message to your email.")
@@ -49,9 +42,8 @@ def login(request):
         elif request.POST.get('code') is not None:
             em = request.GET.get('email')
             cd = request.POST.get('codechar')
-            rl = request.POST.get('user')
+            rl = request.GET.get('user')
             try:
-                rv = None
                 if rl == "patient":
                     rv = Revoke.objects.get(patient__email=em)
                 else:
@@ -59,10 +51,9 @@ def login(request):
                 if cd == rv.code:
                     messages.success(request, "Good Job please update your password.")
                     qd = QueryDict("", mutable=True)
-                    qd.update({"revoke": "password", "id": rv.patient.id if rl == "patient" else rv.doctor.id})
-                    # email = EmailMessage("Hello,", f'Here is your code: {rv.code}', to=[em])
-                    # email.send()
-                    # rv.delete()
+                    qd.update({"revoke": "password", "id": rv.patient.id if rl == "patient" else rv.doctor.id, 'user': rl })
+
+                    rv.delete()
                     return redirect(reverse('account:login') + f'?{qd.urlencode()}')
                 else:
                     messages.error(request, "The Code you have entered isn't correct.")
@@ -99,6 +90,7 @@ def login(request):
                     messages.warning(request, "User doesn't exist!, with this credentials.")
     context = {
         'id': request.GET.get("id"),
+        'reset_req': request.GET.get("user"),
         'role': fg,
         'revoke': rvk,
     }
@@ -124,9 +116,12 @@ def update_password_forgot(request, pk, role):
         rnp = request.POST.get('renew_password')
         if np != rnp:
             messages.warning(request, "Two password aren't match..")
-            qd.update({'revoke': 'password', "id": pk})
+            qd.update({'revoke': 'password', "id": pk, 'user': role})
         else:
-            User.objects.filter(id=pk).update(password=np)
+            if role == 'patient':
+                Patient.objects.filter(id=pk).update(password=np)
+            else:
+                Doctor.objects.filter(id=pk).update(password=np)
             messages.success(request, "Your password are successfully updated!")
     return redirect(reverse(f'account:login') + f'?{qd.urlencode()}')
 

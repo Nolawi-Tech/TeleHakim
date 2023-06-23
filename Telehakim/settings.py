@@ -74,7 +74,6 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'mesaye2010@gmail.com'
 
 
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',

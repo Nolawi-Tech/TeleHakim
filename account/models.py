@@ -57,8 +57,8 @@ class Doctor(models.Model):
 
 class Revoke(models.Model):
     ran = ''.join(random.sample(string.digits, k=6))
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True)
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, null=True)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, blank=True, null=True)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, blank=True, null=True)
     code = models.CharField(max_length=15, blank=True, default=ran)
     date_created = models.DateTimeField(auto_now_add=True)
 

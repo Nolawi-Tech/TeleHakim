@@ -12,7 +12,7 @@ from typing import List
     
     Payment integration.
     Integration b/n prediction and other system -> suggest doctor based on specialization.
-    Amaric language support. 
+    Amahric language support. 
 '''
 
 
