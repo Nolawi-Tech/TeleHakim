@@ -40,6 +40,21 @@
                     <li class=""><a href="#testimonial">Testimonial</a></li>
                     <li class=""><a href="#contact">Contact</a></li>
                     <li class=""><a href="{% url 'account:login' %}" class="btn btn-primary btn-block">Login & Sign up</a></li>
+                   
+                    <div id="google_translate_element"></div>
+                    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+                    <script>
+                      function googleTranslateElementInit(){
+                        new google.translate.TranslateElement(
+                          {pageLanguage: 'en'},
+                          'google_translate_element'
+                        );
+                      }
+                
+                    
+                
+                    </script>
+                
                   </ul>
                   
                   
@@ -509,6 +524,7 @@
           </div>
         </div>
       </div>
+ 
       <div class="footer-line">
         <div class="container">
           <div class="row">
@@ -530,7 +546,7 @@
     </footer>
   
   <!--/ footer-->
-
+ 
   <script src="assets/js/jquery.min.js"></script>
   <script src="assets/js/jquery.easing.min.js"></script>
   <script src="assets/js/bootstrap.min.js"></script>
