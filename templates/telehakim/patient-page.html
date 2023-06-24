@@ -88,7 +88,14 @@ medical-history
                 <div class="col-md-4">
                     <input type="date" name="date" class="form-control" placeholder="date">
                 </div>
-                <div class="col-md-2">
+                <div class="mt-2">
+        
+                    <p>Please complete the payment to confirm your appointment:</p>
+                    <!-- <button type="button" class="btn btn-success btn-block">Pay Now</button> -->
+                    <a href="{% url 'payment:express-payment' %}" class="btn btn-success btn-block">Pay Now by yenepay</a>
+                    <a href="https://t.me/telehakimbot" class="btn btn-success btn-block">Pay Now by chapa</a>
+                  </div>
+                <div class="col-md-12">
                     <input type="submit" name="list_date" class="form-control btn btn-primary" value="Submit">
                 </div>
             </form>
