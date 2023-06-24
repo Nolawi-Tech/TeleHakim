@@ -60,7 +60,7 @@
                 <h3 class="p-2 text-center text-white">From the symptoms below, please pick one that's you the most</h3>
             </div>
         </div>
-        <div v class="row  d-flex align-items-center ">
+        <div  class="row  d-flex justify-content-between ">
             <div class="col-12 col-lg-4 main-text align-item-center ">
                 <div class="image-container text-center">
                     <img class="img img-fluid " onclick="selectImage('page1.html')" src="{% static 'asset/img/recommend/symptoms/cough men.png' %} " alt=" ">
@@ -80,16 +80,16 @@
                 </div>
             </div>
         </div>
-        <div class="row  d-flex align-items-center ">
+        <div class="row  d-flex justify-content-between ">
             <div class="col-12 col-lg-4 align-items-center ">
                 <div class="image-container">
-                    <img class="img img-fluid" onclick="selectImage('page5.html')" src="{% static 'asset/img/recommend/symptoms/fatigue.png' %} " alt=" ">
+                    <img class="img img-fluid" onclick="selectImage('page4.html')" src="{% static 'asset/img/recommend/symptoms/fatigue.png' %} " alt=" ">
                     <p class="text-center">fatigue/tired</p>
                 </div>
             </div>
             <div class="col-12 col-lg-4 align-items-center ">
                 <div class="image-container">
-                    <img class="img img-fluid" onclick="selectImage('page6.html')" src="{% static 'asset/img/recommend/symptoms/fever.png' %} " alt=" ">
+                    <img class="img img-fluid" onclick="selectImage('page5.html')" src="{% static 'asset/img/recommend/symptoms/fever.png' %} " alt=" ">
                     <p class="text-center">fever</p>
                 </div>
             </div>
@@ -181,7 +181,7 @@
                 window.location.href = "{% url 'interview4'%}";
             }
             if (page5.clicked) {
-                window.location.href = "{% url 'interview1'%}";
+                window.location.href = "{% url 'fever_interview1'%}";
             }
             if (page6.clicked) {
                 window.location.href = "{% url 'interview2'%}";
