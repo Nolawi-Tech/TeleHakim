@@ -9,6 +9,10 @@ from account.include import *
 qd = QueryDict("", mutable=True)
 
 
+def home(request):
+    return render(request, 'index.html')
+
+
 def login(request):
     fg = 'admin'
     rvk = request.GET.get("revoke")
