@@ -51,7 +51,7 @@ def payment_with_express(request):
         "expiresAfter": 24,
         "itemId": 60,
         "itemName": "Billing",
-        "unitPrice": 11.0,
+        "unitPrice": 1300,
         "quantity": 1,
         "discount": 0.0,
         "handlingFee": 0.0,

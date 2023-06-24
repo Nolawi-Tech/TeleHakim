@@ -17,7 +17,7 @@
                                 {% for x, y in obj.items %}
                                     <input type="hidden" name="{{ x }}" value="{{ y }}">
                                 {% endfor %}
-                                10.0 ETB
+                                {{ doctor.fee }}
                                 <input type="submit" class="btn btn-success btn-lg btn-block" value="Pay with yenepay">
                             </form>
                     </div>
