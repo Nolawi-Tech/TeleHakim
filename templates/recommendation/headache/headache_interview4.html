@@ -117,13 +117,13 @@
             </div>
         </div>
 
-        <div id="three " style="display: none;">
+        <div id="three" style="display: none;">
             <div class="row d-flex justify-content-between">
                 <div class="col">
                     <p class="h2 p-5 text-center ">is stiff neck included in your list of symptoms?</p>
                 </div>
             </div>
-            <div class="row d-flex justify-content-between ">
+            <div class="row d-flex justify-content-between">
                 <div class="col ">
                     <div>
                         <img class="img img-fluid " src="{% static 'asset/img/recommend/symptoms/headache/stiffneck.png' %} " alt=" ">
@@ -132,11 +132,11 @@
                 </div>
             </div>
             <div class="row d-flex justify-content-between p-5 ">
-                <div class="col-auto ">
-                    <button class="btn btn-success " type="submit " name="symptom " value="one_yes " id="three_yes">Yes</button>
+                <div class="col-auto">
+                    <button class="btn btn-success" type="submit" name="symptom " value="one_yes " id="three_yes">Yes</button>
                 </div>
-                <div class="col-auto ">
-                    <button class="btn btn-success " type="submit " name="symptom " value="one_no " id="three_no">No</button>
+                <div class="col-auto">
+                    <button class="btn btn-success" type="submit" name="symptom" value="one_no" id="three_no">No</button>
                 </div>
             </div>
         </div>
@@ -159,43 +159,43 @@
         }
 
         function hideWaitingText() {
-            waitingText.style.display = "none ";
+            waitingText.style.display = "none";
         }
         irritableYesButton.forEach(function(button) {
-            button.addEventListener("click ", function(event) {
+            button.addEventListener("click", function(event) {
                 event.preventDefault();
                 const one = document.querySelector("#one");
-                one.style.display = "none ";
+                one.style.display = "none";
                 showWaitingText("Please wait... Checking symptoms... ");
                 setTimeout(function() {
                     hideWaitingText();
                     const feverSection = document.querySelector("#two");
-                    feverSection.style.display = "block ";
+                    feverSection.style.display = "block";
                 }, 2000);
             });
         });
         acidityPainYesButton.forEach(function(button) {
-            button.addEventListener("click ", function(event) {
+            button.addEventListener("click", function(event) {
                 event.preventDefault();
                 const two = document.querySelector("#two");
-                two.style.display = "none ";
-                showWaitingText("Please wait... Checking symptoms... ");
+                two.style.display = "none";
+                showWaitingText("Please wait... Checking symptoms...");
                 setTimeout(function() {
                     hideWaitingText();
-                    const feverSection = document.querySelector("#three ");
-                    feverSection.style.display = "block ";
+                    const feverSection = document.querySelector("#three");
+                    feverSection.style.display = "block";
                 }, 2000);
             });
         });
 
-        stiffneckYesButton.addEventListener("click ", function(event) {
-            var url = "{% url 'headache_result' %} ";
+        stiffneckYesButton.addEventListener("click", function(event) {
+            var url = "{% url 'headache_result' %}";
             var key = "Migraine ";
             window.location.href = url + "?key=" + key;
 
         });
-        stiffneckNOButton.addEventListener(" click ", function(event) {
-            var url = "{% url 'headache_interview2' %} ";
+        stiffneckNOButton.addEventListener("click", function(event) {
+            var url = "{% url 'headache_interview2' %}";
             window.location.href = url;
 
         });

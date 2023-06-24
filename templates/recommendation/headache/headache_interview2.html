@@ -238,7 +238,7 @@
         var page4 = document.getElementById('checkbox4');
 
         const waitingText = document.querySelector("#waiting-text");
-        const chillsYesButton = document.querySelector("#one_yes");
+        const chillsYesButton = document.querySelectorAll("#one_yes,#one_no");
         const slurredPainYesButton = document.querySelector("#two_yes");
         const excessivehungerYesButton = document.querySelector("#two_one_yes");
         const unsteadinessYesButton = document.querySelector("#three_yes");
@@ -317,7 +317,7 @@
             const heading1 = document.querySelector("#two");
             heading1.style.display = "none";
 
-            showWaitingText("Please wait... Checking ...");
+            showWaitingText("Please wait... Checking vomiting...");
             setTimeout(function() {
                 hideWaitingText();
                 const vomiting = document.querySelector("#two_one");
@@ -330,11 +330,14 @@
             window.location.href = url + "?key=" + key;
 
         });
-        chillsYesButton.addEventListener("click", function(event) {
-            var url = "{% url 'headache_result' %}";
-            var key = "Malaria";
-            window.location.href = url + "?key=" + key;
+        chillsYesButton.forEach(function(button) {
+            button.addEventListener("click", function(event) {
+                event.preventDefault();
+                var url = "{% url 'headache_result' %}";
+                var key = "Malaria";
+                window.location.href = url + "?key=" + key;
 
+            });
         });
         unsteadinessYesButton.addEventListener("click", function(event) {
             var url = "{% url 'headache_result' %}";

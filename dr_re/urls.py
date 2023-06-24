@@ -28,5 +28,7 @@ urlpatterns = [
     path("fever_interview2",fever_interview2,name='fever_interview2'),
     path("fever_interview3",fever_interview3,name='fever_interview3'),
     path("fever_interview4",fever_interview4,name='fever_interview4'),
+    path("fever_interview5",fever_interview5,name='fever_interview5'),
+    path("fever_result",fever_result,name='fever_result'),
     path("recommend",recommend,name='recommend'),
 ]

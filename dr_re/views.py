@@ -142,6 +142,8 @@ def fever_interview3(request):
      return render(request,"recommendation/fever/fever_interview3.html")
 def fever_interview4(request):
      return render(request,"recommendation/fever/fever_interview4.html")
+def fever_interview5(request):
+     return render(request,"recommendation/fever/fever_interview5.html")
 def fever_result(request):
      key_value = request.GET.get('key')   
      print(key_value)   
