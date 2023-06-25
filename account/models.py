@@ -1,6 +1,6 @@
 from django.db import models
 import random
-import string
+from django.utils.crypto import get_random_string
 
 
 class Patient(models.Model):
@@ -56,13 +56,22 @@ class Doctor(models.Model):
 
 
 class Revoke(models.Model):
-    ran = ''.join(random.sample(string.digits, k=6))
+    code = models.CharField(max_length=6, unique=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, blank=True, null=True)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, blank=True, null=True)
-    code = models.CharField(max_length=15, blank=True, default=ran)
     date_created = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if not self.code:
+            self.code = self.generate_unique_code()
+
+        super().save(*args, **kwargs)
+
+    def generate_unique_code(self):
+        code = "".join([str(random.randint(0, 9)) for i in range(6)])
+        while Revoke.objects.filter(code=code).exists():
+            code = "".join([str(random.randint(0, 9)) for i in range(6)])
+        return code
 
     def __str__(self):
         return self.code
-
-

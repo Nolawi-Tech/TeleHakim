@@ -27,6 +27,14 @@ Doctor
                 <span>View Rate</span>
             </a>
         </li>
+        {% if not user.is_verified %}
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'dashboard:doctor-dashboard' %}?pages=call_admin">
+                <i class="bi bi-person-fill"></i>
+                <span>Call Admin</span>
+            </a>
+        </li>
+        {% endif %}
         <li class="nav-item">
             <a class="nav-link collapsed" href="{% url 'dashboard:doctor-dashboard' %}?pages=remove_day">
                 <i class="bi bi-trash-fill"></i>
@@ -51,6 +59,8 @@ chatting
 add_working_day
 {% elif page == "remove_day" %}
 remove_working_day
+{% elif page == "call_admin" %}
+Book an appointment & call admin
 {% elif page == 'profile' %}
 profile
 {% elif page == 'view_rate' %}
@@ -196,6 +206,64 @@ view_rate
     </div>
 </div>
 <!-- end view Rate -->
+{% elif page == "call_admin" %}
+<div class="row contact justify-content-center">
+    <div class="col-xl-8">
+        <p class="text-center card-title">Book an appointment & call admin for Approval.</p>
+        <div class="card p-4">
+            <form class="row g-3" action="" method="get">
+                <input type="hidden" name="pages" value="call_admin">
+                <div class="col-md-4">
+                    <select name="admin" class="form-control">
+                        <option value="" disabled>Select Admin</option>
+                        {% for admin in admins %}
+                        <option value="{{ admin.id }}">{{ admin.first_name }} {{ admin.last_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <input type="date" name="date" class="form-control" placeholder="date">
+                </div>
+                <div class="col-md-2">
+                    <input type="submit" name="list_date_admin" class="form-control btn btn-primary" value="Submit">
+                </div>
+            </form>
+            <hr>
+            <div class="row">
+                <div class="">
+                    <div class="row">
+                        {% for date in book_info_admin.dates %}
+                        <div class="col col-xl-3 col-xl-4">
+                            <div class="card-title">{{ date }}</div>
+                            {% for schedule in book_info_admin.schedules %}
+                            {% if schedule.date == date %}
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <a class="btn alert-info sm"
+                                       href="{% url 'appointment:schedule-admin' %}?email={{ book_info_admin.add_email }}&sch_id={{ schedule.id }}">
+                                        {{ schedule.schedule }}
+                                    </a>
+                                </li>
+                            </ul>
+                            {% endif %}
+
+                            {% endfor %}
+                        </div>
+
+                        {% empty %}
+                        <div class="col">
+                            <div class="btn sm">
+                                No Schedule
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
 {% elif page|slice:":4" == 'chat' %}
 {% if page == 'chatting' %}
 {% include 'chat/room.html' %}
@@ -203,7 +271,7 @@ view_rate
 {% include 'chat/index.html' %}
 {% endif %}
 {% elif page == 'profile' %}
-    {% include 'telehakim/partials/profile.html' %}
+{% include 'telehakim/partials/profile.html' %}
 {% else %}
 {% load mathfilters %}
 <!-- Start Data table -->
@@ -298,14 +366,14 @@ view_rate
                         <td><a href="#" class="btn btn-sm btn-primary">Pending</a></td>
                         {% elif history.get_status == 0 %}
                         <td><a href="#" class="btn btn-sm btn-success">Ongoing</a></td>
-                        {% elif history.get_status == 3 %}
-                            <td><a href="#" class="btn btn-sm btn-info">Waiting</a></td>
+                        {% elif history.get_status == 2 %}
+                        <td><a href="#" class="btn btn-sm btn-info">Waiting</a></td>
                         {% else %}
                         <td><a href="#" class="btn btn-sm btn-danger">Passed</a></td>
                         {% endif %}
 
                         {% if history.get_status == 1 %}
-                        <td><a href="{% url 'dashboard:doctor-dashboard'%}?pages=chat&app_id={{ history.id }}"
+                        <td><a href="{% url 'dashboard:doctor-dashboard'%}?pages=chat&app_id={{ history.id }}&purpose=1"
                                class="btn btn-sm btn-outline-info">CALL</a></td>
                         {% elif history.get_status == 0 %}
                         <td>
@@ -319,8 +387,39 @@ view_rate
                                     data-bs-target="#disablebackdrop2">
                                 Medical H.
                             </button>
+                            {% for his in histories %}
+                                {% if his.id == history.id %}
+                                  <div class="modal fade mt-5" id="modalDialogScrollable{{ history.id }}" tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-scrollable">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title">View Medical history of patient given by Doctors
+                                          </h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {% for mhis in history.patient.patient_mhistory.all %}
+                                            <p class="float-end text-muted">{{ mhis.date }}</p>
+                                            <p>Prescribed by <b class="text-primary fw-bold fs-6 text-monospace">Dr. {{ mhis.doctor.first_name|title }} </b></p>
+                                            <p>
+                                                {{ mhis.history }}
+                                            </p>
+                                            <hr>
+                                            {% empty %}
+                                            <p class="text-center">No Medical history yet.</p>
+                                            {% endfor %}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable{{ history.id }}">
+                                    View MH
+                                  </button>
+                                {% endif %}
+                            {% endfor %}
                         </td>
-                        {% elif history.get_status == 3 %}
+                        {% elif history.get_status == 2 %}
                         <td>-</td>
                         {% else %}
                         <td>-</td>
@@ -328,7 +427,65 @@ view_rate
 
                         <td>
                             {% with tm=history.left_time %}
-                                {{tm.days}} Days, {{ tm.seconds|intdiv:3600 }} Hr, {{ tm.seconds|mod:3600|intdiv:60 }} Min
+                            {{tm.days}} Days, {{ tm.seconds|intdiv:3600 }} Hr, {{ tm.seconds|mod:3600|intdiv:60 }} Min
+                            {% endwith %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                Approvals waiting
+                <table class="table datatable">
+                    <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">Patient name</th>
+                        <th scope="col">Patient Email</th>
+                        <th scope="col">Your Email</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">ROOM_ID</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                        <th scope="col">Left Time</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for history in admin_histories %}
+
+                    <tr>
+                        <th scope="row">{{ history.id }}</th>
+                        <td>{{ history.patient.first_name }} {{ history.patient.last_name }}</td>
+                        <td>{{ history.patient.email }}</td>
+                        <td>{{ history.doctor.email }}</td>
+                        <td>{{ history.schedule.schedule }}</td>
+                        <td>STRDVJb</td>
+                        {% if history.get_status == 1 %}
+                        <td><a href="#" class="btn btn-sm btn-primary">Pending</a></td>
+                        {% elif history.get_status == 0 %}
+                        <td><a href="#" class="btn btn-sm btn-success">Ongoing</a></td>
+                        {% elif history.get_status == 2 %}
+                        <td><a href="#" class="btn btn-sm btn-info">Waiting</a></td>
+                        {% else %}
+                        <td><a href="#" class="btn btn-sm btn-danger">Passed</a></td>
+                        {% endif %}
+
+                        {% if history.get_status == 1 %}
+                        <td><a href="{% url 'dashboard:doctor-dashboard'%}?pages=chat&app_id={{ history.id }}&purpose=0"
+                               class="btn btn-sm btn-outline-info">CALL</a></td>
+                        {% elif history.get_status == 0 %}
+                        <td>
+                            -
+                        </td>
+                        {% elif history.get_status == 2 %}
+                        <td>-</td>
+                        {% else %}
+                        <td>-</td>
+                        {% endif %}
+
+                        <td>
+                            {% with tm=history.left_time %}
+                            {{tm.days}} Days, {{ tm.seconds|intdiv:3600 }} Hr, {{ tm.seconds|mod:3600|intdiv:60 }} Min
                             {% endwith %}
                         </td>
                     </tr>
@@ -359,6 +516,7 @@ view_rate
                     'max-height':'100%'
                 });
             });
+
 
 
 
