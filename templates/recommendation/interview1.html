@@ -1,0 +1,323 @@
+{% load static %}{% block maincontent %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TeleHakim</title>
+    <meta name="description" content="Free Bootstrap Theme by BootstrapMade.com">
+    <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'https://fonts.googleapis.com/css?family=Open+Sans|Raleway|Candal' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/font-awesome.min.css' %}">
+    <!-- <link href="{% static 'asset/css/recommendation/bootstrap1.min.css' %}" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/recommendation/style.css' %}">
+    <link href="{% static 'asset/css/recommendation/recommend.css'%} " rel="stylesheet">
+    <link href="{% static 'asset/css/recommendation/modified.css'%} " rel="stylesheet">
+
+</head>
+
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+    <!--banner-->
+    <section id="banner" class="banner">
+        <div class="bg-color">
+            <nav class="navbar navbar-default">
+                <div class="container">
+                    <div class="col-md-12">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				      </button>
+                            <a class="navbar-brand" href="#"><img src="{% static 'asset/img/logo.png'%}" class="img-responsive" style="width: 140px; margin-top: -16px;"></a>
+                        </div>
+                        <div class="collapse navbar-collapse navbar-right" id="myNavbar">
+                            <ul class="nav navbar-nav">
+                                <li class="n1"><a href="{url ''}">Home</a></li>
+                                <li class="n1"><a href="#service">Services</a></li>
+                                <li class="n1"><a href="#about">About</a></li>
+                                <li class="n1"><a href="#testimonial">Testimonial</a></li>
+                                <li class="n1"><a href="#contact">Contact</a></li>
+                                <li class="n1"><a href="login.html" class="btn btn-info btn-block">Login</a></li>
+                                <div id="google_translate_element"></div>
+                                <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+                                <script>
+                                    function googleTranslateElementInit() {
+                                        new google.translate.TranslateElement({
+                                                pageLanguage: 'en'
+                                            },
+                                            'google_translate_element'
+                                        );
+                                    }
+                                </script>
+
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </nav>
+        </div>
+    </section>
+    <div class="container  main my-5 py-5">
+        <div class="row d-flex align-items-center">
+            <div class="col-12 col-md-7  main-text align-item-center">
+                <div style="margin: 5px,20,5px,20;">
+                    <h2 class="">Terms of service</h2>
+                    <br>
+                    <h3>Before using the checkup, please read the Terms of Service and remember:</h3>
+                </div>
+                <br>
+                <div class="ms-5">
+                    <ul>
+                        <li class="mb-3 h3 "><b>Checkup isn’t a diagnosis.</b> It’s only for your information and not a qualified medical opinion.</li>
+                        <li class="mb-3 h3 "><b>Checkup isn’t for emergencies.</b> Call your local emergency number right away when there’s a health emergency.</li>
+                        <li class=" h3 "><b>Your data is safe.</b> The information you give won’t be shared or used to identify you.</li>
+                    </ul>
+                </div>
+
+
+            </div>
+            <div class="col-12 col-md-4  align-items-center">
+                <div>
+                    <img class="img" src="{% static 'asset/img/recommend/terms of service.png' %}" alt="img">
+                </div>
+
+            </div>
+        </div>
+        <!-- start check box -->
+
+        <div class="container agree ms-5 mt-5">
+            <div class="form-group ">
+                <div class="form-check ">
+                    <input class="form-check-input" type="checkbox" id="checkbox1">
+                    <label class="form-check-label" for="checkbox1">
+                            I read and accept 
+                            <button id="slideButton1" class="btn btn-link  text-color-primary">Terms of service</button>.
+                  </label>
+                    <div id="message1" class="text-danger"></div>
+                </div>
+            </div>
+            <div id="slider1">
+                <h1>Terms of services</h1>
+                <p>This is the content that will slide in from the right.</p>
+                <button id="closeButton1">Close</button>
+            </div>
+            <div class="form-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="checkbox2">
+                    <label class="form-check-label" for="checkbox2">
+                        I agree for my health information to be used for the interview. More information in the 
+                        <button id="slideButton2" class="btn btn-link color-primary">Privacy Policy</button> 
+                        .
+                  </label>
+
+                    <div id="message2" class="text-danger"></div>
+                </div>
+            </div>
+        </div>
+        <div id="slider2">
+            <h1>Privacy Policy</h1>
+            <p>This is the content that will slide in from the right.</p>
+            <button id="closeButton2">Close</button>
+        </div>
+        <!-- <div id="pageContent">
+                Your page content here
+        </div> -->
+        <!-- end checkbox -->
+
+
+        <div class="container-fluid">
+            <hr>
+        </div>
+
+        <div class="col d-flex  justify-content-center pr-5">
+            <button id="nextButton" class="btn-1">Next</button>
+        </div>
+
+    </div>
+    <!--service-->
+    <section id="service" class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-4">
+                    <h2 class="ser-title">Our Service</h2>
+                    <hr class="botm-line">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris cillum.</p>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <div class="service-info">
+                        <div class="icon">
+                            <i class="fa fa-stethoscope"></i>
+                        </div>
+                        <div class="icon-info">
+                            <h4>24 Hour Support</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                    </div>
+                    <div class="service-info">
+                        <div class="icon">
+                            <i class="fa fa-ambulance"></i>
+                        </div>
+                        <div class="icon-info">
+                            <h4>Emergency Services</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <div class="service-info">
+                        <div class="icon">
+                            <i class="fa fa-user-md"></i>
+                        </div>
+                        <div class="icon-info">
+                            <h4>Medical Counseling</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                    </div>
+                    <div class="service-info">
+                        <div class="icon">
+                            <i class="fa fa-medkit"></i>
+                        </div>
+                        <div class="icon-info">
+                            <h4>Premium Healthcare</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/ service-->
+
+    <!--footer-->
+    <footer id="footer">
+        <div class="top-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 marb20">
+                        <div class="ftr-tle">
+                            <h4 class="white no-padding">About Us</h4>
+                        </div>
+                        <div class="info-sec">
+                            <p>Praesent convallis tortor et enim laoreet, vel consectetur purus latoque penatibus et dis parturient.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 marb20">
+                        <div class="ftr-tle">
+                            <h4 class="white no-padding">Quick Links</h4>
+                        </div>
+                        <div class="info-sec">
+                            <ul class="quick-info">
+                                <li><a href="index.html"><i class="fa fa-circle"></i>Home</a></li>
+                                <li><a href="#service"><i class="fa fa-circle"></i>Service</a></li>
+                                <li><a href="#contact"><i class="fa fa-circle"></i>Appointment</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 marb20">
+                        <div class="ftr-tle">
+                            <h4 class="white no-padding">Follow us</h4>
+                        </div>
+                        <div class="info-sec">
+                            <ul class="social-icon">
+                                <li class="bglight-blue"><i class="fa fa-facebook"></i></li>
+                                <li class="bgred"><i class="fa fa-google-plus"></i></li>
+                                <li class="bgdark-blue"><i class="fa fa-linkedin"></i></li>
+                                <li class="bglight-blue"><i class="fa fa-twitter"></i></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-line">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+
+                        <div class="credits">
+                            <!--
+        All the links in the footer should remain intact.
+        You can delete the links only if you purchased the pro version.
+        Licensing information: https://bootstrapmade.com/license/
+        Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Medilab
+      -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--/ footer-->
+
+    <script src="asset/js/jquery.min.js"></script>
+    <script src="asset/js/jquery.easing.min.js"></script>
+    <script src="asset/js/bootstrap.min.js"></script>
+    <script src="asset/js/custom.js"></script>
+    <script src="asset/contactform/contactform.js"></script>
+    <script>
+        const checkbox1 = document.getElementById('checkbox1');
+        const checkbox2 = document.getElementById('checkbox2');
+        const message1 = document.getElementById('message1');
+        const message2 = document.getElementById('message2');
+        const nextButton = document.getElementById('nextButton');
+
+        nextButton.addEventListener('click', function() {
+            if (!checkbox1.checked) {
+                message1.innerText = "Please agree to Terms of Service.";
+            } else {
+                message1.innerText = "";
+            }
+
+            if (!checkbox2.checked) {
+                message2.innerText = "Please agree to Privacy Policy and the processing of your health information.";
+            } else {
+                message2.innerText = "";
+            }
+            if (checkbox1.checked && checkbox2.checked) {
+                window.location.href = "{% url 'interview2'%}";
+            }
+        });
+
+        var slideButton1 = document.getElementById('slideButton1');
+        var slider1 = document.getElementById('slider1');
+        var closeButton1 = document.getElementById('closeButton1');
+
+        slideButton1.addEventListener('click', function() {
+            slider1.classList.add('active');
+        });
+
+        closeButton1.addEventListener('click', function() {
+            slider1.classList.remove('active');
+        });
+        document.addEventListener('click', function(event) {
+            if (!slider1.contains(event.target) && event.target !== slideButton1) {
+                slider1.classList.remove('active');
+            }
+        });
+        var slideButton2 = document.getElementById('slideButton2');
+        var slider2 = document.getElementById('slider2');
+        var closeButton2 = document.getElementById('closeButton2');
+
+        slideButton2.addEventListener('click', function() {
+            slider2.classList.add('active');
+        });
+
+        closeButton2.addEventListener('click', function() {
+            slider2.classList.remove('active');
+        });
+        document.addEventListener('click', function(event) {
+            if (!slider2.contains(event.target) && event.target !== slideButton2) {
+                slider2.classList.remove('active');
+            }
+        });
+    </script>
+
+</body> {% endblock maincontent%}

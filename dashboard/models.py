@@ -1,5 +1,6 @@
 from django.db import models
 from account.models import Patient, Doctor
+from django.db.models import Sum
 
 
 class Feedback(models.Model):
@@ -26,8 +27,12 @@ class Rate(models.Model):
     comment = models.CharField(max_length=200, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True, null=True)
 
+    @property
+    def total_rate(self):
+        return (Rate.objects.filter(doctor=self.doctor).aggregate(sum_rate=Sum('rate'))['sum_rate'] + 1)/(len(Rate.objects.filter(doctor=self.doctor))+0.01)
+
     def __str__(self):
-        return self.user.first_name + " " + self.doctor.first_name
+        return self.patient.first_name + " " + self.doctor.first_name
 
 
 class Prescription(models.Model):

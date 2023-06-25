@@ -4,15 +4,14 @@ from dashboard.models import *
 from appointment.models import *
 from django.contrib import messages
 from account.forms import *
+from account.decorators import *
 from account.include import user_info, user_role as u_role, automate_email, send_email
 from account.forms import PatientRegistrationForm, DoctorRegistrationForm
 
 from datetime import date as dt
 
 
-# Create your views here.
-
-
+@login_first
 def delete(request, pk, identity):
     page = request.GET.get('pages', '')
 
@@ -91,6 +90,7 @@ def delete(request, pk, identity):
             return redirect(reverse('dashboard:doctor-dashboard') + "?pages=remove_day")
 
 
+@login_first
 def deactivate(request, id):
     page = request.GET.get('pages', '')
     try:
@@ -104,6 +104,8 @@ def deactivate(request, id):
         return redirect(reverse('dashboard:admin-dashboard') + "?pages=" + page)
 
 
+@login_first
+@admin_only
 def admin_dashboard(request):
     page = request.GET.get('pages')
     user = user_info(request)
@@ -150,6 +152,8 @@ def admin_dashboard(request):
     return render(request, 'telehakim/admin-page.html', context)
 
 
+@login_first
+@patient_only
 def patient_dashboard(request):
     page = request.GET.get('pages')
     user = user_info(request)
@@ -241,6 +245,8 @@ def patient_dashboard(request):
     return render(request, 'telehakim/patient-page.html', context)
 
 
+@login_first
+@doctor_only
 def doctor_dashboard(request):
     page = request.GET.get('pages')
     app_id = request.GET.get('app_id')

@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from appointment.models import *
 from account.include import user_info
+from account.decorators import login_first
 
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
@@ -83,6 +84,7 @@ def add_schedule(due_date, time, doctor, from_admin=False):
                 )
 
 
+@login_first
 def fill_date_admin(request):
     if request.POST.get('fill_date'):
         first_date = request.POST.get('date-first')
@@ -109,6 +111,7 @@ def fill_date_admin(request):
     return redirect(reverse('dashboard:admin-dashboard') + '?pages=add_app_day')
 
 
+@login_first
 def schedule_dtime_admin(request):
     email = request.GET.get('email')
     sch_id = request.GET.get('sch_id')
@@ -133,6 +136,7 @@ def schedule_dtime_admin(request):
     return redirect(reverse('dashboard:doctor-dashboard'))
 
 
+@login_first
 def approve_doctor(request, id):
     try:
         doc = Doctor.objects.get(id=id)
@@ -153,6 +157,7 @@ def view_cv(request, id):
     return response
 
 
+@login_first
 def fill_date(request):
     if request.POST.get('fill_date'):
         first_date = request.POST.get('date-first')
@@ -181,6 +186,7 @@ def fill_date(request):
     return redirect(reverse('dashboard:doctor-dashboard') + '?pages=working_day')
 
 
+@login_first
 def schedule_dtime(request):
     doctor = request.GET.get('doctor')
     sch_id = request.GET.get('sch_id')

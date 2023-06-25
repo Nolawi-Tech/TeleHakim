@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from account.forms import *
 from django.contrib import messages
+from account.decorators import *
 from django.http import QueryDict
 from django.urls import reverse
 from account.include import *
@@ -51,7 +52,8 @@ def login(request):
                 if cd == rv.code:
                     messages.success(request, "Good Job please update your password.")
                     qd = QueryDict("", mutable=True)
-                    qd.update({"revoke": "password", "id": rv.patient.id if rl == "patient" else rv.doctor.id, 'user': rl })
+                    qd.update(
+                        {"revoke": "password", "id": rv.patient.id if rl == "patient" else rv.doctor.id, 'user': rl})
 
                     rv.delete()
                     return redirect(reverse('account:login') + f'?{qd.urlencode()}')
@@ -154,6 +156,7 @@ def update_password(request, pk, role):
     return redirect(reverse(f'dashboard:{flag}-dashboard') + f'?pages=profile')
 
 
+@login_first
 def logout(request):
     request.session.pop("user-role", 0)
     request.session.pop("email", 0)
