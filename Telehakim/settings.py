@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'dashboard',
     'appointment',
     'webrtc',
+    'dr_re',
 
     'mathfilters',
 ]
@@ -72,7 +73,6 @@ EMAIL_HOST_USER = 'mesaye2010@gmail.com'
 EMAIL_HOST_PASSWORD = 'vpajumtxbwwgtpbt'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'mesaye2010@gmail.com'
-
 
 
 AUTH_PASSWORD_VALIDATORS = [

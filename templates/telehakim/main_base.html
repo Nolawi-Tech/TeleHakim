@@ -128,7 +128,14 @@
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                     <li class="dropdown-header">
                         <h6>{{ user.first_name|title }} {{ user.last_name|title }}</h6>
-                        <span>{{ user_role|title }}</span>
+                        <span>
+                            {{ user_role|title }}
+                            {% if user.is_verified %}
+                                <span class="badge bg-success rounded-pill">Verified</span>
+                            {% else %}
+                                <span class="badge bg-danger rounded-pill">Not Verified</span>
+                            {% endif %}
+                        </span>
                     </li>
                     <li>
                         <hr class="dropdown-divider">

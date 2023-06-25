@@ -2,17 +2,24 @@ from typing import List
 
 '''
 
-    Admin can interview the doctors,viewing CV, accept or reject, fill some info.
+    
+    if one use join it for the other b/c status will be 0.
+    Room Id generated for each patient and doctor and store it.
     System's can withhold doctors from working based on 5 user rates.
-    Personal profile update, password reset.
+    
     In email using threading.
     
-    Admin delete User and some unnecessary actions.
+    Admin can interview the doctors,viewing CV, accept or reject, fill some info.
+    Doctor view their patients’ medical record
+    Patient can see the doctor's rate.
+    Personal profile update, password reset.
+    Verified Doctor only able to work and apper on search.
+    Admin delete User and some unnecessary actions. 
     Timing and Notification sent to user before clock is ticking.
     
     Payment integration.
     Integration b/n prediction and other system -> suggest doctor based on specialization.
-    Amaric language support. 
+    Amahric language support. 
 '''
 
 

@@ -4,15 +4,14 @@ from dashboard.models import *
 from appointment.models import *
 from django.contrib import messages
 from account.forms import *
+from account.decorators import *
 from account.include import user_info, user_role as u_role, automate_email, send_email
 from account.forms import PatientRegistrationForm, DoctorRegistrationForm
 
 from datetime import date as dt
 
 
-# Create your views here.
-
-
+@login_first
 def delete(request, pk, identity):
     page = request.GET.get('pages', '')
 
@@ -49,10 +48,10 @@ def delete(request, pk, identity):
             feedback = Feedback.objects.get(id=pk)
             feedback.delete()
             messages.success(request, "Feedback deleted successfully.")
-            return redirect('dashboard:admin-dashboard')
+            return redirect(reverse('dashboard:admin-dashboard') + "?pages=view_feedback")
         except:
             messages.error(request, "Sorry, we can't delete feedback.")
-            return redirect('dashboard:admin-dashboard')
+            return redirect(reverse('dashboard:admin-dashboard') + "?pages=view_feedback")
     elif identity == "appointment":
         try:
             appointment = Appointment.objects.get(id=pk)
@@ -91,6 +90,7 @@ def delete(request, pk, identity):
             return redirect(reverse('dashboard:doctor-dashboard') + "?pages=remove_day")
 
 
+@login_first
 def deactivate(request, id):
     page = request.GET.get('pages', '')
     try:
@@ -104,9 +104,13 @@ def deactivate(request, id):
         return redirect(reverse('dashboard:admin-dashboard') + "?pages=" + page)
 
 
+@login_first
+@admin_only
 def admin_dashboard(request):
     page = request.GET.get('pages')
     user = user_info(request)
+    purpose = request.GET.get('purpose')
+    app_id = request.GET.get('app_id')
     user_role = u_role(request)
 
     if request.method == "POST":
@@ -118,13 +122,27 @@ def admin_dashboard(request):
                 messages.success(request, "Thank you, for updating your profile.")
             else:
                 messages.error(request, "Sorry, we can't update your profile.")
+
+    if request.GET.get('decline') is not None:
+        try:
+            app_id = request.GET.get('decline')
+            app = AppAdmin.objects.get(id=app_id)
+            app.delete()
+            messages.success(request, "Appointment declined successfully.")
+        except:
+            messages.error(request, "Sorry, we can't decline appointment.")
+        return redirect(reverse('dashboard:admin-dashboard') + "?pages=doctors_waiting")
+    query = AppAdmin.objects.filter(patient=user)
     context = {
         'page': page,
         'user': user,
         'user_role': user_role,
+        'app_id': app_id,
+        'purpose': purpose,
         'update_form': PatientRegistrationForm(instance=user),
         'patients': Patient.objects.all(),
         'doctors': Doctor.objects.all(),
+        'histories': sorted(query, key=lambda obj: obj.get_status),
         'admins': Patient.objects.filter(is_admin=True),
         'feedbacks': Feedback.objects.all(),
         'patient_form': PatientRegistrationForm(),
@@ -134,15 +152,18 @@ def admin_dashboard(request):
     return render(request, 'telehakim/admin-page.html', context)
 
 
+@login_first
+@patient_only
 def patient_dashboard(request):
     page = request.GET.get('pages')
     user = user_info(request)
     app_id = request.GET.get('app_id')
+    purpose = request.GET.get('purpose')
     user_role = u_role(request)
 
     unique_dates = []
     list_schedule = []
-    doctors = Doctor.objects.all()
+    doctors = Doctor.objects.filter(is_verified=True)
 
     if request.method == "POST":
         if request.POST.get('update') is not None:
@@ -191,7 +212,7 @@ def patient_dashboard(request):
         email = request.GET.get('doc_email')
         date = request.GET.get('date')
         try:
-            doctor = Doctor.objects.get(email=email)
+            doctor = Doctor.objects.get(email=email, is_verified=True)
             list_schedule = WorkingDay.objects.filter(doctor=doctor, date__gte=dt.today()).filter(is_booked=False)
             if date != "":
                 list_schedule = list_schedule.filter(date=date)
@@ -201,15 +222,16 @@ def patient_dashboard(request):
                     unique_dates.append(sch.date)
         except:
             messages.error(request, "Sorry, we can't find any doctor or provide email.")
-
+    query = Appointment.objects.filter(patient=user)
     context = {
         'page': page,
         'user': user,
         'user_role': user_role,
         'app_id': app_id,
+        'purpose': purpose,
         'doctors': doctors,
         'update_form': PatientRegistrationForm(instance=user),
-        'histories': Appointment.objects.filter(patient=user).order_by('status'),
+        'histories': sorted(query, key=lambda obj: obj.get_status),
         'prescriptions': Prescription.objects.filter(patient=user),
         'medical_histories': MedicalHistory.objects.filter(patient=user, is_shown=True),
         'book_info': {
@@ -223,9 +245,12 @@ def patient_dashboard(request):
     return render(request, 'telehakim/patient-page.html', context)
 
 
+@login_first
+@doctor_only
 def doctor_dashboard(request):
     page = request.GET.get('pages')
     app_id = request.GET.get('app_id')
+    purpose = request.GET.get('purpose')
     user = user_info(request)
     user_role = u_role(request)
     rates = Rate.objects.filter(doctor=user)
@@ -233,6 +258,9 @@ def doctor_dashboard(request):
 
     list_schedule = []
     unique_dates = []
+    list_schedule_admin = []
+    unique_dates_admin = []
+    admin = user_info(request)
 
     if request.method == "POST":
         if request.POST.get('set_md_history') is not None:
@@ -270,6 +298,20 @@ def doctor_dashboard(request):
                 messages.success(request, "Thank you, for updating your profile.")
             else:
                 messages.error(request, "Sorry, we can't update your profile.")
+    if request.GET.get('list_date_admin'):
+        date = request.GET.get('date')
+        admin_id = request.GET.get('admin')
+        admin = Patient.objects.get(id=admin_id)
+        try:
+            list_schedule_admin = AppDay.objects.filter(patient=admin, date__gte=dt.today()).filter(is_booked=False)
+            if date != "":
+                list_schedule_admin = list_schedule_admin.filter(date=date)
+
+            for sch in list_schedule_admin:
+                if not sch.date in unique_dates_admin:
+                    unique_dates_admin.append(sch.date)
+        except:
+            messages.error(request, "Sorry, we can't find any doctor or provide email.")
     if request.GET.get('list_date'):
         date = request.GET.get('date')
         try:
@@ -282,13 +324,17 @@ def doctor_dashboard(request):
                     unique_dates.append(sch.date)
         except:
             messages.error(request, "Sorry, we can't find any doctor or provide email.")
-
+    query = Appointment.objects.filter(doctor=user)
+    admin_query = AppAdmin.objects.filter(doctor=user)
     context = {
         'page': page,
         'user': user,
+        'purpose': purpose,
         'user_role': user_role,
         'app_id': app_id,
-        'histories': Appointment.objects.filter(doctor=user).order_by('status'),
+        'admins': Patient.objects.filter(is_admin=True),
+        'histories': sorted(query, key=lambda obj: obj.get_status),
+        'admin_histories': sorted(admin_query, key=lambda obj: obj.get_status),
         'rate_info': {
             'rates': rates,
             'total_rate': sum(obj.rate for obj in rates),
@@ -298,6 +344,11 @@ def doctor_dashboard(request):
             'dates': sorted(unique_dates)[:6],
             'schedules': list_schedule,
             'doc_email': user.email,
+        },
+        'book_info_admin': {
+            'dates': sorted(unique_dates_admin)[:6],
+            'schedules': list_schedule_admin,
+            'add_email': admin.email,
         },
         'notifications': [
             a for a in Appointment.objects.filter(doctor=user) if

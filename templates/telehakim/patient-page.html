@@ -167,20 +167,20 @@ medical-history
 
                     <div class="col-md-3 text-center">
                         <label for="">.</label>
-                        <input type="submit" class="btn btn-primary form-control" value="Search" name="search">
+                        <input type="submit" class="btn btn-primary form-control" value="Filter" name="search">
                     </div>
                 </div>
             </form>
             {% for doctor in doctors %}
-            <div class="card mt-3">
-                <div class="row g-0">
+                <div class="card mt-3">
+                    <div class="row g-0">
                     <div class="col-md-3">
                         <img src="{{ doctor.photo.url }}" class="img-fluid rounded" alt="Doctor photo">
                     </div>
                     <div class="col-md-9 ps-3">
                         <h5 class="card-title">{{ doctor.first_name }} {{ doctor.last_name }}</h5>
-                        <div class=""><i class="bi bi-emoji-heart-eyes-fill"></i> {{ doctor.specialization }} | {{
-                            doctor.experience }} Years Exp.
+                        <div class=""><i class="bi bi-emoji-heart-eyes-fill"></i> {{ doctor.specialization }} |
+                            {{ doctor.experience }} Years Exp.
                         </div>
                         <div class=""><i class="bi bi-currency-dollar "></i> <span class="text-danger fw-bold">{{ doctor.fee }}</span>
                             Birr/Hr. online
@@ -190,15 +190,11 @@ medical-history
                                 href="?pages=book&doc_email={{ doctor.email }}&date=&list_date=Submit">See all
                             timings.</a></div>
                         <div class=""><i class="bi bi-award-fill"></i> 340 rate | 95%
-                        {% with total_rate=doctor.doctor_rate.all|add:"rate" %}
-                            Total Rate: {{ total_rate }}
-                        {% endwith %}
                         </div>
 
-                        <button type="button" class="btn btn-primary m-2 text-center" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable">
-                            View rate
-                          </button>
-                          <div class="modal fade mt-5" id="modalDialogScrollable" tabindex="-1">
+                        {% for doc in doctors %}
+                        {% if doc.email == doctor.email %}
+                          <div class="modal fade mt-5" id="modalDialogScrollable{{ doctor.id }}" tabindex="-1">
                             <div class="modal-dialog modal-dialog-scrollable">
                               <div class="modal-content">
                                 <div class="modal-header">
@@ -206,25 +202,33 @@ medical-history
                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                  {% for rate in doctor.doctor_rate.all %}
-                                    {% if rate.doctor.email == doctor.email %}
-                                        <p>By <b class="text-danger fw-bold">{{ rate.user.first_name }}/{{rate.doctor.email}}/{{doctor.email}}</b> | {{ rate.rate }} rates</p>
-                                        <p>
-                                            {{ rate.comment }}
-                                        </p>
-                                        <hr>
-                                    {% endif %}
+                                    {% for rate in doctor.doctor_rate.all %}
+                                    <p class="float-end text-muted">{{ rate.date }}</p>
+
+                                    <p>Rated by <b class="text-primary fw-bold fs-6 text-monospace"> {{ rate.patient.first_name|title }} </b>
+                                        <br>{{ rate.rate }} Rates of 10 </p>
+                                    <p>
+                                        {{ rate.comment }}
+                                    </p>
+                                    <!--                        floating left showing date of rate-->
+                                    <hr>
+
                                     {% empty %}
-                                        <p>No rate yet</p>
-                                  {% endfor %}
+                                    <p class="text-center">No rate yet.</p>
+                                    {% endfor %}
                                 </div>
                               </div>
                             </div>
                           </div>
 
+                          <button type="button" class="btn btn-primary m-2 text-center" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable{{ doctor.id }}">
+                            View rate
+                          </button>
+                        {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
-            </div>
+                </div>
             {% endfor %}
         </div>
     </div>
@@ -378,7 +382,7 @@ medical-history
                         <td><a href="" class="btn btn-sm btn-primary">Pending</a></td>
                         {% elif history.get_status == 0 %}
                         <td><a href="" class="btn btn-sm btn-success">Ongoing</a></td>
-                        {% elif history.get_status == 3 %}
+                        {% elif history.get_status == 2 %}
                         <td><a href="" class="btn btn-sm btn-success">Waiting</a></td>
                         {% else %}
                         <td><a href="" class="btn btn-sm btn-danger">Passed</a></td>
@@ -392,8 +396,8 @@ medical-history
                             </button>
                         </td>
                         {% elif history.get_status == 1 %}
-                        <td><a href="{% url 'dashboard:patient-dashboard'%}?pages=chat&app_id={{ history.id }}" class="btn btn-sm btn-outline-info">CALL</a></td>
-                        {% elif history.get_status == 3 %}
+                        <td><a href="{% url 'dashboard:patient-dashboard'%}?pages=chat&app_id={{ history.id }}&purpose=1" class="btn btn-sm btn-outline-info">CALL</a></td>
+                        {% elif history.get_status == 2 %}
                         <td> - </td>
                         {% else %}
                         <td>

@@ -72,6 +72,12 @@
           <span>View Feedback</span>
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'dashboard:admin-dashboard' %}?pages=add_app_day">
+          <i class="bi bi-calendar-day-fill"></i>
+          <span>Appointment Day</span>
+        </a>
+      </li>
     </ul>
 
   </aside><!-- End Sidebar-->
@@ -88,6 +94,8 @@
         update account
     {% elif page == 'profile' %}
         profile
+    {% elif page == 'add_app_day' %}
+        Add Appointment day for Admin
     {% elif page == 'doctors_waiting'%}
         doctors_waiting
     {% elif page == 'doctors_unverified'%}
@@ -112,6 +120,158 @@
 {% block middle %}
     {% load static %}
     {% if page == 'doctors_waiting'%}
+        {% load mathfilters %}
+        <!-- Start Data table -->
+        <!-- Prescription modal -->
+        <div class="modal fade" id="disablebackdrop" tabindex="-1" data-bs-backdrop="false">
+            <div class="modal-dialog resizable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Write Prescription for patient.</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" id="input_id_pr" name="id" value="">
+                            <div class="form-floating mb-3 mt-3">
+                                        <textarea class="form-control" required placeholder="Leave a comment here"
+                                                  name="prescription"
+                                                  id="floatingTextareapr"
+                                                  style="height: 100px;"></textarea>
+                                <label for="floatingTextarea">Write Prescription here....</label>
+                            </div>
+                            <input type="submit" value="Save" name="set_prescription" class="btn btn-primary float-end">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Medical History modal -->
+        <div class="modal fade" id="disablebackdrop2" tabindex="-1" data-bs-backdrop="false">
+            <div class="modal-dialog resizable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Write Medical History</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div>
+                                <input type="hidden" id="input_id_mh" name="id" value="">
+                                <div class="form-check">
+                                    <input class="form-check-input" name="is_shown" type="checkbox" id="gridCheck">
+                                    <label class="form-check-label" for="gridCheck">
+                                        Not shown to patients
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3 mt-3">
+                                        <textarea class="form-control" required placeholder="Leave a comment here"
+                                                  name="md_history"
+                                                  id="floatingTextarea2" style="height: 100px;"></textarea>
+                                <label for="floatingTextarea2">Write Medical History here...</label>
+                            </div>
+                            <input type="submit" value="Save" name="set_md_history" class="btn btn-primary float-end">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title pl-3">Waiting Doctor to be approved</h5>
+                        <table class="table datatable">
+                            <thead>
+                            <tr>
+                                <th scope="col">id</th>
+                                <th scope="col">Patient name</th>
+                                <th scope="col">Patient Email</th>
+                                <th scope="col">Your Email</th>
+                                <th scope="col">Time</th>
+                                <th scope="col">ROOM_ID</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                                <th scope="col">Left Time</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for history in histories %}
+
+                            <tr>
+                                <th scope="row">{{ history.id }}</th>
+                                <td>{{ history.patient.first_name }} {{ history.patient.last_name }}</td>
+                                <td>{{ history.patient.email }}</td>
+                                <td>{{ history.doctor.email }}</td>
+                                <td>{{ history.schedule.schedule }}</td>
+                                <td>STRDVJb</td>
+                                {% if history.get_status == 1 %}
+                                <td><a href="#" class="btn btn-sm btn-primary">Pending</a></td>
+                                {% elif history.get_status == 0 %}
+                                <td><a href="#" class="btn btn-sm btn-success">Ongoing</a></td>
+                                {% elif history.get_status == 2 %}
+                                    <td><a href="#" class="btn btn-sm btn-info">Waiting</a></td>
+                                {% else %}
+                                <td><a href="#" class="btn btn-sm btn-danger">Passed</a></td>
+                                {% endif %}
+
+                                {% if history.get_status == 1 %}
+                                <td><a href="{% url 'dashboard:admin-dashboard'%}?pages=chat&app_id={{ history.id }}&purpose=0"
+                                       class="btn btn-sm btn-outline-info">CALL</a></td>
+                                {% elif history.get_status == 0 %}
+                                <td>
+                                    <a href="{% url 'appointment:view-cv' history.doctor.id %}" target="_blank" rel="noopener" data-idm-skip class="btn btn-sm btn-outline-secondary">View CV</a>
+                                    <a href="{% url 'appointment:approve-doctor' history.doctor.id %}" class="btn btn-sm btn-outline-success">Approve</a>
+                                </td>
+                                {% elif history.get_status == 2 %}
+                                <td>
+                                    <a href="{% url 'dashboard:admin-dashboard'%}?decline={{ history.id }}"
+                                       class="btn btn-sm btn-outline-danger">Decline</a>
+                                </td>
+                                {% else %}
+                                <td>-</td>
+                                {% endif %}
+
+                                <td>
+                                    {% with tm=history.left_time %}
+                                        {{tm.days}} Days, {{ tm.seconds|intdiv:3600 }} Hr, {{ tm.seconds|mod:3600|intdiv:60 }} Min
+                                    {% endwith %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <script>
+                    function set_id_mh(id){
+                        const inp_mh = document.getElementById("input_id_mh");
+                        inp_mh.setAttribute('value', id)
+                    }
+                    function set_id_pr(id){
+                        const inp_pr = document.getElementById("input_id_pr");
+                        inp_pr.setAttribute('value', id)
+                    }
+
+                    $('.modal-content').resizable({
+                        //alsoResize: ".modal-dialog",
+                        minHeight: 300,
+                        minWidth: 300
+                    });
+                    $('.modal-dialog').draggable();
+
+                    $('#myModal').on('show.bs.modal', function () {
+                        $(this).find('.modal-body').css({
+                            'max-height':'100%'
+                        });
+                    });
+                </script>
+            </div>
+        </div>
     {% elif page == 'doctors_unverified'%}
         <div class="our-custom-model card m-auto d-none">
             <div class="modal-header">
@@ -137,7 +297,6 @@
                                 <th scope="col">Phone</th>
                                 <th scope="col">Address</th>
                                 <th scope="col"></th>
-                                <th scope="col"></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -150,10 +309,7 @@
                                     <td>{{ doctor.specialization }}</td>
                                     <td>{{ doctor.phone }}</td>
                                     <td>{{ doctor.address }}</td>
-                                    <td>
-                                        <a href="{% url 'dashboard:admin-dashboard' %}?pages=update_user&id={{ user.id }}"
-                                           class="btn btn-sm btn-info">Update</a>
-                                    </td>
+
                                     <td>
                                         <button class="btn btn-sm btn-danger" onclick="dume(this)"
                                                 value="{{ doctor.id }}">Delete
@@ -324,6 +480,60 @@
             </div>
         </div>
       <!-- End Data table -->
+    {% elif page == 'add_app_day' %}
+        <div class="row">
+    <div class="col-lg-9">
+        <h5 class="card-title">Add Appointment day for Admin</h5>
+        <div class="card p-5">
+            <form action="{% url 'appointment:fill-date-admin' %}" method="post" class="row g-3">
+                {% csrf_token %}
+                <div class="col-12">
+                    <label for="inputDate1" class="form-label">Initial | Specific Date</label>
+                    <input id="inputDate1" name="date-first" type="date" class="form-control" , required>
+                </div>
+                <div class="col-12">
+                    <label for="inputDate" class="form-label">Final Date</label>
+                    <input id="inputDate" name="date-final" type="date" class="form-control">
+                </div>
+                <div class="col-12">
+                    <label for="floatingTextarea" class="form-label">Free Time</label>
+                    <textarea class="form-control" name="date-input" placeholder="Address" required
+                              id="floatingTextarea"
+                              style="height: 100px;"></textarea>
+                </div>
+
+                <div class="float-end col-4">
+                    <input type="submit" name="fill_date" value="ADD" class="form-control btn btn-primary">
+                </div>
+            </form>
+        </div>
+        <div class="card p-5">
+            <h5 class="card-title">How to fill my work day?</h5>
+            <p>
+                Fill in only the initial or specific date if your schedule is different for particular date,
+                and then fill in the free time in the text area.
+            </p>
+            <p>
+                Fill in the start and end dates if your schedule is the same for the range of dates,
+                and then fill in the free time in the text box.
+            </p>
+            <p>
+                Use the suggested format: <span style="font-family:monospace; color:red;font-size:19px">Start-time - end-time:d|n.</span><br>
+                <span style="font-family:monospace; color:red;font-size:19px">Note:</span> don't use minute here and
+                both n and d are case-insensitive.
+                <br><br>
+                3-5:d -> from morning 3:00 to 5:00, d-> refers to day, n->for night <br>
+                10-12:d -> from 10:00 to 12:00, in afternoon <br>
+                7-8:N -> from 7:00 to 8:00, in Night <br>
+
+            </p>
+            <p>
+                Please use commas to separate the different time slots, eg. 3-5:d,10-12:d,7-8:N
+            </p>
+
+        </div>
+    </div>
+</div>
     {% elif page == 'view_feedback' %}
         <!-- start of view feedback -->
       <div class="row">
@@ -335,7 +545,10 @@
               {{ feedback.body }}
             </div>
             <div class="card-footer">
-              <span style="float: right;margin-right: 20px;">By {{ feedback.name }} on {{ feedback.date }}</span>
+                <a href="{% url 'dashboard:delete-item' feedback.id 'feedback' %}" class="btn btn-sm btn-outline-danger">Delete</a>
+              <span style="float: right;margin-right: 20px;">
+                  By {{ feedback.name }} on {{ feedback.date }}
+              </span>
             </div>
           </div>
           {% endfor %}
@@ -399,6 +612,8 @@
                                     </td>
                                 </tr>
                                 {% endif %}
+                            {% empty %}
+                                <div>Nothing to show here</div>
                             {% endfor %}
                             </tbody>
                         </table>

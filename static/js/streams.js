@@ -5,6 +5,7 @@ const TOKEN = sessionStorage.getItem("token")
 let UID = sessionStorage.getItem("uid");
 let username = sessionStorage.getItem("name");
 let app_id = sessionStorage.getItem("app_id");
+let purpose = sessionStorage.getItem("purpose");
 
 const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" })
 
@@ -136,7 +137,7 @@ let getMember = async (user) => {
 }
 
 let changeStatus = async (option) => {
-    let response = await fetch('/appointment/change_status/'+app_id + '/'+option)
+    let response = await fetch('/appointment/change_status/'+app_id + '/'+option + '/' + purpose)
     let data = await response.json()
     return data
 }
