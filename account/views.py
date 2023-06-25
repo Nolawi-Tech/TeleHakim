@@ -9,8 +9,15 @@ from account.include import *
 qd = QueryDict("", mutable=True)
 
 
+
 def home(request):
-    return render(request, 'index.html')
+
+    doctors = Doctor.objects.all()
+    
+    context = {
+        'doctors':doctors
+    }
+    return render(request, 'index.html',context)
 
 
 def login(request):

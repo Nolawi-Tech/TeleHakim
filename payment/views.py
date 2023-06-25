@@ -6,44 +6,13 @@ def home(request):
     return render(request, 'pay/home.html')
 
 
-def payment_with_cart(request):
-    obj = {
-        "process": "Cart",
-        "successUrl": "http://localhost:8000/success",
-        "ipnUrl": "http://localhost:8000/ipn",
-        "cancelUrl": "http://localhost:8000/cancel",
-        "merchantId": "22429",
-        "merchantOrderId": "l710.0",
-        "expiresAfter": 24,
-        "totalItemsDeliveryFee": 19,
-        "totalItemsDiscount": 1,
-        "totalItemsHandlingFee": 12,
-        "totalItemsTax1": 250,
-        "totalItemsTax2": 0
-    }
-    cart = {
-        "cartitems": [
-            {
-                "itemId": "sku-01",
-                "itemName": "sample item",
-                "unitPrice": 2300,
-                "quantity": 1
-            },
-            {
-                "itemId": "sku-02",
-                "itemName": "sample item 2",
-                "unitPrice": 2300,
-                "quantity": 2
-            }
-        ]
-    }
-    return render(request, 'pay/index-cart.html', {'obj': obj, 'cart': cart})
+
 
 
 def payment_with_express(request):
     obj = {
         "process": "Express",
-        "successUrl": "http://localhost:8000/success",
+        "successUrl": "http://127.0.0.1:8000/dashboard/patient/?pages=book",
         "ipnUrl": "http://localhost:8000/ipn",
         "cancelUrl": "http://localhost:8000/cancel",
         "merchantId": "SB2367",

@@ -1,14 +1,7 @@
-/*
-    Theme Name: Medilab
-    Theme URL: https://bootstrapmade.com/medilab-free-medical-bootstrap-theme/
-    Author: BootstrapMade.com
-    Author URL: https://bootstrapmade.com
-*/
-
 body {
 	font-family: 'Open Sans', sans-serif;
 	line-height: 20px;
-	color: #ada6b6;
+	color: #000000;
 	font-size: 300;
 	font-size: 16px;
 }
@@ -31,7 +24,7 @@ h1, h2, h3, h4, h5, h6
 {
 	font-family: 'Raleway', sans-serif;
 	font-weight: 600;
-	color: #280155;
+	color: #050505;
 }
 a, a:hover, a:focus, a:active{
     outline: none;
@@ -73,7 +66,7 @@ banner
     transition: all 0.3s;
 }
 .navbar-default {
-    background-color: transparent;
+    background-color: #ffffff;
     border: 5px;
 }
 .navbar {
@@ -122,7 +115,7 @@ banner
 }
 .navbar-default .navbar-nav > li > a
 {
-	color: #000000;
+	color: #77348b;
 	text-transform: uppercase;
 	font-size: 18px;
 	font-weight: 300;
@@ -202,48 +195,12 @@ services
 .icon-info p{
 	font-size: 15px !important;
 }
-/***************************************
-cta-1
-***************************************/
-.schedule-tab {
-	background-color: #1e08e7;
-	float: left;
-}
-.medi-info{
-	border-right: 1px solid #fff;
-}
-.medi-info, .time-info{
-	padding: 20px;
-	color: #fff;
-}
-.medi-info h3, .time-info h3{
-	padding-bottom: 16px;
-	color: #fff;
-	font-weight: 600;
-}
-.medi-info-btn, .medi-info-btn:hover, .medi-info-btn:focus {
-    margin: 15px 0px 5px;
-    display: inline-block;
-    border: solid white 2px;
-    padding: 3px 8px;
-    font-size: 12px;
-    color: #fff;
-    font-weight: 400 !important;
-    cursor: pointer;
-}
-td {
-    border: 0px solid #ededed;
-    border-top: 1px solid rgba(216, 216, 216, 0.5);
-    padding: 6px 10px 6px 0;
-}
-.medi-info, .time-info{
-    font-size: 14px;
-}
+
 /***************************************
 about
 ***************************************/
 #about{
-    background-color: #746ce4;
+    background-color: #c8c7c9;
 }
 .lg-line{
 	line-height: 1.4;
@@ -254,7 +211,7 @@ about
     width: 40px;
     height: 40px;
     padding-top: 6px;
-    background: #b2b6b6;
+    background: #c8c7c9;;
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
     border-radius: 50%;
@@ -285,27 +242,7 @@ doctor team*/
     height: 150px;
     object-fit: cover;
   }
-  .doctor-rating {
-    margin-top: 5px;
-  }
-  .rating-input {
-    display: inline-block;
-    margin-left: 10px;
-  }
-  .rating-input input[type="radio"] {
-    display: none;
-  }
-  .rating-input label {
-    color: #ddd;
-    font-size: 20px;
-    cursor: pointer;
-    transition: color 0.3s;
-  }
-  .rating-input input[type="radio"]:checked + label {
-    color: #ffcc00;
-  }
 
-/***************************************/
 .thumbnail {
 	border-radius: 0px;
 }
@@ -322,10 +259,10 @@ testimonial
     background-color: #eee;
 }
 .testi-details {
-    background: #fff;
+    background: #c8c7c9;;
     padding: 14px 24px;
     margin-bottom: 20px;
-    box-shadow: 3px 3px 2px 0px rgba(0,0,0,0.18);
+    box-shadow: 3px 3px 2px 0px rgba(255, 255, 255, 0.18);
     position: relative;
 }
 .testi-info a {
@@ -384,7 +321,7 @@ testimonial
 cta -2
 ***************************************/
 #cta-2{
-	background-color: rgb(31, 6, 255);
+	background-color: rgb(173, 173, 177);
 }
 .white{
 	color: #fff;
@@ -425,7 +362,7 @@ contact us
 }
 
 .validation {
-    color: red;
+    color: rgb(236, 230, 230);
     display:none;
     margin: 0 0 20px;
     font-weight:400;
@@ -461,13 +398,13 @@ contact us
 footer
 ***************************************/
 #footer{
-	background-color: #607ddb;
+	background-color: #808d8d;
 }
 .ftr-tle {
     height: 50px;
 }
 .info-sec {
-    color: #fff;
+    color: #000000;
 }
 .quick-info li i {
     font-size: 8px;

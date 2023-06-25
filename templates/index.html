@@ -34,12 +34,11 @@
           <header>
               <div class="collapse navbar-collapse navbar-right" id="myNavbar">
                   <ul class="nav navbar-nav">
-                    <li class="active"><a href="#banner">Home</a></li>
+                    <li class=""><a href="#banner">Home</a></li>
                     <li class=""><a href="#service">Services</a></li>
-                    <li class=""><a href="#about">About</a></li>
                     <li class=""><a href="#testimonial">Testimonial</a></li>
                     <li class=""><a href="#contact">Contact</a></li>
-                    <li class=""><a href="{% url 'account:login' %}" class="btn btn-primary btn-block">Login & Sign up</a></li>
+                    <li class=""><a href="{% url 'account:login' %}" class="btn btn-link btn-block">Login & Sign up</a></li>
                    
                     <div id="google_translate_element"></div>
                     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
@@ -50,7 +49,7 @@
                           'google_translate_element'
                         );
                       }
-                
+                cytuvyibuonipm
                     
                 
                     </script>
@@ -77,7 +76,7 @@
             <div class="banner-text text-center">
               <h1 class="white">Tele-Hakim</h1>
               <p>Always bring your doctor with you anywhere, anytime</p>
-              <a href="#" class="btn btn-appoint">take Consultation.</a>
+              <a href="#" class="btn btn-appoint">Try our recommendation</a>
             </div>
             <div class="overlay-detail text-center">
               <a href="#service"><i class="fa fa-angle-down"></i></a>
@@ -96,7 +95,7 @@
         <div class="col-md-4 col-sm-4">
           <h2 class="ser-title">Our Service</h2>
           <hr class="botm-line">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris cillum.</p>
+          <p>The general objective of our project is to develop a comprehensive, user-friendly telemedicine system that allows patients and doctors in Ethiopia to securely access medical care remotely.labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris cillum.</p>
         </div>
         <div class="col-md-4 col-sm-4">
           <div class="service-info">
@@ -142,53 +141,8 @@
     </div>
   </section>
   <!--/ service-->
-  <!--cta-->
-  <section id="cta-1" class="section-padding">
-    <div class="container">
-      <div class="row">
-        <div class="schedule-tab">
-          <div class="col-md-4 col-sm-4 bor-left">
-            <div class="mt-boxy-color"></div>
-            <div class="medi-info">
-              <h3>Emergency Case</h3>
-              <p>I am text block. Edit this text from Appearance / Customize / Homepage header columns. Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-              <a href="#" class="medi-info-btn">READ MORE</a>
-            </div>
-          </div>
-          <div class="col-md-4 col-sm-4">
-            <div class="medi-info">
-              <h3>Emergency Case</h3>
-              <p>I am text block. Edit this text from Appearance / Customize / Homepage header columns. Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-              <a href="#" class="medi-info-btn">READ MORE</a>
-            </div>
-          </div>
-          <div class="col-md-4 col-sm-4 mt-boxy-3">
-            <div class="mt-boxy-color"></div>
-            <div class="time-info">
-              <h3>Opening Hours</h3>
-              <table style="margin: 8px 0px 0px;">
-                <tbody>
-                  <tr>
-                    <td>Monday - Friday</td>
-                    <td>8.00 - 17.00</td>
-                  </tr>
-                  <tr>
-                    <td>Saturday</td>
-                    <td>9.30 - 17.30</td>
-                  </tr>
-                  <tr>
-                    <td>Sunday</td>
-                    <td>9.30 - 15.00</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!--cta-->
+ 
+
   <!--about-->
   <section id="about" class="section-padding">
     <div class="container">
@@ -198,7 +152,7 @@
             <h2 class="head-title lg-line">The Tele-Hakim <br> Dream</h2>
             <hr class="botm-line">
             <p class="sec-para">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..</p>
-            <a href="" style="color: #0cb8b6; padding-top:10px;">Know more..</a>
+            <a href="" style="color: #2127e0; padding-top:10px;">Know more..</a>
           </div>
         </div>
         <div class="col-md-9 col-sm-8 col-xs-12">
@@ -233,138 +187,77 @@
           <h2 class="ser-title">Meet Our Doctors!</h2>
           <hr class="botm-line">
         </div>
-        <div class="col-md-3 col-sm-3 col-xs-6">
-          <div class="thumbnail">
-            <a href="#">
-              <img src="{% static 'assets/img/doctor1.jpg'%}" alt="..." class="team-img">
-            </a>
-            <div class="caption">
-              <h3>doctor Abebe</h3>
-              <p>Lorem ipsum dolor sit amet consectetur.</p>
-              <div class="doctor-rating">
-                <div class="rating-input">
-                  <input type="radio" id="rating1" name="rating-jessica" value="1">
-                  <label for="rating1">&#9733;</label>
-                  <input type="radio" id="rating2" name="rating-jessica" value="2">
-                  <label for="rating2">&#9733;</label>
-                  <input type="radio" id="rating3" name="rating-jessica" value="3">
-                  <label for="rating3">&#9733;</label>
-                  <input type="radio" id="rating4" name="rating-jessica" value="4">
-                  <label for="rating4">&#9733;</label>
-                  <input type="radio" id="rating5" name="rating-jessica" value="5">
-                  <label for="rating5">&#9733;</label>
-                </div>
-              </div>
-              
-              <ul class="list-inline">
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
+
+        {% for doctor in doctors %}
 
         <div class="col-md-3 col-sm-3 col-xs-6">
           <div class="thumbnail">
             <a href="#">
-              <img src="{% static 'assets/img/doctor1.jpg'%}" alt="..." class="team-img">
+              <img src="{{ doctor.photo.url }}" class="img-fluid  team-img" alt="Doctor photo">
             </a>
             <div class="caption">
-              <h3>doctor Abebe</h3>
-              <p>Dr Lorem ipsum dolor sit amet consectetur adipisicing.</p>
-              <div class="doctor-rating">
-                <div class="rating-input">
-                  <input type="radio" id="rating1" name="rating-jessica" value="1">
-                  <label for="rating1">&#9733;</label>
-                  <input type="radio" id="rating2" name="rating-jessica" value="2">
-                  <label for="rating2">&#9733;</label>
-                  <input type="radio" id="rating3" name="rating-jessica" value="3">
-                  <label for="rating3">&#9733;</label>
-                  <input type="radio" id="rating4" name="rating-jessica" value="4">
-                  <label for="rating4">&#9733;</label>
-                  <input type="radio" id="rating5" name="rating-jessica" value="5">
-                  <label for="rating5">&#9733;</label>
-                </div>
+              <h5 class="card-title">{{ doctor.first_name }} {{ doctor.last_name }}</h5>
+              <!-- <div class=""><i class="bi bi-emoji-heart-eyes-fill"></i> {{ doctor.specialization }} | {{
+                  doctor.experience }} Years Exp.
+              </div> -->
+              <div class=""><i class="bi bi-currency-dollar "></i> <span class="text-danger fw-bold">{{ doctor.fee }}</span>
+                  Birr/Hr. online
               </div>
-              
-              <ul class="list-inline">
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-              </ul>
+              <div class=""><i class="bi bi-envelope-fill"></i> {{ doctor.email }}</div>
+              <div class=""><i class="bi bi-calendar-day-fill me-1"></i> <a
+                      href="{% url 'account:login' %}">See all
+                  timings.</a></div>
+              <!-- <div class=""><i class="bi bi-award-fill"></i> 340 rate | 95%
+              {% with total_rate=doctor.doctor_rate.all|add:"rate" %}
+                  Total Rate: {{ total_rate }}
+              {% endwith %}
+              </div> -->
+
+              <button type="button" class="btn btn-primary m-2 text-center" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable">
+                  View rate
+                </button>
+                <div class="modal fade mt-5" id="modalDialogScrollable" tabindex="-1">
+                  <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">View rate given by patients</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        {% for rate in doctor.doctor_rate.all %}
+                          {% if rate.doctor.email == doctor.email %}
+                              <p>By <b class="text-danger fw-bold">{{ rate.user.first_name }}/{{rate.doctor.email}}/{{doctor.email}}</b> | {{ rate.rate }} rates</p>
+                              <p>
+                                  {{ rate.comment }}
+                              </p>
+                              <hr>
+                          {% endif %}
+                          {% empty %}
+                              <p>No rate yet</p>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
             </div>
           </div>
         </div>
 
-        <div class="col-md-3 col-sm-3 col-xs-6">
-          <div class="thumbnail">
-            <a href="#">
-              <img src="{% static 'assets/img/doctor1.jpg'%}" alt="..." class="team-img">
-            </a>
-            <div class="caption">
-              <h3>doctor Abebe</h3>
-              <p>Lorem ipsum dolor sit amet consectetur.</p>
-              <div class="doctor-rating">
-                <div class="rating-input">
-                  <input type="radio" id="rating1" name="rating-jessica" value="1">
-                  <label for="rating1">&#9733;</label>
-                  <input type="radio" id="rating2" name="rating-jessica" value="2">
-                  <label for="rating2">&#9733;</label>
-                  <input type="radio" id="rating3" name="rating-jessica" value="3">
-                  <label for="rating3">&#9733;</label>
-                  <input type="radio" id="rating4" name="rating-jessica" value="4">
-                  <label for="rating4">&#9733;</label>
-                  <input type="radio" id="rating5" name="rating-jessica" value="5">
-                  <label for="rating5">&#9733;</label>
-                </div>
-              </div>
-              
-              <ul class="list-inline">
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-              </ul>
+        
+            {% endfor %}
+
+
+
+
             </div>
           </div>
         </div>
+        
 
-        <div class="col-md-3 col-sm-3 col-xs-6">
-          <div class="thumbnail">
-            <a href="#">
-              <img src="{% static 'assets/img/doctor1.jpg'%}" alt="..." class="team-img">
-            </a>
-            <div class="caption">
-              <h3>doctor Abebe</h3>
-              <p>Lorem, ipsum dolor ipsum dolo ipsum dolo.</p>
-              <div class="doctor-rating">
-                <div class="rating-input">
-                  <input type="radio" id="rating1" name="rating-jessica" value="1">
-                  <label for="rating1">&#9733;</label>
-                  <input type="radio" id="rating2" name="rating-jessica" value="2">
-                  <label for="rating2">&#9733;</label>
-                  <input type="radio" id="rating3" name="rating-jessica" value="3">
-                  <label for="rating3">&#9733;</label>
-                  <input type="radio" id="rating4" name="rating-jessica" value="4">
-                  <label for="rating4">&#9733;</label>
-                  <input type="radio" id="rating5" name="rating-jessica" value="5">
-                  <label for="rating5">&#9733;</label>
-                </div>
-              </div>
-              
-              <ul class="list-inline">
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
+      </div>
 
-              </div>
     </div>
   </section>
-  
   
   <!--/ doctor team-->
   <!--testimonial-->
@@ -425,7 +318,7 @@
         </div>
         <div class="col-md-4 col-sm-5">
           Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a typek
-          <p class="text-right text-primary"><i>— Medilap Healthcare</i></p>
+          <p class="text-right text-primary"><i>— TeleHakim</i></p>
         </div>
         <div class="col-md-2"></div>
       </div>
@@ -531,13 +424,6 @@
             <div class="col-md-12 text-center">
               
               <div class="credits">
-                <!--
-                  All the links in the footer should remain intact.
-                  You can delete the links only if you purchased the pro version.
-                  Licensing information: https://bootstrapmade.com/license/
-                  Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Medilab
-                -->
-               
               </div>
             </div>
           </div>

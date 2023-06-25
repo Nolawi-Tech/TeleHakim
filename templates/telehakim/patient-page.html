@@ -4,6 +4,7 @@
 Patient
 {% endblock %}
 
+
 {% block aside %}
 <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
@@ -90,10 +91,15 @@ medical-history
                 </div>
                 <div class="mt-2">
         
-                    <p>Please complete the payment to confirm your appointment:</p>
+                    <p>Please complete the payment to submit your appointment:</p>
                     <!-- <button type="button" class="btn btn-success btn-block">Pay Now</button> -->
-                    <a href="{% url 'payment:express-payment' %}" class="btn btn-success btn-block">Pay Now by yenepay</a>
-                    <a href="https://t.me/telehakimbot" class="btn btn-success btn-block">Pay Now by chapa</a>
+                    {% if is_paied %}
+                    <a href="" class="btn btn-success btn-block">Paied</a>
+
+                    {% else %}
+                    <a href="{% url 'payment:express-payment' %}" class="btn btn-primary btn-block">Pay Now by yenepay</a>
+                    {% endif %}
+                    <a href="https://t.me/telehakimbot" class="btn btn-link btn-block">Pay Now by chapa</a>
                   </div>
                 <div class="col-md-12">
                     <input type="submit" name="list_date" class="form-control btn btn-primary" value="Submit">

@@ -139,6 +139,7 @@ def patient_dashboard(request):
     user = user_info(request)
     app_id = request.GET.get('app_id')
     user_role = u_role(request)
+    is_paied = request.GET.get('BuyerId')
 
     unique_dates = []
     list_schedule = []
@@ -201,10 +202,12 @@ def patient_dashboard(request):
                     unique_dates.append(sch.date)
         except:
             messages.error(request, "Sorry, we can't find any doctor or provide email.")
+    
 
     context = {
         'page': page,
         'user': user,
+        'is_paied': is_paied,
         'user_role': user_role,
         'app_id': app_id,
         'doctors': doctors,
