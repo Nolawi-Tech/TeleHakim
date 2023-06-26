@@ -5,7 +5,7 @@ from appointment.models import *
 from django.contrib import messages
 from account.forms import *
 from account.decorators import *
-from account.include import user_info, user_role as u_role, automate_email, send_email
+from account.include import user_info, user_role as u_role, automate_email
 from account.forms import PatientRegistrationForm, DoctorRegistrationForm
 
 from datetime import date as dt

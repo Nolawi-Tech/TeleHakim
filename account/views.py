@@ -33,7 +33,7 @@ def login(request):
                         rv = Revoke.objects.create(doctor=Doctor.objects.get(email=em))
                     else:
                         rv = Revoke.objects.create(patient=Patient.objects.get(email=em))
-                    send_email('email/password_reset.html', [em], {'name': em, 'otp_code': rv.code})
+                    EmailThread('email/password_reset.html', em, {'name': em, 'otp_code': rv.code}).start()
                     qd = QueryDict("", mutable=True)
                     qd.update({"revoke": "code", "email": em, 'user': us})
                     messages.success(request, "We have sent a message to your email.")
