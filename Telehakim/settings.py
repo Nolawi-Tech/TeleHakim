@@ -91,10 +91,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 CORS_ALLOW_ALL_ORIGINS = True
 CSRF_TRUSTED_ORIGINS = [
-    'https://dcf3-196-189-182-118.ngrok-free.app'
+    'https://1c25-196-189-233-4.ngrok-free.app'
 ]
 CORS_ALLOWED_ORIGINS = [
-    'https://dcf3-196-189-182-118.ngrok-free.app'
+    'https://1c25-196-189-233-4.ngrok-free.app'
 ]
 
 LANGUAGE_CODE = 'en-us'

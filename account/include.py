@@ -1,3 +1,5 @@
+from threading import Thread
+
 from .models import *
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
@@ -26,6 +28,29 @@ def user_info(request):
     return us
 
 
+class EmailThread(Thread):
+    def __init__(self, link, email_to, context):
+        self.email_to = email_to
+        self.link = link
+        self.context = context
+        Thread.__init__(self)
+
+    def run(self):
+        html_content = render_to_string(self.link, self.context)
+        text_content = strip_tags(html_content)
+        email = EmailMultiAlternatives(
+            'TeleHakim System',
+            text_content,
+            'mesaye2010@gmail.com',
+            [self.email_to],
+        )
+        email.attach_alternative(html_content, "text/html")
+        if email.send() > 0:
+            return True
+        else:
+            return False
+
+
 def send_email(link, to, content):
     try:
         html_content = render_to_string(link, content)
@@ -47,8 +72,9 @@ def automate_email(request):
     for ap in app:
         if not ap.is_notified:
             if (ap.left_time.total_seconds() > 0) and (ap.left_time.total_seconds() < 1800):
-                a = send_email('email/appointment_reminder.html', [ap.patient.email], {'name': ap.patient.first_name})
-                b = send_email('email/appointment_reminder.html', [ap.doctor.email], {'name': ap.doctor.first_name})
-                if a or b:
-                    ap.is_notified = True
-                    ap.save()
+
+                EmailThread('email/appointment_reminder.html', ap.patient.email, {'name': ap.patient.first_name}).start()
+                EmailThread('email/appointment_reminder.html', ap.doctor.email, {'name': ap.doctor.first_name}).start()
+
+                ap.is_notified = True
+                ap.save()

@@ -189,7 +189,8 @@ medical-history
                         <div class=""><i class="bi bi-calendar-day-fill me-1"></i> <a
                                 href="?pages=book&doc_email={{ doctor.email }}&date=&list_date=Submit">See all
                             timings.</a></div>
-                        <div class=""><i class="bi bi-award-fill"></i> 340 rate | 95%
+                        <div class=""><i class="bi bi-award-fill"></i>
+                            {{ doctor.doctor_rate.all.first.total_rate|floatformat:2 }} rates of 10
                         </div>
 
                         {% for doc in doctors %}
@@ -263,7 +264,7 @@ medical-history
                     </div>
 
                     <div class="col-md-12 text-center">
-                        <input type="submit" class="btn btn-primary" name="feedback" value="Send Message">
+                        <input type="submit" class="btn btn-primary" name="feedback" value="Send Feedback">
                     </div>
 
                 </div>
@@ -377,24 +378,28 @@ medical-history
                         <td>{{ history.doctor.email }}</td>
                         <td>{{ history.patient.email }}</td>
                         <td>{{ history.schedule.schedule }}</td>
-                        <td>STRDVJb</td>
+                        <td class="fw-bold">{{ history.room_id }}</td>
                         {% if history.get_status == 1 %}
-                        <td><a href="" class="btn btn-sm btn-primary">Pending</a></td>
-                        {% elif history.get_status == 0 %}
-                        <td><a href="" class="btn btn-sm btn-success">Ongoing</a></td>
+                            <td><a href="" class="btn btn-sm btn-primary">Pending</a></td>
+                        {% elif history.get_status == 0 and history.attendee %}
+                            <td><a href="" class="btn btn-sm btn-success">Ongoing</a></td>
+                        {% elif history.get_status == 0 or history.attendee %}
+                            <td><a href="" class="btn btn-sm btn-success">Pending</a></td>
                         {% elif history.get_status == 2 %}
-                        <td><a href="" class="btn btn-sm btn-success">Waiting</a></td>
+                            <td><a href="" class="btn btn-sm btn-info">Waiting</a></td>
                         {% else %}
-                        <td><a href="" class="btn btn-sm btn-danger">Passed</a></td>
+                            <td><a href="" class="btn btn-sm btn-danger">Passed</a></td>
                         {% endif %}
 
-                        {% if history.get_status == 0 %}
+                        {% if history.get_status == 0 and history.attendee %}
                         <td>
                             <button type="button" onclick="set_email({{ history.doctor.id }})" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal"
                                     data-bs-target="#disablebackdrop">
                                 Rate Doctor
                             </button>
                         </td>
+                        {% elif history.get_status == 0 or history.attendee %}
+                        <td><a href="{% url 'dashboard:patient-dashboard'%}?pages=chat&app_id={{ history.id }}&purpose=1" class="btn btn-sm btn-outline-info">CALL</a></td>
                         {% elif history.get_status == 1 %}
                         <td><a href="{% url 'dashboard:patient-dashboard'%}?pages=chat&app_id={{ history.id }}&purpose=1" class="btn btn-sm btn-outline-info">CALL</a></td>
                         {% elif history.get_status == 2 %}

@@ -361,11 +361,13 @@ view_rate
                         <td>{{ history.patient.email }}</td>
                         <td>{{ history.doctor.email }}</td>
                         <td>{{ history.schedule.schedule }}</td>
-                        <td>STRDVJb</td>
+                        <td class="fw-bold">{{ history.room_id }}</td>
                         {% if history.get_status == 1 %}
                         <td><a href="#" class="btn btn-sm btn-primary">Pending</a></td>
-                        {% elif history.get_status == 0 %}
+                        {% elif history.get_status == 0 and history.host %}
                         <td><a href="#" class="btn btn-sm btn-success">Ongoing</a></td>
+                        {% elif history.get_status == 0 or history.host %}
+                        <td><a href="#" class="btn btn-sm btn-primary">Pending</a></td>
                         {% elif history.get_status == 2 %}
                         <td><a href="#" class="btn btn-sm btn-info">Waiting</a></td>
                         {% else %}
@@ -375,7 +377,8 @@ view_rate
                         {% if history.get_status == 1 %}
                         <td><a href="{% url 'dashboard:doctor-dashboard'%}?pages=chat&app_id={{ history.id }}&purpose=1"
                                class="btn btn-sm btn-outline-info">CALL</a></td>
-                        {% elif history.get_status == 0 %}
+
+                        {% elif history.get_status == 0 and history.host%}
                         <td>
                             <button type="button" onclick="set_id_pr({{ history.patient.id }})"
                                     class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
@@ -419,6 +422,9 @@ view_rate
                                 {% endif %}
                             {% endfor %}
                         </td>
+                        {% elif history.get_status == 0 or history.host %}
+                        <td><a href="{% url 'dashboard:doctor-dashboard'%}?pages=chat&app_id={{ history.id }}&purpose=1"
+                               class="btn btn-sm btn-outline-info">CALL</a></td>
                         {% elif history.get_status == 2 %}
                         <td>-</td>
                         {% else %}
@@ -459,7 +465,7 @@ view_rate
                         <td>{{ history.patient.email }}</td>
                         <td>{{ history.doctor.email }}</td>
                         <td>{{ history.schedule.schedule }}</td>
-                        <td>STRDVJb</td>
+                        <td class="fw-bold">{{ history.room_id }}</td>
                         {% if history.get_status == 1 %}
                         <td><a href="#" class="btn btn-sm btn-primary">Pending</a></td>
                         {% elif history.get_status == 0 %}

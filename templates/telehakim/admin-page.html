@@ -208,7 +208,7 @@
                                 <td>{{ history.patient.email }}</td>
                                 <td>{{ history.doctor.email }}</td>
                                 <td>{{ history.schedule.schedule }}</td>
-                                <td>STRDVJb</td>
+                                <td class="fw-bold">{{ history.room_id }}</td>
                                 {% if history.get_status == 1 %}
                                 <td><a href="#" class="btn btn-sm btn-primary">Pending</a></td>
                                 {% elif history.get_status == 0 %}

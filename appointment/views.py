@@ -1,4 +1,5 @@
-from datetime import datetime, timedelta
+import string
+import random
 
 from django.db import IntegrityError
 from django.http import JsonResponse, HttpResponse
@@ -7,32 +8,45 @@ from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 
 from appointment.models import *
-from account.include import user_info
+from account.include import user_info, EmailThread
 from account.decorators import login_first
 
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import render_to_string
-from django.utils.html import strip_tags
+from account.models import Patient, Doctor
 
 
 def test(request):
-    return render(request, 'telehakim/addinfo_doctor.html')
+    des = EmailThread('email/appointment_reminder.html', "mesaye2010@gmail.com", {'name': 'Test-Name', 'otp_code': 8345}).start()
+    print(des)
+    return JsonResponse({'token': 'adfasd', 'uid': 'sdfs'}, safe=False)
 
-    # return JsonResponse({'token': 'adfasd', 'uid': 'sdfs'}, safe=False)
+
+def random_room_id():
+    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
 
 
 @csrf_exempt
 def change_status(request, id, option, purpose):
     try:
+        test_patient = Patient.objects.first()
+        test_doctor = Doctor.objects.first()
         if purpose == '0':
             app = AppAdmin.objects.get(id=id)
         else:
             app = Appointment.objects.get(id=id)
 
         if option == "in":
+            if type(user_info(request)) == type(test_doctor):
+                app.host = True
+            else:
+                app.attendee = True
             app.status = 0
         else:
-            app.status = 1
+            if type(user_info(request)) == type(test_doctor):
+                app.host = False
+            else:
+                app.attendee = False
+            if not (app.attendee and app.host):
+                app.status = 1
         app.save()
         return JsonResponse({'response': "Data saved!"}, safe=False)
     except:
@@ -122,8 +136,12 @@ def schedule_dtime_admin(request):
         wk = AppDay.objects.get(id=sch_id)
         wk.is_booked = True
         wk.save()
-        bk = AppAdmin(doctor=doctor, patient=admin, schedule=wk)
+        bk = AppAdmin(doctor=doctor, patient=admin, schedule=wk, room_id=random_room_id())
         bk.save()
+        EmailThread('email/room_id_email.html', user_info(request).email,
+                    {'room_id': bk.room_id, 'name': user_info(request).first_name}).start()
+        EmailThread('email/room_id_email.html', bk.patient.email,
+                    {'room_id': bk.room_id, 'name': bk.patient.first_name}).start()
 
         messages.success(request, "Good Job, We have scheduled this specific date for you!")
     except IntegrityError:
@@ -197,8 +215,13 @@ def schedule_dtime(request):
         wk = WorkingDay.objects.get(id=sch_id)
         wk.is_booked = True
         wk.save()
-        bk = Appointment(doctor=doctor, patient=pt, schedule=wk)
+        bk = Appointment(doctor=doctor, patient=pt, schedule=wk, room_id=random_room_id())
         bk.save()
+        EmailThread('email/room_id_email.html', user_info(request).email,
+                    {'room_id': bk.room_id, 'name': user_info(request).first_name}).start()
+        EmailThread('email/room_id_email.html', bk.doctor.email,
+                    {'room_id': bk.room_id, 'name': bk.doctor.first_name}).start()
+
 
         messages.success(request, "Good Job, We have scheduled this specific date for you!")
     except IntegrityError:

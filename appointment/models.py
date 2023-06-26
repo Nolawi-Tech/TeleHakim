@@ -18,7 +18,11 @@ class AppAdmin(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, unique=True)
     schedule = models.ForeignKey(AppDay, on_delete=models.SET_NULL, null=True)
+    room_id = models.CharField(max_length=20, blank=True, null=True)
     status = models.IntegerField(default=1)
+
+    host = models.BooleanField(default=False)
+    attendee = models.BooleanField(default=False)
     is_notified = models.BooleanField(default=False)
 
     @property
@@ -73,8 +77,12 @@ class WorkingDay(models.Model):
 class Appointment(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-    schedule = models.ForeignKey(WorkingDay,on_delete=models.SET_NULL, null=True)
+    schedule = models.ForeignKey(WorkingDay, on_delete=models.SET_NULL, null=True)
+    room_id = models.CharField(max_length=20, blank=True, null=True)
     status = models.IntegerField(default=1)
+
+    host = models.BooleanField(default=False)
+    attendee = models.BooleanField(default=False)
     is_notified = models.BooleanField(default=False)
 
     @property
@@ -84,7 +92,7 @@ class Appointment(models.Model):
         dt = self.schedule.date
 
         hr = int(start.split(':')[0])
-        if zone == "Night":
+        if zone.lower() == "night":
             if hr >= 7:
                 hr -= 6
             else:

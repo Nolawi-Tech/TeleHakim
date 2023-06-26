@@ -3,12 +3,15 @@ from typing import List
 '''
 
     
-    if one use join it for the other b/c status will be 0.
-    Room Id generated for each patient and doctor and store it.
+    
     System's can withhold doctors from working based on 5 user rates.
     
-    In email using threading.
+    Django administration setup as a superuser.
+    Validation for all forms.
     
+    In email using threading.
+    If one use join it for the other b/c status will be 0.
+    Room Id generated for each patient and doctor and store it.
     Admin can interview the doctors,viewing CV, accept or reject, fill some info.
     Doctor view their patients’ medical record
     Patient can see the doctor's rate.

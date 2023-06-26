@@ -8,13 +8,12 @@
                     {{user_role|title}}
                     {% if user.is_verified %}
                         <span class="badge bg-success rounded-pill">Verified</span>
-                    {% else %}
+                    {% elif user_role == 'doctor' %}
                         <span class="badge bg-danger rounded-pill">Not Verified</span>
                     {% endif %}
                 </h3>
             </div>
         </div>
-
     </div>
 
     <div class="col-xl-8">
@@ -125,7 +124,7 @@
                                     Password</label>
                                 <div class="col-md-8 col-lg-9">
                                     <input name="current_password" type="password" class="form-control"
-                                           id="currentPassword" required>
+                                           id="currentPassword" minlength="4" required>
                                 </div>
                             </div>
 
