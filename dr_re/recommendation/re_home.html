@@ -1,0 +1,51 @@
+{% extends 'recommendation/mian.html' %}
+{% load static %}
+{% block middle %} 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TeleHakim</title>
+    <meta name="description" content="Free Bootstrap Theme by BootstrapMade.com">
+    <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'https://fonts.googleapis.com/css?family=Open+Sans|Raleway|Candal' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/font-awesome.min.css' %}">
+    <!-- <link href="{% static 'asset/css/recommendation/bootstrap1.min.css' %}" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/recommendation/style.css' %}">
+    <link href="{% static 'asset/css/recommendation/recommend.css'%} " rel="stylesheet">
+    <link href="{% static 'asset/css/recommendation/modified.css'%} " rel="stylesheet">
+
+</head>
+
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+    
+    <div class="container pt-5 main my-5 ">
+        <div class="row d-flex align-items-center">
+            <div class="col-12 col-md-6 main-text text-center align-item-center">
+
+                <div>
+                    <h1>What concerns you about your health today?</h1>
+                </div>
+                <div>
+                    <h4>Check your symptoms and find out what could be causing them. It's fast, free and anonymous.</h4>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 ps-5 align-items-center">
+                <div>
+                    <img class=" img-fluid" src="{% static 'asset/img/recommend/health1.png' %}" alt="yes">
+                </div>
+
+            </div>
+        </div>
+        <div class="row d-flex align-items-center text-center">
+            <div>
+                <a class="btn-1 " href="{% url 'interview0' %}">start checkup</a>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock  %}

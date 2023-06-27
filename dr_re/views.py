@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from account.models import Doctor
 import pandas as pd
 import joblib
 import os
@@ -8,8 +9,14 @@ import os
 
 from django.conf import settings
 
+
 # Create your views here
 # 
+
+def mian(request):
+    return render(request, 'recommendation/mian.html')
+
+
 symptom = ['high_fever', 'nausea', 'skin_rash', 'yellowish_skin', 'itching', 'mild_fever', 'vomiting', 'fatigue',
            'abnormal_menstruation', 'muscle_weakness', 'indigestion', 'joint_pain', 'yellowing_of_eyes', 'headache',
            'blurred_and_distorted_vision', 'continuous_feel_of_urine', 'prominent_veins_on_calf', 'sweating',
@@ -35,18 +42,67 @@ symptom = ['high_fever', 'nausea', 'skin_rash', 'yellowish_skin', 'itching', 'mi
            'puffy_face_and_eyes', 'restlessness', 'sinus_pressure', 'swelled_lymph_nodes', 'palpitations',
            'irritability', 'redness_of_eyes', 'loss_of_smell', 'fluid_overload', 'mood_swings', 'cold_hands_and_feets',
            'runny_nose']
-symptom_52 = ["high_fever", "nausea", "skin_rash", "yellowish_skin",
-              "itching", "mild_fever", "vomiting", "fatigue",
-              "abnormal_menstruation", "muscle_weakness", "indigestion",
-              "joint_pain", "yellowing_of_eyes", "headache", "blurred_and_distorted_vision",
-              "continuous_feel_of_urine", "prominent_veins_on_calf", "sweating",
-              "altered_sensorium", "lack_of_concentration", "neck_pain",
-              "irritation_in_anus", "abdominal_pain", "chills", 'shivering', 'sunken_eyes', 'breathlessness',
-              'hip_joint_pain', 'cough', 'ulcers_on_tongue', 'dark_urine', 'loss_of_appetite',
-              'weight_loss', 'irregular_sugar_level', 'malaise', 'rusty_sputum', 'chest_pain', 'mucoid_sputum',
-              'diarrhoea', 'family_history', 'phlegm', 'muscle_pain', 'congestion', 'patches_in_throat',
-              'unsteadiness', 'loss_of_balance', 'stomach_pain', 'spotting_ urination', 'dischromic _patches',
-              'dizziness', 'inflammatory_nails', 'acidity']
+
+medical_conditions = {
+    'Vertigo Paroxysmal Positional Vertigo': ['Otolaryngologist (ent)', 'Neurologist', 'Physical therapist',
+                                              'General practitioner'],
+    'AIDS': ['Internist', 'Family physician', 'Nurse practitioner', 'General practitioner'],
+    'Acne': ['Dermatologist', 'Family physician', 'Nurse practitioner', 'General practitioner'],
+    'Alcoholic hepatitis': ['Gastroenterologist', 'Hepatologist', 'Primary care doctor', 'General practitioner'],
+    'Allergy': ['Allergist', 'Family physician', 'Internist', 'Nurse practitioner', 'General practitioner'],
+    'Arthritis': ['Rheumatologist', 'Primary care doctor', 'Internist', 'Nurse practitioner', 'General practitioner'],
+    'Bronchial Asthma': ['Pulmonologist', 'Allergist', 'Family physician', 'Nurse practitioner',
+                         'General practitioner'],
+    'Cervical spondylosis': ['Spine specialist', 'Neurosurgeon', 'Orthopedic surgeon', 'Physiatrist',
+                             'General practitioner'],
+    'Chicken pox': ['Primary care doctor/pediatrician', 'Dermatologist', 'Infectious disease specialist',
+                    'General practitioner'],
+    'Chronic cholestasis': ['Hepatologist', 'Primary care doctor', 'Internist', 'Nurse practitioner',
+                            'General practitioner'],
+    'Common Cold': ['Primary care doctor/pediatrician', 'Ear, nose, and throat (ent) doctor',
+                    'Infectious disease specialist', 'General practitioner'],
+    'Dengue': ['Primary care doctor/pediatrician', 'Infectious disease specialist', 'Hematologist',
+               'General practitioner'],
+    'Diabetes': ['Endocrinologist', 'Primary care doctor', 'Pediatrician', 'Nurse practitioner',
+                 'General practitioner'],
+    'Dimorphic hemorrhoids (piles)': ['Proctologist', 'Primary care doctor', 'Gastroenterologist', 'Nurse practitioner',
+                                      'General practitioner'],
+    'Drug Reaction': ['Allergist', 'Primary care doctor', 'Primary care doctor', 'Immunologist',
+                      'General practitioner'],
+    'Fungal infection': ['Dermatologist', 'Podiatrist', 'Infectious disease specialist', 'Primary care doctor',
+                         'General practitioner'],
+    'GERD': ['Gastroenterologist', 'Primary care doctor', 'Ear, nose, and throat (ent) doctor', 'General practitioner'],
+    'Gastroenteritis': ['Gastroenterologist', 'Primary care doctor', 'Pediatrician', 'General practitioner'],
+    'Heart attack': ['Cardiologist', 'Primary care doctor', 'Emergency room doctor', 'General practitioner'],
+    'Hepatitis B': ['Primary care doctor', 'Infectious disease specialist', 'Hepatologist', 'General practitioner'],
+    'Hepatitis C': ['Primary care doctor', 'Infectious disease specialist', 'Hepatologist', 'General practitioner'],
+    'Hepatitis D': ['Primary care doctor', 'Infectious disease specialist', 'Hepatologist', 'Gastroenterologist',
+                    'General practitioner'],
+    'Hepatitis E': ['Primary care doctor', 'Hepatologist', 'Infectious disease specialist', 'General practitioner'],
+    'Hypertension': ['Cardiologist', 'Primary care doctor', 'Nephrologist', 'General practitioner'],
+    'Hyperthyroidism': ['Primary care doctor', 'Ear, nose, and throat (ent) doctor', 'Endocrinologist',
+                        'General practitioner'],
+    'Hypoglycemia': ['Endocrinologist', 'Primary care doctor', 'Diabetes educator', 'General practitioner'],
+    'Hypothyroidism': ['Endocrinologist', 'Primary care doctor', 'Thyroidologist', 'General practitioner'],
+    'Impetigo': ['Primary care doctor', 'Dermatologist', 'Pediatrician', 'General practitioner'],
+    'Jaundice': ['Primary care doctor', 'Hepatologist', 'Gastroenterologist', 'General practitioner'],
+    'Malaria': ['Infectious disease specialist', 'Primary care doctor', 'Travel medicine specialist',
+                'General practitioner'],
+    'Migraine': ['Neurologist', 'Primary care doctor', 'Ophthalmologist', 'General practitioner'],
+    'Osteoarthristis': ['Rheumatologist', 'Primary care doctor', 'Orthopedist', 'General practitioner'],
+    'Paralysis (brain hemorrhage)': ['Neurologist', 'Primary care doctor', 'Neurosurgeon', 'General practitioner'],
+    'Peptic ulcer disease': ['Gastroenterologist', 'Primary care doctor', 'Internist', 'General practitioner'],
+    'Pneumonia': ['Pulmonologist', 'Primary care doctor', 'Emergency room doctor', 'General practitioner'],
+    'Psoriasis': ['Dermatologist', 'Primary care doctor', 'Rheumatologist', 'General practitioner'],
+    'Tuberculosis': ['Pulmonologist', 'Infectious disease specialist', 'Primary care doctor', 'Emergency room doctor',
+                     'General practitioner'],
+    'Typhoid': ['Infectious disease specialist', 'Primary care doctor', 'Emergency room doctor',
+                'General practitioner'],
+    'Urinary tract infection': ['Urologist', 'Primary care doctor', 'Gynecologist', 'General practitioner'],
+    'Varicose veins': ['Phlebologist', 'Vascular surgeon', 'Dermatologist', 'General practitioner',
+                       'General practitioner']
+}
+
 symptom1 = symptom[:33]
 symptom2 = symptom[33:66]
 symptom3 = symptom[66:99]
@@ -62,25 +118,15 @@ diseases = {0: '(vertigo) Paroymsal  Positional Vertigo', 1: 'AIDS', 2: 'Acne', 
             27: 'Impetigo', 28: 'Jaundice', 29: 'Malaria', 30: 'Migraine', 31: 'Osteoarthristis',
             32: 'Paralysis (brain hemorrhage)',
             33: 'Peptic ulcer diseae', 34: 'Pneumonia', 35: 'Psoriasis', 36: 'Tuberculosis', 37: 'Typhoid',
-            38: 'Urinary tract infection', 39: 'Varicose veins', 40: 'hepatitis A'}
+            38: 'Urinary tract infection', 39: 'Varicose veins', 40: 'hepatitis A'
+            }
+
+from account.decorators import login_first
 
 
-@login_required(login_url='account:login')
+@login_first
 def re_home(request):
     return render(request, 'recommendation/re_home.html')
-
-
-def login(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-            return redirect('rehome')
-
-    return render(request, 'account/login.html')
 
 
 def recommend(request):
@@ -158,13 +204,15 @@ def cough_interview1(request):
 
 
 def cough_result(request):
-    if request.method == "POST":
-        symptom = request.POST.get("symptom")
+    key_value = tuple(medical_conditions[request.GET.get('key')])
+    doctors = list(
+        Doctor.objects.filter(specialization__in=key_value).values('first_name', 'last_name', 'email', 'photo',
+                                                                   'specialization'))
 
-        if symptom:
-            symptom_list.append(symptom)
-
-    return render(request, "recommendation/coughing/cough_result.html", {'symptom_list': symptom_list})
+    context = {
+        'doctors': doctors
+    }
+    return render(request, "recommendation/coughing/cough_result.html", context)
 
 
 def cough_interview2(request):
@@ -193,9 +241,15 @@ def headache_interview5(request):
 
 
 def headache_result(request):
-    key_value = request.GET.get('key')
-    print(key_value)
-    return render(request, "recommendation/headache/headache_result.html", {'result': key_value})
+    key_value = tuple(medical_conditions[request.GET.get('key')])
+    doctors = list(
+        Doctor.objects.filter(specialization__in=key_value).values('first_name', 'last_name', 'email', 'photo',
+                                                                   'specialization'))
+
+    context = {
+        'doctors': doctors
+    }
+    return render(request, "recommendation/headache/headache_result.html", context)
 
 
 # fever
@@ -220,6 +274,12 @@ def fever_interview5(request):
 
 
 def fever_result(request):
-    key_value = request.GET.get('key')
-    print(key_value)
-    return render(request, "recommendation/fever/fever_result.html", {'result': key_value})
+    key_value = tuple(medical_conditions[request.GET.get('key')])
+    doctors = list(
+        Doctor.objects.filter(specialization__in=key_value).values('first_name', 'last_name', 'email', 'photo',
+                                                                   'specialization'))
+
+    context = {
+        'doctors': doctors
+    }
+    return render(request, "recommendation/fever/fever_result.html", context)

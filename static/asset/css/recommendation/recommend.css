@@ -5,7 +5,7 @@ body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-form {
+form.symptom {
     margin: 50px 50px;
     padding: 20px;
     background-color: #FFF;
@@ -33,10 +33,9 @@ input[type="submit"]:hover {
 }
 
 .main {
-    background-color: #e7e1e1;
     border-radius: 10px;
     box-shadow: 0px 0px 10px #ffffff;
-    margin-top: 20px;
+    margin-top: 90px !important;;
 }
 
 .main-text {
@@ -49,8 +48,6 @@ input[type="submit"]:hover {
     margin-left: auto;
     margin-right: auto;
     margin-top: 20px;
-    width: 50;
-    height: 50;
 }
 
 #slider1,

@@ -1,0 +1,161 @@
+{% extends 'recommendation/mian.html' %}
+{% load static %}
+{% block middle %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TeleHakim</title>
+    <meta name="description" content="Free Bootstrap Theme by BootstrapMade.com">
+    <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'https://fonts.googleapis.com/css?family=Open+Sans|Raleway|Candal' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/recommendation/style.css' %}">
+    <link href="{% static 'asset/css/recommendation/recommend.css'%} " rel="stylesheet">
+    <link href="{% static 'asset/css/recommendation/modified.css'%} " rel="stylesheet">
+    <style>
+        .image-container.clicked  {
+            border: 2px solid rgb(255, 255, 255);
+        }
+    </style>
+</head>
+
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+
+    <div class="container col-6 main my-5 ">
+        <div class="col-lg-12 ">
+            <div class="card  ">
+                <h3 class="p-2 text-center ">From the symptoms below, please pick one that's you the most</h3>
+            </div>
+        </div>
+        <div class="row  d-flex justify-content-between">
+            <div class="col-12 col-lg-4 main-text align-item-center">
+                <div class="image-container text-center" onclick="selectImage('page1.html', this)">
+                    <img class="img img-fluid" src="{% static 'asset/img/recommend/symptoms/cough men.png' %}" alt="">
+                    <p class="text-center">coughing</p>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 align-items-center">
+                <div class="image-container" onclick="selectImage('page2.html', this)">
+                    <img class="img img-fluid" src="{% static 'asset/img/recommend/symptoms/headache men.png' %}" alt="">
+                    <p class="text-center">headache</p>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 align-items-center">
+                <div class="image-container" onclick="selectImage('page3.html', this)">
+                    <img class="img img-fluid" src="{% static 'asset/img/recommend/symptoms/vomiting.png' %}" alt="">
+                    <p class="text-center">vomiting</p>
+                </div>
+            </div>
+        </div>
+        <div class="row  d-flex justify-content-between">
+            <div class="col-12 col-lg-4 align-items-center">
+                <div class="image-container" onclick="selectImage('page4.html', this)">
+                    <img class="img img-fluid" src="{% static 'asset/img/recommend/symptoms/fatigue.png' %}" alt="">
+                    <p class="text-center">fatigue/tired</p>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 align-items-center">
+                <div class="image-container" onclick="selectImage('page5.html', this)">
+                    <img class="img img-fluid" src="{% static 'asset/img/recommend/symptoms/fever.png' %}" alt="">
+                    <p class="text-center">fever</p>
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <div class="text-center text-danger" id="message"></div>
+        <div class="container-fluid">
+            <hr>
+        </div>
+
+        <div class="row d-flex justify-content-between pr-5">
+            <div class="col-auto">
+                <button id="previousButton" class="btn-1 btn-primary">Prev</button>
+            </div>
+            <div class="col-auto">
+                <button id="nextButton" class="btn-1 btn-primary" >Next</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted) {
+                location.reload();
+            }
+        });
+        var page1 = {
+            clicked: false
+        };
+        var page2 = {
+            clicked: false
+        };
+        var page3 = {
+            clicked: false
+        };
+        var page4 = {
+            clicked: false
+        };
+        var page5 = {
+            clicked: false
+        };
+
+        function selectImage(page, element) {
+            if (page === 'page1.html') {
+                page1.clicked = true;
+            } else if (page === 'page2.html') {
+                page2.clicked = true;
+            } else if (page === 'page3.html') {
+                page3.clicked = true;
+            } else if (page === 'page4.html') {
+                page4.clicked = true;
+            } else if (page === 'page5.html') {
+                page5.clicked = true;
+            }
+
+            var images = document.querySelectorAll('.image-container');
+            images.forEach(function(imgContainer) {
+                imgContainer.classList.remove('clicked'); // Reset the clicked state for all images
+            });
+
+            element.classList.add('clicked'); // Apply the clicked state to the selected image container
+
+            if (page1.clicked || page2.clicked || page3.clicked || page4.clicked || page5.clicked) {
+                document.getElementById('nextButton').disabled = false;
+            } else {
+                document.getElementById('nextButton').disabled = true;
+            }
+        }
+
+        var previousButton = document.getElementById('previousButton');
+        previousButton.addEventListener('click', function() {
+            window.location.href = "{% url 'interview3' %}";
+        });
+
+        var nextButton = document.getElementById('nextButton');
+        nextButton.addEventListener('click', function() {
+            if (page1.clicked) {
+                window.location.href = "{% url 'cough_interview1'%}";
+            }
+            if (page2.clicked) {
+                window.location.href = "{% url 'headache_interview1'%}";
+            }
+            if (page3.clicked) {
+                window.location.href = "{% url 'vom_interview'%}";
+            }
+            if (page4.clicked) {
+                window.location.href = "{% url 'interview4'%}";
+            }
+            if (page5.clicked) {
+                window.location.href = "{% url 'fever_interview1'%}";
+            }
+        });
+    </script>
+</body>
+{% endblock %}

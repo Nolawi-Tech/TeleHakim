@@ -1,0 +1,205 @@
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title> TeleHakim</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="{% static 'image/1.png' %}" rel="icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'asset/style.css' %}" rel="stylesheet">
+    <style>
+        /* Custom styling for the Google Translate dropdown */
+        
+        #google_translate_element {
+            position: relative;
+            display: inline-block;
+        }
+        /* Button style */
+        
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+        /* Dropdown container style */
+        
+        .goog-te-menu-value {
+            font-size: 14px;
+            color: #333;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+            padding: 10px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+        }
+        /* Dropdown arrow style */
+        
+        .goog-te-menu-value span:nth-child(2) {
+            margin-left: 4px;
+        }
+        /* Dropdown menu style */
+        
+        .goog-te-menu2 {
+            border: 1px solid #ccc;
+            background-color: #fff;
+            padding: 5px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        /* Dropdown menu item style */
+        
+        .goog-te-menu2-item {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        /* Dropdown menu item hover style */
+        
+        .goog-te-menu2-item:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+
+</head>
+
+<body>
+    <header id="header" class="header fixed-top d-flex align-items-center">
+
+        <div class="d-flex align-items-center justify-content-between">
+            <a href="{% url 'account:home' %}" class="logo d-flex align-items-center">
+                <img src="{% static 'assets/img/logo.png' %}" alt="">
+                <p class="d-none d-lg-block text-white">TELEHAKIM</p>
+            </a>
+
+        </div>
+        <!-- End Logo -->
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+
+                <li class="nav-item ">
+
+                    <a class="text-decoration-none text-white p-2 px-5" href="{% url 'dashboard:patient-dashboard'%}">Dashboard</a>
+
+                </li>
+                <!-- End Notification Nav -->
+
+
+                <li class="nav-item  ">
+                    <a class="text-decoration-none btn text-white p-2 fs-3" href="{% url 'account:logout' %}">logout</a>
+                </li>
+
+                <li class="nav-item ml-4">
+                    <div class="" id="google_translate_element"></div>
+                    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+                    <script>
+                      function googleTranslateElementInit(){
+                        new google.translate.TranslateElement(
+                          {pageLanguage: 'en'},
+                          'google_translate_element'
+                        );
+                      }
+                    </script>
+                </li>
+                    <!-- End Profile Image Icon -->
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                    <li class="dropdown-header">
+                        <h6>{{ user.first_name|title }} {{ user.last_name|title }}</h6>
+                        <span>
+                            {{ user_role|title }}
+                            {% if user.is_verified %}
+                                <span class="badge bg-success rounded-pill">Verified</span>
+                            {% elif user_role == 'doctor' %}
+                                <span class="badge bg-danger rounded-pill">Not Verified</span>
+                            {% endif %}
+                        </span>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center"
+                           href="/dashboard/{{user_role}}/?pages=profile">
+                            <i class="bi bi-person"></i>
+                            <span>My Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center"
+                           href="/dashboard/{{ user_role }}/?pages=profile">
+                            <i class="bi bi-gear"></i>
+                            <span>Account Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center" href="{% url 'account:logout' %}">
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Sign Out</span>
+                        </a>
+                    </li>
+
+                </ul>
+                <!-- End Profile Nav -->
+                
+            </ul>
+        </nav>
+        <!-- End Icons Navigation -->
+    </header>
+
+    <main id="main" class="main">
+
+        <div class="pagetitle">
+            <h1>{% block header %} {% endblock %}</h1>
+
+        </div>
+        <!-- End Page Title -->
+
+        <section class="section">
+            {% block middle %}{% endblock %}
+        </section>
+        <script>
+            function post_none() {
+                setTimeout(function() {
+                    var cm = document.getElementsByClassName('custom-modal')[0];
+                    cm.classList.add('post_none');
+                }, 2000);
+            }
+        </script>
+    </main>
+    <!-- End #main -->
+
+    <footer id="footer" class="footer align-item-center">
+        <div class="copyright">
+            &copy; Copyright <strong><span>TeleHakim System</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+        </div>
+    </footer>
+    <!-- End Footer -->
+</body>
+
+</html>

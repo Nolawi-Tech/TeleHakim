@@ -4,10 +4,24 @@ from django.contrib import messages
 from account.decorators import *
 from django.http import QueryDict
 from django.urls import reverse
-from account.include import *
+from account.include import user_info, user_role
 from account.models import Patient, Doctor
 
 qd = QueryDict("", mutable=True)
+
+
+def home(request):
+    user = user_info(request)
+    user_rl = user_role(request)
+    drs = Doctor.objects.all()[:3]
+
+    context = {
+        'user': user,
+        'user_role': user_rl,
+        'doctors': drs,
+    }
+
+    return render(request, 'index.html', context)
 
 
 def login(request):
@@ -65,8 +79,8 @@ def login(request):
             email = request.POST.get('email')
             password = request.POST.get('password')
             is_doctor = request.POST.get('is_doctor')
-
-            flag = ""
+            next_url = request.GET.get('next')
+            print("next_url-login", next_url)
 
             if is_doctor is None:
                 if Patient.objects.filter(email=email, password=password).exists():
@@ -77,6 +91,8 @@ def login(request):
                         flag = "patient"
                     request.session["user-role"] = flag
                     request.session["email"] = user.email
+                    if next_url is not None:
+                        return redirect('dr_re:re_home')
                     messages.success(request, "Successfully logged in to system. welcome!")
                     return redirect(f'dashboard:{flag}-dashboard')
                 else:

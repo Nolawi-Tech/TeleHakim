@@ -1,0 +1,174 @@
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title> TeleHakim</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="{% static 'assets/img/logo.jpg' %}" rel="icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'asset/style.css' %}" rel="stylesheet">
+    <style>
+        /* Custom styling for the Google Translate dropdown */
+        
+        #google_translate_element {
+            position: relative;
+            display: inline-block;
+        }
+        /* Button style */
+        
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+        /* Dropdown container style */
+        
+        .goog-te-menu-value {
+            font-size: 14px;
+            color: #333;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+            padding: 10px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+        }
+        /* Dropdown arrow style */
+        
+        .goog-te-menu-value span:nth-child(2) {
+            margin-left: 4px;
+        }
+        /* Dropdown menu style */
+        
+        .goog-te-menu2 {
+            border: 1px solid #ccc;
+            background-color: #fff;
+            padding: 5px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        /* Dropdown menu item style */
+        
+        .goog-te-menu2-item {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        /* Dropdown menu item hover style */
+        
+        .goog-te-menu2-item:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header id="header" class="header fixed-top d-flex align-items-center">
+
+        <div class="d-flex align-items-center justify-content-between">
+            <a href="{url ''}" class="logo d-flex align-items-center">
+                <img src="{% static 'assets/img/post.jpg' %}" alt="">
+                <span class="d-none d-lg-block">TELEHAKIM</span>
+            </a>
+
+        </div>
+        <!-- End Logo -->
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+
+                <li class="nav-item d-block ">
+                    <a href="#" class=" text-decoration-none text-black p-2">some</a>
+                </li>
+                <!-- End Search Icon-->
+
+                <li class="nav-item ">
+
+                    <a class="text-decoration-none text-black p-2" href="#">one</a>
+
+                </li>
+                <!-- End Notification Nav -->
+
+
+                <li class="nav-item  pe-3">
+
+                    <a class="text-decoration-none text-black p-2" href="#">two</a>
+                    <!-- End Profile Image Icon -->
+                </li>
+                <!-- End Profile Nav -->
+                <div id="google_translate_element"></div>
+
+                <script>
+                    function googleTranslateElementInit() {
+                        new google.translate.TranslateElement({
+                            pageLanguage: 'en',
+                            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                            autoDisplay: false
+                        }, 'google_translate_element');
+                    }
+
+                    function removeExtraTable() {
+                        var extraTable = document.querySelector('table[width="100%"][height="100%"]');
+                        if (extraTable) {
+                            extraTable.parentNode.removeChild(extraTable);
+                        }
+                    }
+
+                    document.addEventListener('DOMContentLoaded', removeExtraTable);
+                </script>
+                <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+            </ul>
+        </nav>
+        <!-- End Icons Navigation -->
+    </header>
+
+    <main id="main" class="main">
+
+        <div class="pagetitle">
+            <h1>{% block header %} {% endblock %}</h1>
+
+        </div>
+        <!-- End Page Title -->
+
+        <section class="section">
+            {% block middle %}{% endblock %}
+        </section>
+        <script>
+            function post_none() {
+                setTimeout(function() {
+                    var cm = document.getElementsByClassName('custom-modal')[0];
+                    cm.classList.add('post_none');
+                }, 2000);
+            }
+        </script>
+    </main>
+    <!-- End #main -->
+
+    <footer id="footer" class="footer align-item-center">
+        <div class="copyright">
+            &copy; Copyright <strong><span>TeleHakim System</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+        </div>
+    </footer>
+    <!-- End Footer -->
+</body>
+
+</html>

@@ -1,16 +1,19 @@
 from django.shortcuts import redirect
+from django.urls import reverse
+
 from account.include import user_info, user_role
 from django.contrib import messages
 
 
 def login_first(view_func):
     def wrapper(request, *args, **kwargs):
+        next_url = request.GET.get('next')
+        print('decorator', next_url)
         if user_info(request) is None:
-            messages.error(request, "You are not logged in!, Please login first to access the page!")
-            return redirect('account:login')
+            messages.error(request, "You are not logged in!")
+            return redirect(reverse('account:login') + f'?next={next_url}')
         else:
             return view_func(request, *args, **kwargs)
-
     return wrapper
 
 
@@ -45,6 +48,7 @@ def doctor_only(view_func):
             return redirect('account:login')
 
     return wrapper
+
 
 def your_view_only(view_func):
     def wrapper(request, *args, **kwargs):

@@ -1,7 +1,8 @@
-{% load static %}{% block maincontent %}
+{% extends 'recommendation/mian.html' %}
+{% load static %}
+{% block middle %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +12,6 @@
 
     <link rel="stylesheet" type="text/css" href="{% static 'https://fonts.googleapis.com/css?family=Open+Sans|Raleway|Candal' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'asset/css/font-awesome.min.css' %}">
-    <!-- <link href="{% static 'asset/css/recommendation/bootstrap1.min.css' %}" rel="stylesheet"> -->
     <link rel="stylesheet" type="text/css" href="{% static 'asset/css/bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'asset/css/recommendation/style.css' %}">
     <link href="{% static 'asset/css/recommendation/recommend.css'%} " rel="stylesheet">
@@ -21,49 +21,7 @@
 
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
     <!--banner-->
-    <section id="banner" class="banner">
-        <div class="bg-color">
-            <nav class="navbar navbar-default">
-                <div class="container">
-                    <div class="col-md-12">
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-				        <span class="icon-bar"></span>
-				        <span class="icon-bar"></span>
-				        <span class="icon-bar"></span>
-				      </button>
-                            <a class="navbar-brand" href="#"><img src="{% static 'asset/img/logo.png'%}" class="img-responsive" style="width: 140px; margin-top: -16px;"></a>
-                        </div>
-                        <div class="collapse navbar-collapse navbar-right" id="myNavbar">
-                            <ul class="nav navbar-nav">
-                                <li class="n1"><a href="{url ''}">Home</a></li>
-                                <li class="n1"><a href="#service">Services</a></li>
-                                <li class="n1"><a href="#about">About</a></li>
-                                <li class="n1"><a href="#testimonial">Testimonial</a></li>
-                                <li class="n1"><a href="#contact">Contact</a></li>
-                                <li class="n1"><a href="login.html" class="btn btn-info btn-block">Login</a></li>
-                                <div id="google_translate_element"></div>
-                                <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-                                <script>
-                                    function googleTranslateElementInit() {
-                                        new google.translate.TranslateElement({
-                                                pageLanguage: 'en'
-                                            },
-                                            'google_translate_element'
-                                        );
-                                    }
-                                </script>
 
-                            </ul>
-
-                        </div>
-                    </div>
-                </div>
-
-
-            </nav>
-        </div>
-    </section>
     <div class="container  main my-5 py-5">
         <div class="row d-flex align-items-center">
             <div class="col-12 col-md-7  main-text align-item-center">
@@ -85,7 +43,7 @@
             </div>
             <div class="col-12 col-md-4  align-items-center">
                 <div>
-                    <img class="img" src="{% static 'asset/img/recommend/terms of service.png' %}" alt="img">
+                    <img class="img-fluid" src="{% static 'asset/img/recommend/terms of service.png' %}" alt="img">
                 </div>
 
             </div>
@@ -104,8 +62,18 @@
                 </div>
             </div>
             <div id="slider1">
-                <h1>Terms of services</h1>
-                <p>This is the content that will slide in from the right.</p>
+                <h3>Terms of services</h3>
+                <p><b>Purpose:</b> TeleHakim enables remote medical consultations.</p>
+                <p><b>User Eligibility:</b> Users must meet eligibility criteria and comply with laws.</p>
+                <p><b>User Responsibilities:</b> Users must provide accurate information and use the system lawfully.</p>
+                <p><b>Service Description:</b>  TeleHakim offers virtual medical consultations and related features.</p>
+                <p><b>Data Privacy and Security:</b> User data is treated confidentially and protected.</p>
+                <p><b>Consent to Data Processing:</b> Users' data may be shared for medical services.</p>
+                <p><b>Intellectual Property:</b> Users cannot misuse or copy TeleHakim's intellectual property.</p> 
+                <p><b>Limitations of Liability: </b>TeleHakim is not responsible for the accuracy of healthcare providers' information.</p>
+                <p><b>Termination: </b>Users can terminate their use, and the provider may suspend access for violations.</p>
+                <p><b>Modifications to Terms: </b>he provider may update the Terms of Service.</p>
+                    
                 <button id="closeButton1">Close</button>
             </div>
             <div class="form-group">
@@ -122,16 +90,17 @@
             </div>
         </div>
         <div id="slider2">
-            <h1>Privacy Policy</h1>
-            <p>This is the content that will slide in from the right.</p>
+            <h3>Privacy Policy</h3>
+<p><b>Information Collection:</b> TeleHakim collects personal and medical information to provide its services.</p>
+<p><b>Use of Information:</b> Collected information is used to facilitate remote medical consultations and improve the system.</p>
+<p><b>Data Sharing:</b> TeleHakim may share user information with healthcare providers for consultation purposes.</p>
+<p><b>Data Security:</b> Measures are in place to protect user data from unauthorized access or disclosure.</p>
+<p><b>Retention of Information:</b> User data is retained for as long as necessary to provide services and comply with legal requirements.</p>
+<p><b>Third-Party Services:</b> TeleHakim may use third-party services that have their own privacy policies.</p>
+<p><b>Updates to Privacy Policy:</b> TeleHakim may update the Privacy Policy and notify users of any significant changes.</p>
+<p><b>Contact Information:</b> Users can contact TeleHakim for inquiries or concerns about their privacy.</p>
             <button id="closeButton2">Close</button>
         </div>
-        <!-- <div id="pageContent">
-                Your page content here
-        </div> -->
-        <!-- end checkbox -->
-
-
         <div class="container-fluid">
             <hr>
         </div>
@@ -141,127 +110,8 @@
         </div>
 
     </div>
-    <!--service-->
-    <section id="service" class="section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-sm-4">
-                    <h2 class="ser-title">Our Service</h2>
-                    <hr class="botm-line">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris cillum.</p>
-                </div>
-                <div class="col-md-4 col-sm-4">
-                    <div class="service-info">
-                        <div class="icon">
-                            <i class="fa fa-stethoscope"></i>
-                        </div>
-                        <div class="icon-info">
-                            <h4>24 Hour Support</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        </div>
-                    </div>
-                    <div class="service-info">
-                        <div class="icon">
-                            <i class="fa fa-ambulance"></i>
-                        </div>
-                        <div class="icon-info">
-                            <h4>Emergency Services</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4">
-                    <div class="service-info">
-                        <div class="icon">
-                            <i class="fa fa-user-md"></i>
-                        </div>
-                        <div class="icon-info">
-                            <h4>Medical Counseling</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        </div>
-                    </div>
-                    <div class="service-info">
-                        <div class="icon">
-                            <i class="fa fa-medkit"></i>
-                        </div>
-                        <div class="icon-info">
-                            <h4>Premium Healthcare</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--/ service-->
-
-    <!--footer-->
-    <footer id="footer">
-        <div class="top-footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4 col-sm-4 marb20">
-                        <div class="ftr-tle">
-                            <h4 class="white no-padding">About Us</h4>
-                        </div>
-                        <div class="info-sec">
-                            <p>Praesent convallis tortor et enim laoreet, vel consectetur purus latoque penatibus et dis parturient.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-4 marb20">
-                        <div class="ftr-tle">
-                            <h4 class="white no-padding">Quick Links</h4>
-                        </div>
-                        <div class="info-sec">
-                            <ul class="quick-info">
-                                <li><a href="index.html"><i class="fa fa-circle"></i>Home</a></li>
-                                <li><a href="#service"><i class="fa fa-circle"></i>Service</a></li>
-                                <li><a href="#contact"><i class="fa fa-circle"></i>Appointment</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-4 marb20">
-                        <div class="ftr-tle">
-                            <h4 class="white no-padding">Follow us</h4>
-                        </div>
-                        <div class="info-sec">
-                            <ul class="social-icon">
-                                <li class="bglight-blue"><i class="fa fa-facebook"></i></li>
-                                <li class="bgred"><i class="fa fa-google-plus"></i></li>
-                                <li class="bgdark-blue"><i class="fa fa-linkedin"></i></li>
-                                <li class="bglight-blue"><i class="fa fa-twitter"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="footer-line">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 text-center">
-
-                        <div class="credits">
-                            <!--
-        All the links in the footer should remain intact.
-        You can delete the links only if you purchased the pro version.
-        Licensing information: https://bootstrapmade.com/license/
-        Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Medilab
-      -->
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!--/ footer-->
-
-    <script src="asset/js/jquery.min.js"></script>
-    <script src="asset/js/jquery.easing.min.js"></script>
-    <script src="asset/js/bootstrap.min.js"></script>
-    <script src="asset/js/custom.js"></script>
-    <script src="asset/contactform/contactform.js"></script>
+    
+    
     <script>
         const checkbox1 = document.getElementById('checkbox1');
         const checkbox2 = document.getElementById('checkbox2');
@@ -282,7 +132,7 @@
                 message2.innerText = "";
             }
             if (checkbox1.checked && checkbox2.checked) {
-                window.location.href = "{% url 'interview2'%}";
+                window.location.href = "{% url 'dr_re:interview2'%}";
             }
         });
 
@@ -320,4 +170,4 @@
         });
     </script>
 
-</body> {% endblock maincontent%}
+</body> {% endblock %}

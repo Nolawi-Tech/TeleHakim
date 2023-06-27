@@ -31,6 +31,7 @@ class Doctor(models.Model):
         ('Gynaecologist', 'Gynaecologist'),
         ('Pediatrics', 'Pediatrics'),
         ('Psychologist', 'Psychologist'),
+        ('General practitioner', 'General practitioner'),
     ]
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)

@@ -1,0 +1,100 @@
+{% extends 'recommendation/mian.html' %}
+{% load static %}
+{% block middle %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TeleHakim</title>
+    <meta name="description" content="Free Bootstrap Theme by BootstrapMade.com">
+    <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'https://fonts.googleapis.com/css?family=Open+Sans|Raleway|Candal' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/recommendation/style.css' %}">
+    <link href="{% static 'asset/css/recommendation/recommend.css'%} " rel="stylesheet">
+    <link href="{% static 'asset/css/recommendation/modified.css'%} " rel="stylesheet">
+    <style>
+        .image-container.clicked {
+            border: 2px solid rgb(254, 254, 254);
+        }
+    </style>
+</head>
+
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+
+    <div class="container col-6 main my-5 ">
+        <div class="card ">
+            <h3 class="p-2 text-center ">please select gender</h3>
+        </div>
+        <div class="row  d-flex align-items-center">
+            <div class="col-12 col-md-6 main-text align-item-center">
+                <div class="image-container text-center" onclick="selectImage('page1.html', this)">
+                    <img class="img-fluid" src="{% static 'asset/img/recommend/male.png' %}" alt="">
+                    <p class="text-center">Male</p>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 align-items-center">
+                <div class="image-container" onclick="selectImage('page2.html', this)">
+                    <img class="img-fluid" src="{% static 'asset/img/recommend/female.png' %}" alt="">
+                    <p class="text-center">Female</p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="text-center text-danger" id="message"></div>
+        <div class="container-fluid ">
+            <hr>
+        </div>
+
+        <div class="col d-flex justify-content-center pr-5 ">
+            <button id="nextButton" class="btn-1">Next</button>
+        </div>
+    </div>
+
+    <script>
+        var page1 = {
+            clicked: false
+        };
+        var page2 = {
+            clicked: false
+        };
+
+        function selectImage(page, element) {
+            if (page === 'page1.html') {
+                page1.clicked = true;
+            } else if (page === 'page2.html') {
+                page2.clicked = true;
+            }
+
+            var images = document.querySelectorAll('.image-container');
+            images.forEach(function(imgContainer) {
+                imgContainer.classList.remove('clicked'); // Reset the clicked state for all images
+            });
+
+            element.classList.add('clicked'); // Apply the clicked state to the selected image
+
+            if (page1.clicked || page2.clicked) {
+                document.getElementById('nextButton').disabled = false;
+            } else {
+                document.getElementById('nextButton').disabled = true;
+            }
+        }
+
+        var nextButton = document.getElementById('nextButton');
+        nextButton.addEventListener('click', function() {
+            if (page1.clicked) {
+                window.location.href = "{% url 'interview3'%}";
+            }
+            else if (page2.clicked) {
+                window.location.href = "{% url 'interview3'%}";
+            } else {
+                message.innerText = "Please select your gender.";
+            }
+        });
+    </script>
+</body>
+{% endblock %}

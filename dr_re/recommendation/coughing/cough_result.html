@@ -1,0 +1,59 @@
+{% extends 'recommendation/mian.html' %} {% load static %} {% block middle %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TeleHakim</title>
+    <meta name="description" content="Free Bootstrap Theme by BootstrapMade.com">
+    <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'https://fonts.googleapis.com/css?family=Open+Sans|Raleway|Candal' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/font-awesome.min.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/recommendation/style.css' %}">
+    <link href="{% static 'asset/css/recommendation/recommend.css'%} " rel="stylesheet">
+    <link href="{% static 'asset/css/recommendation/modified.css'%} " rel="stylesheet">
+
+</head>
+
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+    <section id="doctor-team " class="section-padding ">
+        <div class="container ">
+
+            <br>
+            <div class="row ">
+                <div class="col-md-12 ">
+                    <h2 class="ser-title ">Telehakim recommend you make appoints with these specialist</h2>
+                    <hr class="botm-line ">
+                </div>
+
+                {% if doctors %} {% for doctor in doctors %}
+                <div class="col-md-3 col-sm-3 col-xs-6 ">
+                    <div class="thumbnail ">
+                        <a href="# ">
+                            <img src="{{doctor.photo.url}}" alt="Doctor photo">
+                        </a>
+                        <div class="caption">
+                            <h3>{{ doctor.first_name }}</h3>
+                            <p>{{doctor.specialization}}</p>
+                            <ul class="list-inline">
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            </ul>
+                            <a href="?pages=book&doc_email={{ doctor.email }}&date=&list_date=Submit" class="btn btn-primary btn-appointment ">Make an Appointment</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}{% endif %}
+
+
+                <!-- Repeat the above code for the other doctors -->
+            </div>
+        </div>
+    </section>
+    {%endblock%}
+    <!--/ footer-->
