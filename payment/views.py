@@ -1,91 +1,60 @@
-from django.shortcuts import render
 import requests
+from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
+from .models import *
+from chapa import Chapa
+from account.models import *
+from django.views.generic import View
+from django.utils.crypto import get_random_string
+from django.http import HttpResponseRedirect
+from django.http import QueryDict
+from urllib.parse import *
+from .models import Transaction
+from django.contrib import messages
 
 
-def home(request):
-    return render(request, 'pay/home.html')
+class KinfeView(View):
 
+    def get(self, request, *args, **kwargs):
+        doc_email = request.GET.get('doctor')
+        pt_email = request.GET.get('patient')
 
-def payment_with_cart(request):
-    obj = {
-        "process": "Cart",
-        "successUrl": "http://localhost:8000/success",
-        "ipnUrl": "http://localhost:8000/ipn",
-        "cancelUrl": "http://localhost:8000/cancel",
-        "merchantId": "22429",
-        "merchantOrderId": "l710.0",
-        "expiresAfter": 24,
-        "totalItemsDeliveryFee": 19,
-        "totalItemsDiscount": 1,
-        "totalItemsHandlingFee": 12,
-        "totalItemsTax1": 250,
-        "totalItemsTax2": 0
-    }
-    cart = {
-        "cartitems": [
-            {
-                "itemId": "sku-01",
-                "itemName": "sample item",
-                "unitPrice": 2300,
-                "quantity": 1
-            },
-            {
-                "itemId": "sku-02",
-                "itemName": "sample item 2",
-                "unitPrice": 2300,
-                "quantity": 2
-            }
-        ]
-    }
-    return render(request, 'pay/index-cart.html', {'obj': obj, 'cart': cart})
+        doc = Doctor.objects.get(email=doc_email)
+        pt = Patient.objects.get(email=pt_email)
 
+        try:
+            SECRET = settings.CHAPA_SECRET
+            API_URL = settings.CHAPA_API_URL
+            API_VERSION = settings.CHAPA_API_VERSION
+            CALLBACK_URL = settings.CHAPA_WEBHOOK_URL
+            TRANSACTION_MODEL = settings.CHAPA_TRANSACTION_MODEL
+        except AttributeError:
+            raise ImproperlyConfigured("One or more chapa config missing, please check in your settings file")
 
-def payment_with_express(request):
-    obj = {
-        "process": "Express",
-        "successUrl": "http://localhost:8000/success",
-        "ipnUrl": "http://localhost:8000/ipn",
-        "cancelUrl": "http://localhost:8000/cancel",
-        "merchantId": "SB2367",
-        "merchantOrderId": "l710.0",
-        "expiresAfter": 24,
-        "itemId": 60,
-        "itemName": "Billing",
-        "unitPrice": 11.0,
-        "quantity": 1,
-        "discount": 0.0,
-        "handlingFee": 0.0,
-        "deliveryFee": 0.0,
-        "tax1": 0.0,
-        "tax2": 0.0
-    }
-    return render(request, 'pay/index-express.html', {'obj': obj})
+        data = {
+            'amount': doc.fee,
+            'currency': 'ETB',
+            'email': pt.email,
+            'first_name': pt.first_name,
+            'last_name': pt.last_name,
+            'tx_ref': get_random_string(10),
+            "return_url": "http://127.0.0.1:8000/dashboard/patient/?pages=payment",
+            'callback_url': 'https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60',
+            'description': 'Tele-Hakim payment'
+        }
 
+        Transaction.objects.create(
+            patient=pt,
+            doctor=doc,
+            amount=doc.fee,
+        )
 
-def success(request):
-    ii = request.GET.get('itemId')
-    total = request.GET.get('TotalAmount')
-    moi = request.GET.get('MerchantOrderId')
-    ti = request.GET.get('TransactionId')
-    status = request.GET.get('Status')
-    url = 'https://testapi.yenepay.com/api/verify/pdt/'
-    datax = {
-        "requestType": "PDT",
-        "pdtToken": "Q1woj27RY1EBsm",
-        "transactionId": ti,
-        "merchantOrderId": moi
-    }
-    x = requests.post(url, datax)
-    if x.status_code == 200:
-        print("It's Paid")
-    else:
-        print('Invalid payment process')
-    return render(request, 'pay/success.html', {'total': total, 'status': status, })
+        chapa = Chapa(SECRET)
+        response = chapa.initialize(**data)
+        if response.get('data', False):
+            url = response.get('data').get('checkout_url')
+            return HttpResponseRedirect(url)
+        print(response)
+        messages.success(request, "Payment Successful, Book an appointment with the doctor")
+        return HttpResponseRedirect('/dashboard/patient/?pages=search')
 
-
-def cancel(request):
-    return render(request, 'pay/cancel.html')
-
-
-def ipn(request):
-    return render(request, 'pay/ipn.html')

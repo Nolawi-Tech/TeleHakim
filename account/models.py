@@ -32,6 +32,12 @@ class Doctor(models.Model):
         ('Pediatrics', 'Pediatrics'),
         ('Psychologist', 'Psychologist'),
         ('General practitioner', 'General practitioner'),
+        ("Infectious disease specialist", "Infectious disease specialist"),
+        ("Pulmonologist", "Pulmonologist"),
+        ("Primary care doctor", "Primary care doctor"),
+        ("Neurologist", "Neurologist"),
+        ("Physical therapist", "Physical therapist"),
+        ("Travel medicine specialist", "Travel medicine specialist"),
     ]
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)

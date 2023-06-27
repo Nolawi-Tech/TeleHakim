@@ -125,6 +125,7 @@ medical-history
                 </div>
 
             </div>
+            <a href="{% url 'pay:pay_with_chapa' %}?doctor={{ book_info.doc_email }}&patient={{ user.email }}" class="btn btn-primary btn-block">Pay Now by Chapa</a>
         </div>
     </div>
 </div>
@@ -162,6 +163,12 @@ medical-history
                             <option value="Gynaecologist">Gynaecologist</option>
                             <option value="Pediatrics">Pediatrics</option>
                             <option value="Psychologist">Psychologist</option>
+                            <option value="Pulmonologist">Pulmonologist</option>
+                            <option value="Infectious disease specialist">Infectious disease specialist</option>
+                            <option value="Primary care doctor">Primary care doctor</option>
+                            <option value="Neurologist">Neurologist</option>
+                            <option value="Travel medicine specialist">Travel medicine specialist</option>
+                            <option value="Physical therapist">Physical therapist</option>
                         </select>
                     </div>
 

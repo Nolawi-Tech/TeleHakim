@@ -222,6 +222,7 @@ def patient_dashboard(request):
                     unique_dates.append(sch.date)
         except:
             messages.error(request, "Sorry, we can't find any doctor or provide email.")
+
     query = Appointment.objects.filter(patient=user)
     context = {
         'page': page,

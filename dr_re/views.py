@@ -43,8 +43,55 @@ symptom = ['high_fever', 'nausea', 'skin_rash', 'yellowish_skin', 'itching', 'mi
            'irritability', 'redness_of_eyes', 'loss_of_smell', 'fluid_overload', 'mood_swings', 'cold_hands_and_feets',
            'runny_nose']
 
+disease_sym = {
+'vertigo (Paroxysmal Positional Vertigo)': ['vomiting', 'nausea', 'headache', 'loss_of_balance', 'spinning_movements', 'unsteadiness'],
+'AIDS': ['extra_marital_contacts', 'muscle_wasting', 'high_fever', 'patches_in_throat'],
+'Acne': ['blackheads', 'pus_filled_pimples', 'skin_rash', 'scarring'],
+'Alcoholic hepatitis': ['vomiting', 'yellowish_skin', 'fluid_overload.1', 'abdominal_pain', 'distention_of_abdomen', 'swelling_of_stomach', 'history_of_alcohol_consumption'],
+'Allergy': ['continuous_sneezing', 'chills', 'watering_from_eyes', 'shivering'],
+'Arthritis': ['movement_stiffness', 'muscle_weakness', 'swelling_joints', 'stiff_neck', 'painful_walking'],
+'Bronchial Asthma': ['mucoid_sputum', 'family_history', 'breathlessness', 'cough', 'high_fever', 'fatigue'],
+'Cervical spondylosis': ['weakness_in_limbs', 'dizziness', 'loss_of_balance', 'neck_pain', 'back_pain'],
+'Chicken pox': ['skin_rash', 'headache', 'loss_of_appetite', 'malaise', 'lethargy', 'itching', 'high_fever', 'mild_fever', 'swelled_lymph_nodes', 'fatigue', 'red_spots_over_body'],
+'Chronic cholestasis': ['vomiting', 'yellowish_skin', 'nausea', 'loss_of_appetite', 'itching', 'abdominal_pain', 'yellowing_of_eyes'],
+'Common Cold': ['throat_irritation', 'continuous_sneezing', 'sinus_pressure', 'headache', 'malaise', 'cough', 'phlegm', 'redness_of_eyes', 'high_fever', 'swelled_lymph_nodes', 'runny_nose', 'congestion', 'chills', 'loss_of_smell', 'muscle_pain', 'fatigue', 'chest_pain'],
+'Dengue': ['vomiting', 'skin_rash', 'nausea', 'headache', 'loss_of_appetite', 'pain_behind_the_eyes', 'malaise', 'back_pain', 'fatigue', 'high_fever', 'red_spots_over_body', 'chills', 'muscle_pain', 'joint_pain'],
+'Diabetes': ['irregular_sugar_level', 'restlessness', 'lethargy', 'obesity', 'blurred_and_distorted_vision', 'polyuria', 'weight_loss', 'excessive_hunger', 'fatigue', 'increased_appetite'],
+'Dimorphic hemmorhoids(piles)': ['irritation_in_anus', 'constipation', 'bloody_stool', 'pain_during_bowel_movements', 'pain_in_anal_region'],
+'Drug Reaction': ['skin_rash', 'stomach_pain', 'burning_micturition', 'itching', 'spotting_ urination'],
+'Fungal infection': ['itching', 'nodal_skin_eruptions', 'skin_rash', 'dischromic_patches'],
+'GERD': ['ulcers_on_tongue', 'vomiting', 'stomach_pain', 'acidity', 'cough', 'chest_pain'],
+'Gastroenteritis': ['dehydration', 'sunken_eyes', 'vomiting', 'diarrhoea'],
+'Heart attack': ['vomiting', 'chest_pain', 'breathlessness', 'sweating'],
+'Hepatitis B': ['dark_urine', 'yellowish_skin', 'yellow_urine', 'loss_of_appetite', 'malaise', 'lethargy', 'receiving_unsterile_injections', 'itching', 'abdominal_pain', 'yellowing_of_eyes', 'fatigue', 'receiving_blood_transfusion'],
+'Hepatitis C': ['family_history', 'nausea', 'yellowish_skin', 'loss_of_appetite', 'yellowing_of_eyes', 'fatigue'],
+'Hepatitis D': ['dark_urine', 'vomiting', 'yellowish_skin', 'nausea', 'loss_of_appetite', 'abdominal_pain', 'yellowing_of_eyes', 'fatigue', 'joint_pain'],
+'Hepatitis E': ['dark_urine', 'vomiting', 'coma', 'yellowish_skin', 'nausea', 'loss_of_appetite', 'abdominal_pain', 'high_fever', 'yellowing_of_eyes', 'fatigue', 'acute_liver_failure', 'joint_pain', 'stomach_bleeding'],
+'Hypertension': ['dizziness', 'headache', 'loss_of_balance', 'lack_of_concentration', 'chest_pain'],
+'Hyperthyroidism': ['abnormal_menstruation', 'sweating', 'mood_swings', 'muscle_weakness', 'restlessness', 'irritability', 'diarrhoea', 'weight_loss', 'excessive_hunger', 'fatigue', 'fast_heart_rate'],
+'Hypoglycemia': ['slurred_speech', 'vomiting', 'drying_and_tingling_lips', 'sweating', 'nausea', 'headache', 'irritability', 'anxiety', 'blurred_and_distorted_vision', 'excessive_hunger', 'fatigue', 'palpitations'],
+'Hypothyroidism': ['abnormal_menstruation', 'cold_hands_and_feets', 'dizziness', 'mood_swings', 'depression', 'lethargy', 'swollen_extremeties', 'irritability', 'brittle_nails', 'weight_gain', 'fatigue', 'puffy_face_and_eyes', 'enlarged_thyroid'],
+'Impetigo': ['skin_rash', 'blister', 'red_sore_around_nose', 'yellow_crust_ooze', 'high_fever'],
+'Jaundice': ['dark_urine', 'vomiting', 'yellowish_skin', 'itching', 'abdominal_pain', 'high_fever', 'weight_loss', 'fatigue'],
+'Malaria': ['vomiting', 'sweating', 'nausea', 'headache', 'diarrhoea', 'high_fever', 'chills', 'muscle_pain'],
+'Migraine': ['visual_disturbances', 'acidity', 'headache', 'depression', 'irritability', 'blurred_and_distorted_vision', 'indigestion', 'stiff_neck', 'excessive_hunger'],
+'Osteoarthristis': ['swelling_joints', 'neck_pain', 'knee_pain', 'hip_joint_pain', 'painful_walking', 'joint_pain'],
+'Paralysis (brain hemorrhage)': ['weakness_of_one_body_side', 'vomiting', 'altered_sensorium', 'headache'],
+'Peptic ulcer diseae': ['vomiting', 'passage_of_gases', 'loss_of_appetite', 'internal_itching', 'abdominal_pain', 'indigestion'],
+'Pneumonia': ['sweating', 'malaise', 'rusty_sputum', 'breathlessness', 'cough', 'phlegm', 'high_fever', 'chills', 'fast_heart_rate', 'fatigue', 'chest_pain'],
+'Psoriasis': ['skin_rash', 'silver_like_dusting', 'skin_peeling', 'small_dents_in_nails', 'inflammatory_nails', 'joint_pain'],
+'Tuberculosis': ['vomiting', 'sweating', 'blood_in_sputum', 'loss_of_appetite', 'malaise', 'breathlessness', 'cough', 'phlegm', 'high_fever', 'weight_loss', 'mild_fever', 'yellowing_of_eyes', 'chills', 'swelled_lymph_nodes', 'fatigue', 'chest_pain'],
+'Typhoid': ['toxic_look_(typhos)', 'fatigue', 'abdominal_pain', 'high_fever', 'belly_pain', 'headache', 'vomiting', 'chills', 'nausea', 'diarrhoea', 'constipation'],
+'Urinary tract infection': ['burning_micturition', 'continuous_feel_of_urine', 'bladder_discomfort', 'foul_smell_of urine'],
+'Varicose veins': ['fatigue', 'swollen_blood_vessels', 'prominent_veins_on_calf', 'swollen_legs', 'bruising', 'obesity', 'cramps']}
+
+
+
+
+
+
 medical_conditions = {
-    'Vertigo Paroxysmal Positional Vertigo': ['Otolaryngologist (ent)', 'Neurologist', 'Physical therapist',
+    'Vertigo (Paroxysmal Positional Vertigo)': ['Otolaryngologist (ent)', 'Neurologist', 'Physical therapist',
                                               'General practitioner'],
     'AIDS': ['Internist', 'Family physician', 'Nurse practitioner', 'General practitioner'],
     'Acne': ['Dermatologist', 'Family physician', 'Nurse practitioner', 'General practitioner'],
@@ -128,7 +175,7 @@ from account.decorators import login_first
 def re_home(request):
     return render(request, 'recommendation/re_home.html')
 
-
+@login_first
 def recommend(request):
     # ml_model = joblib.load("../dr_re/ml_model/ml_model_whole.joblib")
     l = [0] * 132
@@ -170,81 +217,111 @@ def recommend(request):
         'symptom3': symptom3,
         'symptom4': symptom4, })
 
-
+@login_first
 def vom_interview(request):
     l[symptom.index("vomiting")] = 1
     return render(request, "recommendation/vomiting/vom_interview.html", {"list": l})
 
-
+@login_first
 def interview3(request):
     return render(request, "recommendation/interview3.html")
 
-
+@login_first
 def interview2(request):
     return render(request, "recommendation/interview2.html")
 
-
+@login_first
 def interview0(request):
     return render(request, "recommendation/interview0.html", {})
 
-
+@login_first
 def interview1(request):
     return render(request, "recommendation/interview1.html", {})
 
-
+@login_first
 def interview4(request):
     return render(request, "recommendation/interview4.html")
 
 
 symptom_list = ['cough']
 
-
+@login_first
 def cough_interview1(request):
     return render(request, "recommendation/coughing/cough_interview1.html", {'symptom_list': symptom_list})
 
-
+@login_first
 def cough_result(request):
-    key_value = tuple(medical_conditions[request.GET.get('key')])
+
+    l = [0] * 132
+    y=request.GET.get('key')
+    
+    if '_' in y:
+        y=y.replace("_"," ")
+
+        
+
+    for i in disease_sym[y]:
+        j = symptom.index(i)
+        l[j] = 1
+    
+    ml_model = joblib.load("../TELEHAKIM/dr_re/ml_model/ml_model_whole.joblib")
+
+    predictions = ml_model.predict(l)
+
+    disease = diseases[predictions.tolist()[0]]
+    print(disease)
+    x=medical_conditions[disease]
+    key_value = tuple(x)
     doctors = list(
-        Doctor.objects.filter(specialization__in=key_value).values('first_name', 'last_name', 'email', 'photo',
-                                                                   'specialization'))
+        Doctor.objects.filter(specialization__in=key_value).values())
 
     context = {
         'doctors': doctors
     }
     return render(request, "recommendation/coughing/cough_result.html", context)
 
-
+@login_first
 def cough_interview2(request):
     return render(request, "recommendation/coughing/cough_interview2.html")
 
 
-# headache
+@login_first
 def headache_interview1(request):
     return render(request, "recommendation/headache/headache_interview1.html")
 
-
+@login_first
 def headache_interview2(request):
     return render(request, 'recommendation/headache/headache_interview2.html')
 
-
+@login_first
 def headache_interview3(request):
     return render(request, 'recommendation/headache/headache_interview3.html')
 
-
+@login_first
 def headache_interview4(request):
     return render(request, 'recommendation/headache/headache_interview4.html')
 
-
+@login_first
 def headache_interview5(request):
     return render(request, 'recommendation/headache/headache_interview5.html')
 
-
+@login_first
 def headache_result(request):
-    key_value = tuple(medical_conditions[request.GET.get('key')])
+    l = [0] * 132
+    for i in disease_sym[request.GET.get('key')]:
+        j = symptom.index(i)
+        l[j] = 1
+    
+    ml_model = joblib.load("../TELEHAKIM/dr_re/ml_model/ml_model_whole.joblib")
+
+    predictions = ml_model.predict(l)
+
+    disease = diseases[predictions.tolist()[0]]
+    print(disease)
+    x=medical_conditions[disease]
+    key_value = tuple(x)
     doctors = list(
-        Doctor.objects.filter(specialization__in=key_value).values('first_name', 'last_name', 'email', 'photo',
-                                                                   'specialization'))
+        Doctor.objects.filter(specialization__in=key_value).values())
 
     context = {
         'doctors': doctors
@@ -252,32 +329,47 @@ def headache_result(request):
     return render(request, "recommendation/headache/headache_result.html", context)
 
 
-# fever
+@login_first
 def fever_interview1(request):
     return render(request, "recommendation/fever/fever_interview1.html")
 
-
+@login_first
 def fever_interview2(request):
     return render(request, "recommendation/fever/fever_interview2.html")
 
-
+@login_first
 def fever_interview3(request):
     return render(request, "recommendation/fever/fever_interview3.html")
 
-
+@login_first
 def fever_interview4(request):
     return render(request, "recommendation/fever/fever_interview4.html")
 
-
+@login_first
 def fever_interview5(request):
     return render(request, "recommendation/fever/fever_interview5.html")
 
-
+@login_first
 def fever_result(request):
-    key_value = tuple(medical_conditions[request.GET.get('key')])
+    l = [0] * 132
+    y=request.GET.get('key')
+    
+    if '_' in y:
+        y=y.replace("_"," ")
+    for i in disease_sym[y]:
+        j = symptom.index(i)
+        l[j] = 1
+    
+    ml_model = joblib.load("../TELEHAKIM/dr_re/ml_model/ml_model_whole.joblib")
+
+    predictions = ml_model.predict(l)
+
+    disease = diseases[predictions.tolist()[0]]
+    print(disease)
+    x=medical_conditions[disease]
+    key_value = tuple(x)
     doctors = list(
-        Doctor.objects.filter(specialization__in=key_value).values('first_name', 'last_name', 'email', 'photo',
-                                                                   'specialization'))
+        Doctor.objects.filter(specialization__in=key_value).values())
 
     context = {
         'doctors': doctors

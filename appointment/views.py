@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from appointment.models import *
 from account.include import user_info, EmailThread
 from account.decorators import login_first
-
+from payment.models import Transaction
 from account.models import Patient, Doctor
 
 
@@ -207,11 +207,24 @@ def fill_date(request):
 @login_first
 def schedule_dtime(request):
     doctor = request.GET.get('doctor')
+    doctor = Doctor.objects.get(email=doctor)
     sch_id = request.GET.get('sch_id')
+    pt = user_info(request)
+
+    transaction = Transaction.objects.filter(patient=pt, doctor=doctor, is_used=False)
+
+    if len(transaction) > 0:
+        if len(transaction) >= 1:
+            transaction = transaction[0]
+        transaction.is_used = True
+        transaction.save()
+    else:
+        messages.error(request, "Sorry, You dont have any transaction with this doctor!")
+        return redirect(reverse('dashboard:patient-dashboard') + '?pages=doctors')
 
     try:
-        pt = user_info(request)
-        doctor = Doctor.objects.get(email=doctor)
+
+
         wk = WorkingDay.objects.get(id=sch_id)
         wk.is_booked = True
         wk.save()

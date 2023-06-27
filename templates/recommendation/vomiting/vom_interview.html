@@ -164,28 +164,28 @@
         }
         var previousButton = document.getElementById('previousButton');
         previousButton.addEventListener('click', function() {
-            window.location.href = "{% url 'interview4' %}";
+            window.location.href = "{% url 'dr_re:interview4' %}";
         });
 
         var nextButton = document.getElementById('nextButton');
         nextButton.addEventListener('click', function() {
             if (page1.clicked) {
-                window.location.href = "{% url 'interview1'%}";
+                window.location.href = "{% url 'dr_re:interview1'%}";
             }
             if (page2.clicked) {
-                window.location.href = "{% url 'interview2'%}";
+                window.location.href = "{% url 'dr_re:interview2'%}";
             }
             if (page3.clicked) {
-                window.location.href = "{% url 'interview3'%}";
+                window.location.href = "{% url 'dr_re:interview3'%}";
             }
             if (page4.clicked) {
-                window.location.href = "{% url 'interview4'%}";
+                window.location.href = "{% url 'dr_re:interview4'%}";
             }
             if (page5.clicked) {
-                window.location.href = "{% url 'interview1'%}";
+                window.location.href = "{% url 'dr_re:interview1'%}";
             }
             if (page6.clicked) {
-                window.location.href = "{% url 'interview2'%}";
+                window.location.href = "{% url 'dr_re:interview2'%}";
             } else {
                 message.innerText = "Please select symptom.";
             }

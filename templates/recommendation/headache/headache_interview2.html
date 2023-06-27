@@ -1,4 +1,6 @@
-{% load static %}{% block maincontent %}
+{% extends 'recommendation/mian.html' %}
+{% load static %}
+{% block middle %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -21,40 +23,6 @@
 </head>
 
 <div id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
-    <!--banner-->
-    <section id="banner" class="banner">
-        <div class="bg-color">
-            <nav class="navbar navbar-default">
-                <div class="container">
-                    <div class="col-md-12">
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-				        <span class="icon-bar"></span>
-				        <span class="icon-bar"></span>
-				        <span class="icon-bar"></span>
-				      </button>
-                            <a class="navbar-brand" href="#"><img src="{% static 'asset/img/logo.png'%}" class="img-responsive" style="width: 140px; margin-top: -16px;"></a>
-                        </div>
-                        <div class="collapse navbar-collapse navbar-right" id="myNavbar">
-                            <ul class="nav navbar-nav">
-                                <li class=""><a href="{url ''}">Home</a></li>
-                                <li class=""><a href="#service">Services</a></li>
-                                <li class=""><a href="#about">About</a></li>
-                                <li class=""><a href="#testimonial">Testimonial</a></li>
-                                <li class=""><a href="#contact">Contact</a></li>
-                                <li class=""><a href="login.html" class="btn btn-info btn-block">Login</a></li>
-
-                            </ul>
-
-                        </div>
-                    </div>
-                </div>
-
-
-            </nav>
-        </div>
-    </section>
-
     <div class="container col-6 main my-5 ">
 
         <div id="waiting-text" style="display: none;">
@@ -62,8 +30,8 @@
         </div>
         <div id="heading">
             <div class="col-lg-12 ">
-                <div class="card bg-success color-white">
-                    <h3 class="p-2 text-center text-white">From the symptoms below, please selet more that's you the most</h3>
+                <div class="card  color-white">
+                    <h3 class="p-2 text-center text-black">From the symptoms below, please selet more that's you the most</h3>
                 </div>
             </div>
             <div class="row  d-flex justify-content-between ">
@@ -132,16 +100,16 @@
                 </div>
             </div>
             <div class="row d-flex justify-content-between">
-                <div class="col-6">
+                <div class="col-6 d-flex justify-content-center ">
                     <div>
                         <img class="img img-fluid" src="{% static 'asset/img/recommend/symptoms/headache/muslepain.png' %}" alt="">
                         <p>muscle pain</p>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-6 d-flex justify-content-center ">
                     <div>
                         <img class="img img-fluid" src="{% static 'asset/img/recommend/symptoms/headache/chills.png' %}" alt="">
-                        <p class="d-flex text-center">chills</p>
+                        <p class="d-flex text-center ms-3">chills</p>
                     </div>
                 </div>
             </div>
@@ -257,7 +225,7 @@
 
         var previousButton = document.getElementById('previousButton');
         previousButton.addEventListener('click', function() {
-            window.location.href = "{% url 'interview4' %}";
+            window.location.href = "{% url 'dr_re:interview4' %}";
         });
 
         var nextButton = document.getElementById('nextButton');
@@ -317,7 +285,7 @@
             const heading1 = document.querySelector("#two");
             heading1.style.display = "none";
 
-            showWaitingText("Please wait... Checking vomiting...");
+            showWaitingText("Please wait... Checking ...");
             setTimeout(function() {
                 hideWaitingText();
                 const vomiting = document.querySelector("#two_one");
@@ -325,7 +293,7 @@
             }, 2000);
         });
         excessivehungerYesButton.addEventListener("click", function(event) {
-            var url = "{% url 'headache_result' %}";
+            var url = "{% url 'dr_re:headache_result' %}";
             var key = "Hypoglycemia";
             window.location.href = url + "?key=" + key;
 
@@ -333,14 +301,14 @@
         chillsYesButton.forEach(function(button) {
             button.addEventListener("click", function(event) {
                 event.preventDefault();
-                var url = "{% url 'headache_result' %}";
+                var url = "{% url 'dr_re:headache_result' %}";
                 var key = "Malaria";
                 window.location.href = url + "?key=" + key;
 
             });
         });
         unsteadinessYesButton.addEventListener("click", function(event) {
-            var url = "{% url 'headache_result' %}";
+            var url = "{% url 'dr_re:headache_result' %}";
             var key = "(vertigo) Paroymsal Positional Vertigo)";
             window.location.href = url + "?key=" + key;
 
@@ -357,4 +325,4 @@
             }
         }
     </script>
-    {% endblock maincontent%}
+    {% endblock %}

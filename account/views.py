@@ -4,8 +4,8 @@ from django.contrib import messages
 from account.decorators import *
 from django.http import QueryDict
 from django.urls import reverse
-from account.include import user_info, user_role
-from account.models import Patient, Doctor
+from account.include import user_info, user_role, EmailThread
+from account.models import Patient, Doctor, Revoke
 
 qd = QueryDict("", mutable=True)
 
@@ -20,7 +20,6 @@ def home(request):
         'user_role': user_rl,
         'doctors': drs,
     }
-
     return render(request, 'index.html', context)
 
 

@@ -30,8 +30,8 @@
         </div>
         <div id="heading">
             <div class="col-lg-12">
-                <div class="card bg-success color-white">
-                    <h3 class="p-2 text-center text-white">From the symptoms below, please select the ones that apply to you the most</h3>
+                <div class="card  color-white">
+                    <h3 class="p-2 text-center text-black">From the symptoms below, please select the ones that apply to you the most</h3>
                 </div>
             </div>
 
@@ -161,19 +161,19 @@
 
         var previousButton = document.getElementById('previousButton');
         previousButton.addEventListener('click', function() {
-            window.location.href = "{% url 'interview4' %}";
+            window.location.href = "{% url 'dr_re:interview4' %}";
         });
 
         var nextButton = document.getElementById('nextButton');
         nextButton.addEventListener('click', function() {
             if (page1.checked && !page2.checked && !page3.checked && !page4.checked) {
-                window.location.href = "{% url 'fever_interview2' %}";
+                window.location.href = "{% url 'dr_re:fever_interview2' %}";
 
             } else if (page1.checked && !page2.checked && !page3.checked && !page4.checked) {
-                window.location.href = "{% url 'fever_interview3' %}";
+                window.location.href = "{% url 'dr_re:fever_interview3' %}";
 
             } else if (!page1.checked && page2.checked && !page3.checked && !page4.checked) {
-                window.location.href = "{% url 'fever_interview4' %}";
+                window.location.href = "{% url 'dr_re:fever_interview4' %}";
 
             } else if (!page1.checked && !page2.checked && !page3.checked && page4.checked) {
                 const heading = document.querySelector("#heading");
@@ -208,13 +208,13 @@
             });
         });
         extraYesButton.addEventListener("click", function(event) {
-            var url = "{% url 'fever_result' %}";
+            var url = "{% url 'dr_re:fever_result' %}";
             var key = "Aids";
             window.location.href = url + "?key=" + key;
 
         });
         extraNoButton.addEventListener("click", function(event) {
-            var url = "{% url 'fever_result' %}";
+            var url = "{% url 'dr_re:fever_result' %}";
             var key = "Aids";
             window.location.href = url + "?key=" + key;
 

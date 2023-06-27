@@ -20,7 +20,7 @@
     <link href="{% static 'asset/css/recommendation/modified.css'%} " rel="stylesheet">
     <style>
         .image-container.clicked  {
-            border: 2px solid rgb(255, 255, 255);
+            border: 2px solid rgb(0, 0, 0);
         }
     </style>
 </head>
@@ -34,33 +34,28 @@
             </div>
         </div>
         <div class="row  d-flex justify-content-between">
-            <div class="col-12 col-lg-4 main-text align-item-center">
+            <div class="col-12 col-lg-6 main-text align-item-center">
                 <div class="image-container text-center" onclick="selectImage('page1.html', this)">
                     <img class="img img-fluid" src="{% static 'asset/img/recommend/symptoms/cough men.png' %}" alt="">
                     <p class="text-center">coughing</p>
                 </div>
             </div>
-            <div class="col-12 col-lg-4 align-items-center">
+            <div class="col-12 col-lg-6 align-items-center">
                 <div class="image-container" onclick="selectImage('page2.html', this)">
                     <img class="img img-fluid" src="{% static 'asset/img/recommend/symptoms/headache men.png' %}" alt="">
                     <p class="text-center">headache</p>
                 </div>
             </div>
-            <div class="col-12 col-lg-4 align-items-center">
+            
+        </div>
+        <div class="row  d-flex justify-content-between">
+            <div class="col-12 col-lg-6 align-items-center">
                 <div class="image-container" onclick="selectImage('page3.html', this)">
                     <img class="img img-fluid" src="{% static 'asset/img/recommend/symptoms/vomiting.png' %}" alt="">
                     <p class="text-center">vomiting</p>
                 </div>
             </div>
-        </div>
-        <div class="row  d-flex justify-content-between">
-            <div class="col-12 col-lg-4 align-items-center">
-                <div class="image-container" onclick="selectImage('page4.html', this)">
-                    <img class="img img-fluid" src="{% static 'asset/img/recommend/symptoms/fatigue.png' %}" alt="">
-                    <p class="text-center">fatigue/tired</p>
-                </div>
-            </div>
-            <div class="col-12 col-lg-4 align-items-center">
+            <div class="col-12 col-lg-6 align-items-center">
                 <div class="image-container" onclick="selectImage('page5.html', this)">
                     <img class="img img-fluid" src="{% static 'asset/img/recommend/symptoms/fever.png' %}" alt="">
                     <p class="text-center">fever</p>
@@ -147,7 +142,7 @@
                 window.location.href = "{% url 'dr_re:headache_interview1'%}";
             }
             if (page3.clicked) {
-                window.location.href = "{% url 'dr_re:vom_interview'%}";
+                window.location.href = "{% url 'dr_re:fever_interview1'%}";
             }
             if (page4.clicked) {
                 window.location.href = "{% url 'dr_re:interview4'%}";

@@ -197,12 +197,12 @@
         </div>
         <div id="two" style="display: none;">
 
-            <div class="col-8">
+            <div class="col-auto">
                 <p class="h2 p-5 text-center"> Are you currently experiencing any pain or discomfort in your abdomen</p>
             </div>
-            <div class="col-4">
+            <div class="col-auto d-flex justify-content-center">
                 <div>
-                    <img class="img-fluid" src="{% static 'asset/img/recommend/symptoms/headace/abdominalpain.png' %}" alt="">
+                    <img class="img-fluid" src="{% static 'asset/img/recommend/symptoms/headache/abdominalpain.png' %}" alt="">
                     <p class="text-center">belly pain</p>
                 </div>
             </div>
@@ -294,13 +294,13 @@
 
         var previousButton = document.getElementById('previousButton');
         previousButton.addEventListener('click', function() {
-            window.location.href = "{% url 'interview4' %}";
+            window.location.href = "{% url 'dr_re:interview4' %}";
         });
 
         var nextButton = document.getElementById('nextButton');
         nextButton.addEventListener('click', function() {
             if (page1.checked && page2.checked && !page3.checked && !page4.checked && !page5.checked && !page6.checked) {
-                window.location.href = "{% url 'fever_interview5' %}";
+                window.location.href = "{% url 'dr_re:fever_interview5' %}";
 
             } else if (!page1.checked && page2.checked && !page3.checked && !page4.checked && !page5.checked && !page6.checked) {
                 const heading = document.querySelector("#heading");
@@ -373,13 +373,13 @@
             });
         });
         coughPainYesButton.addEventListener("click", function(event) {
-            var url = "{% url 'fever_result' %}";
+            var url = "{% url 'dr_re:fever_result' %}";
             var key = "Aids";
             window.location.href = url + "?key=" + key;
 
         });
         coughPainNOButton.addEventListener("click", function(event) {
-            var url = "{% url 'fever_result' %}";
+            var url = "{% url 'dr_re:fever_result' %}";
             var key = "Aids";
             window.location.href = url + "?key=" + key;
 
@@ -414,14 +414,14 @@
         });
 
         constYesButton.addEventListener("click", function(event) {
-            var url = "{% url 'fever_result' %}";
-            var key = "typhoid";
+            var url = "{% url 'dr_re:fever_result' %}";
+            var key = "Typhoid";
             window.location.href = url + "?key=" + key;
 
         });
         constNOButton.addEventListener("click", function(event) {
-            var url = "{% url 'fever_result' %}";
-            var key = "typhoid";
+            var url = "{% url 'dr_re:fever_result' %}";
+            var key = "Typhoid";
             window.location.href = url + "?key=" + key;
 
         });

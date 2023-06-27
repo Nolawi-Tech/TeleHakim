@@ -115,3 +115,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CHAPA_SECRET = "CHASECK_TEST-8Ocsb1gZVDbe3yIqyDVxVCKtVXTw6pDR"
+CHAPA_API_URL = 'https://checkout.chapa.co/checkout/web/payment/SC-pAuS5JNOjEJQ'
+CHAPA_WEBHOOK_URL = 'https://6ba4-196-188-115-244.eu.ngrok.io'
+CHAPA_API_VERSION = 'v1'
+CHAPA_TRANSACTION_MODEL = 'http://checkout.chapa.co/checkout/web/payment/SC-pAuS5JNOjEJQ'

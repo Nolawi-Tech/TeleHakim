@@ -8,10 +8,10 @@ class PatientRegistrationForm(forms.ModelForm):
         fields = '__all__'
         exclude = ['is_admin', 'is_patient']
         widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control', 'pattern': '[A-Za-z ]+'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control', 'pattern': '[A-Za-z ]+'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control', 'pattern': '[0-9]+', "minlength": '10', "maxlength": '13'}),
             'password': forms.PasswordInput(attrs={'class': 'form-control', "minlength": '4'}),
             'address': forms.TextInput(attrs={'class': 'form-control'}),
             'date_of_birth': forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'mm/dd/yyyy'}),
@@ -25,10 +25,10 @@ class DoctorRegistrationForm(forms.ModelForm):
         fields = ['first_name', 'last_name', 'email', 'phone', 'password', 'address', 'specialization', 'date_of_birth',
                   'document', 'photo']
         widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control', 'pattern': '[A-Za-z ]+'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control', 'pattern': '[A-Za-z ]+'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control', 'pattern': '[0-9]+', "minlength": '10', "maxlength": '13'}),
             'password': forms.PasswordInput(attrs={'class': 'form-control', "minlength": '4'}),
             'address': forms.TextInput(attrs={'class': 'form-control'}),
             'specialization': forms.Select(attrs={'class': 'form-control'}),
@@ -44,9 +44,9 @@ class AddInfoDoctorForm(forms.ModelForm):
         fields = ['degree', 'experience', 'about', 'fee', 'hospital', 'account_number']
         widgets = {
             'degree': forms.TextInput(attrs={'class': 'form-control'}),
-            'experience': forms.NumberInput(attrs={'class': 'form-control'}),
+            'experience': forms.NumberInput(attrs={'class': 'form-control', 'pattern': '[0-9]+'}),
             'about': forms.TextInput(attrs={'class': 'form-control'}),
-            'fee': forms.NumberInput(attrs={'class': 'form-control'}),
+            'fee': forms.NumberInput(attrs={'class': 'form-control', 'pattern': '[0-9]+'}),
             'hospital': forms.TextInput(attrs={'class': 'form-control'}),
             'account_number': forms.NumberInput(attrs={'class': 'form-control'}),
         }

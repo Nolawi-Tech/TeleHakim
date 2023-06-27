@@ -12,12 +12,12 @@
                             <div class="col-md-6">
                                 <label for="{{ doctor_form.first_name.auto_id }}" class="form-label">First Name</label>
                                 {{ doctor_form.first_name }}
-                                <div class="invalid-feedback">Please, enter your First name!</div>
+                                <div class="invalid-feedback">Please, enter your First name and must be letters!!</div>
                             </div>
                             <div class="col-md-6">
                                 <label for="{{ doctor_form.last_name.auto_id }}" class="form-label">Last Name</label>
                                 {{ doctor_form.last_name }}
-                                <div class="invalid-feedback">Please, enter your Last name!</div>
+                                <div class="invalid-feedback">Please, enter your Last name and must be letters!!</div>
                             </div>
                             <div class="col-md-6">
                                 <label for="{{ doctor_form.email.auto_id }}" class="form-label">Your Email</label>
@@ -32,8 +32,9 @@
                             <div class="col-md-6">
                                 <label for="{{ doctor_form.phone.auto_id }}" class="form-label">Phone</label>
                                 {{ doctor_form.phone }}
-                                <div class="invalid-feedback">Please, enter your Phone!</div>
+                                <div class="invalid-feedback">Please, enter your Phone and number only!</div>
                             </div>
+
                             <div class="col-md-4">
                                 <label for="{{ doctor_form.address.auto_id }}" class="form-label">Your Address</label>
                                 {{ doctor_form.address }}

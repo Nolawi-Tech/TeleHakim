@@ -29,25 +29,57 @@
                     <hr class="botm-line ">
                 </div>
 
-                {% if doctors %} {% for doctor in doctors %}
-                <div class="col-md-3 col-sm-3 col-xs-6 ">
-                    <div class="thumbnail ">
-                        <a href="# ">
-                            <img src="{{doctor.photo.url}}" alt="Doctor photo">
-                        </a>
-                        <div class="caption">
-                            <h3>{{ doctor.first_name }}</h3>
-                            <p>{{doctor.specialization}}</p>
-                            <ul class="list-inline">
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                            </ul>
-                            <a href="{% url 'dashboard:patient-dashboard' %}?pages=book&doc_email={{ doctor.email }}&date=&list_date=Submit" class="btn btn-primary btn-appointment ">Make an Appointment</a>
+                {% for doctor in doctors %}
+
+                <div class="col-md-3 col-sm-3 col-xs-6">
+                  <div class="thumbnail">
+                    <a href="#">
+                      <img src="{{ doctor.photo.url }}" class="img-fluid  team-img" alt="Doctor photo">
+                    </a>
+                    <div class="caption">
+                      <h5 class="card-title">{{ doctor.first_name }} {{ doctor.last_name }}</h5>
+                      <!-- <div class=""><i class="bi bi-emoji-heart-eyes-fill"></i> {{ doctor.specialization }} | {{
+                          doctor.experience }} Years Exp.
+                      </div> -->
+                      <div class=""><i class="bi bi-currency-dollar "></i> <span class="text-danger fw-bold">{{ doctor.fee }}</span>
+                          Birr/Hr. 
+                      </div>
+                      <div class=""><i class="bi bi-envelope-fill"></i> {{ doctor.specialization }}</div>
+
+                        <a href="{% url 'dashboard:patient-dashboard' %}?pages=book&doc_email={{ doctor.email }}&date=&list_date=Submit" class="btn btn-primary btn-appointment ">Make an Appointment</a>
+        
+                      <button type="button" class="btn btn-primary m-2 text-center" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable10">
+                          View rate
+                        </button>
+                        <div class="modal fade mt-5" id="modalDialogScrollable10" tabindex="-1">
+                          <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title">View rate given by patients</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                {% for rate in doctor.doctor_rate.all %}
+                                  {% if rate.doctor.email == doctor.email %}
+                                      <p>By <b class="text-danger fw-bold">{{ rate.user.first_name }}/{{rate.doctor.email}}/{{doctor.email}}</b> | {{ rate.rate }} rates</p>
+                                      <p>
+                                          {{ rate.comment }}
+                                      </p>
+                                      <hr>
+                                  {% endif %}
+                                  {% empty %}
+                                      <p>No rate yet</p>
+                                {% endfor %}
+                              </div>
+                            </div>
+                          </div>
                         </div>
                     </div>
+                  </div>
                 </div>
-                {% endfor %}{% endif %}
+        
+                
+                    {% endfor %}
 
 
                 <!-- Repeat the above code for the other doctors -->

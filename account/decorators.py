@@ -8,7 +8,6 @@ from django.contrib import messages
 def login_first(view_func):
     def wrapper(request, *args, **kwargs):
         next_url = request.GET.get('next')
-        print('decorator', next_url)
         if user_info(request) is None:
             messages.error(request, "You are not logged in!")
             return redirect(reverse('account:login') + f'?next={next_url}')
