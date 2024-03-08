@@ -1,10 +1,247 @@
-<!DOCTYPE html>
+{% load static %}
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
+
+  <head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <title>Tele-Hakim</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'land/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'land/assets/css/templatemo-chain-app-dev.css' %}">
+    <link rel="stylesheet" href="{% static 'land/assets/css/animated.css' %}">
+    <link rel="stylesheet" href="{% static 'land/assets/css/owl.css' %}">
+
+  </head>
+
 <body>
-$END$
+
+  <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav">
+            <!-- ***** Logo Start ***** -->
+            <a href="index.html" class="logo">
+              <img src="{% static 'land/assets/images/logo.png' %}" alt="Chain App Dev">
+            </a>
+            <!-- ***** Logo End ***** -->
+            <!-- ***** Menu Start ***** -->
+            <ul class="nav">
+              <!-- *****  ***** -->
+              <li><div ><a id="modal_trigger" href="#modal"><i class="fa fa-sign-in-alt"></i>  SignUp</a></div></li>
+              <li><div ><a id="modal_trigger" href="#model"><i class="fa fa-sign-in-alt"></i>  Login</a></div></li>
+                <div id="google_translate_element"></div>
+                <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+                <script>
+                                    function googleTranslateElementInit() {
+                                        new google.translate.TranslateElement({
+                                                pageLanguage: 'en'
+                                            },
+                                            'google_translate_element'
+                                        );
+                                    }
+                                </script>
+            </ul>
+            <a class='menu-trigger'>
+                <span>Menu</span>
+            </a>
+            <!-- ***** Menu End ***** -->
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+
+  <div id="modal" class="popupContainer" style="display:none;">
+    <div class="popupHeader">
+        <span class="header_title">Register</span>
+        <span class="modal_close"><i class="fa fa-times"></i></span>
+    </div>
+
+    <section class="popupBody">
+        <!-- Social Login -->
+
+
+
+            <div class="action_btns">
+                <div class="one_half text-center last"><a href="#" id="login_form" class="btn">Register(user)</a></div>
+                <div class="one_half last"><a href="#" id="register_form" class="btn">Register(dr)</a></div>
+            </div>
+        </div>
+
+        <!-- Username & Password Login form -->
+        <div class="user_login">
+            <form>
+                <label>Email / Username</label>
+                <input type="text" />
+                <br />
+
+                <label>Password</label>
+                <input type="password" />
+                <br />
+
+                <div class="checkbox">
+                    <input id="remember" type="checkbox" />
+                    <label for="remember">Remember me on this computer</label>
+                </div>
+
+                <div class="action_btns">
+                    <div class="one_half"><a href="#" class="btn back_btn"><i class="fa fa-angle-double-left"></i> Back</a></div>
+                    <div class="one_half last"><a href="#" class="btn btn_red">Login</a></div>
+                </div>
+            </form>
+
+            <a href="#" class="forgot_password">Forgot password?</a>
+        </div>
+
+        <!-- Register Form -->
+        <div class="user_register">
+            <form>
+                <label>Full Name</label>
+                <input type="text" />
+                <br />
+
+                <label>Email Address</label>
+                <input type="email" />
+                <br />
+
+                <label>Password</label>
+                <input type="password" />
+                <br />
+
+                <div class="checkbox">
+                    <input id="send_updates" type="checkbox" />
+                    <label for="send_updates">Send me occasional email updates</label>
+                </div>
+
+                <div class="action_btns">
+                    <div class="one_half"><a href="#" class="btn back_btn"><i class="fa fa-angle-double-left"></i> Back</a></div>
+                    <div class="one_half last"><a href="#" class="btn btn_red">Register</a></div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+
+  <div id="services" class="services section">
+    {% block recommend_service %}
+      {% endblock %}
+  </div>
+
+
+
+  <footer id="newsletter">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+          <div class="section-heading">
+            <h4>Join our Telemedice Service </h4>
+          </div>
+        </div>
+        <div class="col-lg-6 offset-lg-3">
+          <form id="search" action="#" method="GET">
+            <div class="row">
+              <div class="col-lg-6 col-sm-6">
+                <fieldset>
+                  <input type="address" name="address" class="email" placeholder="Email Address..." autocomplete="on" required>
+                </fieldset>
+              </div>
+              <div class="col-lg-6 col-sm-6">
+                <fieldset>
+                  <button type="submit" class="main-button">Join Now <i class="fa fa-angle-right"></i></button>
+                </fieldset>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="footer-widget">
+            <h4>Contact Us</h4>
+            <p>Bole, Addis Ababa, Ethiopia</p>
+            <p><a href="#">010-020-0340</a></p>
+            <p><a href="#">info@telehakim.co</a></p>
+          </div>
+        </div>
+
+        <div class="col-lg-3">
+          <div class="footer-widget">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><a href="https://a2sv.org/">A2SV</a></li>
+              <li><a href="https://ethio-health.com/">EthioHealth</a></li>
+              <li><a href="https://www.dst.gov.za/index.php/about-us/ministers-office">Health Minster</a></li>
+
+            </ul>
+
+          </div>
+
+        </div>
+
+        <div class="col-lg-3">
+          <div class="footer-widget">
+
+            <p>Privacy </p>
+            <p>Security </p>
+
+
+          </div>
+
+        </div>
+
+        <div class="col-lg-3">
+          <div class="footer-widget">
+            <h4>About Our Company</h4>
+            <div class="logo">
+              <img src="{% static 'land/assets/images/logo.png' %}" alt="">
+            </div>
+            <p>The Telemedicine project integrates advanced technologies, combining telecommunication with Artificial Intelligence (AI) to revolutionize healthcare. This initiative establishes a secure telecommunication infrastructure for real-time audio-video consultations.</p>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="copyright-text">
+            <p>Copyright © 2024 Tele-Hakim Company. All Rights Reserved.
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Scripts -->
+  <script src="{% static 'land/vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'land/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'land/assets/js/owl-carousel.js' %}"></script>
+  <script src="{% static 'land/assets/js/animation.js' %}"></script>
+  <script src="{% static 'land/assets/js/imagesloaded.js' %}"></script>
+  <script src="{% static 'land/assets/js/popup.js' %}"></script>
+  <script src="{% static 'land/assets/js/custom.js' %}"></script>
 </body>
 </html>

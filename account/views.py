@@ -10,6 +10,10 @@ from account.models import Patient, Doctor
 qd = QueryDict("", mutable=True)
 
 
+def home_page(request):
+    return render(request, "recommendation/index.html")
+
+
 def login(request):
     fg = 'admin'
     rvk = request.GET.get("revoke")

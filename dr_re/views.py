@@ -65,9 +65,12 @@ diseases = {0: '(vertigo) Paroymsal  Positional Vertigo', 1: 'AIDS', 2: 'Acne', 
             38: 'Urinary tract infection', 39: 'Varicose veins', 40: 'hepatitis A'}
 
 
-@login_required(login_url='account:login')
 def re_home(request):
     return render(request, 'recommendation/re_home.html')
+
+
+def test_page(request):
+    return render(request, "recommendation/base.html")
 
 
 def login(request):
