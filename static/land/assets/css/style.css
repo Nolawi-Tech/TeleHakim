@@ -9,7 +9,7 @@
     .chat-icon-2 {
     position: fixed;
     bottom: 50px;
-    right: 160px;
+    right: 180px;
     z-index: 9999; /* Ensure the icon appears on top of other elements */
     cursor: pointer;
     transition: transform 0.3s ease;

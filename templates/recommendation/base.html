@@ -46,15 +46,16 @@
         <div class="col-12">
           <nav class="main-nav">
             <!-- ***** Logo Start ***** -->
-            <a href="index.html" class="logo">
+            <a href="{% url 'account:home_page'%}" class="logo">
               <img src="{% static 'land/assets/images/logo.png' %}" alt="Chain App Dev">
             </a>
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
+            {% if status == no %}
             <ul class="nav">
               <!-- *****  ***** -->
-              <li><div ><a id="modal_trigger" href="#modal"><i class="fa fa-sign-in-alt"></i>  SignUp</a></div></li>
-              <li><div ><a id="modal_trigger" href="#model"><i class="fa fa-sign-in-alt"></i>  Login</a></div></li>
+              <li><a id="modal_trigger" href="#modal"><i class="fa fa-sign-in-alt"></i>  SignUp</a></li>
+              <li><a id="modal_trigger" href="{% url 'account:login'%}"><i class="fa fa-sign-in-alt"></i>  Login</a></li>
                 <div id="google_translate_element"></div>
                 <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
                 <script>
@@ -67,6 +68,8 @@
                                     }
                                 </script>
             </ul>
+            {% endif %}
+
             <a class='menu-trigger'>
                 <span>Menu</span>
             </a>
@@ -86,65 +89,10 @@
 
     <section class="popupBody">
         <!-- Social Login -->
-
-
-
-            <div class="action_btns">
-                <div class="one_half text-center last"><a href="#" id="login_form" class="btn">Register(user)</a></div>
-                <div class="one_half last"><a href="#" id="register_form" class="btn">Register(dr)</a></div>
+             <div class="action_btns d-inline">
+                <a href="{% url 'account:register-patient' 'index' %}" class="btn">Register(User)</a>
+                <a href="{% url 'account:register-doctor' 'index' %}" class="btn">Register(Dr.)</a>
             </div>
-        </div>
-
-        <!-- Username & Password Login form -->
-        <div class="user_login">
-            <form>
-                <label>Email / Username</label>
-                <input type="text" />
-                <br />
-
-                <label>Password</label>
-                <input type="password" />
-                <br />
-
-                <div class="checkbox">
-                    <input id="remember" type="checkbox" />
-                    <label for="remember">Remember me on this computer</label>
-                </div>
-
-                <div class="action_btns">
-                    <div class="one_half"><a href="#" class="btn back_btn"><i class="fa fa-angle-double-left"></i> Back</a></div>
-                    <div class="one_half last"><a href="#" class="btn btn_red">Login</a></div>
-                </div>
-            </form>
-
-            <a href="#" class="forgot_password">Forgot password?</a>
-        </div>
-
-        <!-- Register Form -->
-        <div class="user_register">
-            <form>
-                <label>Full Name</label>
-                <input type="text" />
-                <br />
-
-                <label>Email Address</label>
-                <input type="email" />
-                <br />
-
-                <label>Password</label>
-                <input type="password" />
-                <br />
-
-                <div class="checkbox">
-                    <input id="send_updates" type="checkbox" />
-                    <label for="send_updates">Send me occasional email updates</label>
-                </div>
-
-                <div class="action_btns">
-                    <div class="one_half"><a href="#" class="btn back_btn"><i class="fa fa-angle-double-left"></i> Back</a></div>
-                    <div class="one_half last"><a href="#" class="btn btn_red">Register</a></div>
-                </div>
-            </form>
         </div>
     </section>
 </div>
