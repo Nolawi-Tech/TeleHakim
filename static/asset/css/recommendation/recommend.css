@@ -1,8 +1,7 @@
 body {
     background-color: #f3f5f7;
     color: black;
-    text-transform: uppercase;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 form {

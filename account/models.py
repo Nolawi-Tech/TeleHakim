@@ -42,7 +42,7 @@ class Doctor(models.Model):
     specialization = models.CharField(max_length=100, choices=SPECIALITY_CHOICES)
     document = models.FileField(upload_to='doctor_document')
     photo = models.ImageField(upload_to='doctor_photo', blank=True, default='user_avatar.png')
-    is_verified = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=True)
 
     degree = models.CharField(max_length=100, null=True, blank=True)
     experience = models.CharField(max_length=100, default='0')

@@ -16,56 +16,56 @@
         </a>
       </li><!-- End Dashboard Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-gear-fill"></i><span>Manage Account</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="{% url 'dashboard:admin-dashboard' %}?pages=register_patient">
-              <i class="bi bi-circle"></i><span>Register Patient</span>
-            </a>
-          </li>
-          <li>
-            <a href="{% url 'dashboard:admin-dashboard' %}?pages=register_doctor">
-              <i class="bi bi-circle"></i><span>Register Doctor</span>
-            </a>
-          </li>
-            <li>
-            <a href="{% url 'dashboard:admin-dashboard' %}?pages=register_admin">
-              <i class="bi bi-circle"></i><span>Register Admin</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Components Nav -->
+<!--      <li class="nav-item">-->
+<!--        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">-->
+<!--          <i class="bi bi-gear-fill"></i><span>Manage Account</span><i class="bi bi-chevron-down ms-auto"></i>-->
+<!--        </a>-->
+<!--        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">-->
+<!--          <li>-->
+<!--            <a href="{% url 'dashboard:admin-dashboard' %}?pages=register_patient">-->
+<!--              <i class="bi bi-circle"></i><span>Register Patient</span>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--            <a href="{% url 'dashboard:admin-dashboard' %}?pages=register_doctor">-->
+<!--              <i class="bi bi-circle"></i><span>Register Doctor</span>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--            <li>-->
+<!--            <a href="{% url 'dashboard:admin-dashboard' %}?pages=register_admin">-->
+<!--              <i class="bi bi-circle"></i><span>Register Admin</span>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </li>&lt;!&ndash; End Components Nav &ndash;&gt;-->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="{% url 'dashboard:admin-dashboard' %}?pages=patients">
-          <i class="bi bi-people-fill"></i><span>Patients</span>
-        </a>
-      </li>
-        <li class="nav-item">
-        <a class="nav-link collapsed" href="{% url 'dashboard:admin-dashboard' %}?pages=admins">
-          <i class="bi bi-people-fill"></i><span>Admins</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-people-fill"></i><span>Doctors</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="{% url 'dashboard:admin-dashboard' %}?pages=doctors_unverified">
-              <i class="bi bi-circle"></i><span>Unverified</span>
-            </a>
-          </li>
-          <li>
-            <a href="{% url 'dashboard:admin-dashboard' %}?pages=doctors_waiting">
-              <i class="bi bi-circle"></i><span>Waiting Book</span>
-            </a>
-          </li>
-        </ul>
-      </li>
+<!--      <li class="nav-item">-->
+<!--        <a class="nav-link collapsed" href="{% url 'dashboard:admin-dashboard' %}?pages=patients">-->
+<!--          <i class="bi bi-people-fill"></i><span>Patients</span>-->
+<!--        </a>-->
+<!--      </li>-->
+<!--        <li class="nav-item">-->
+<!--        <a class="nav-link collapsed" href="{% url 'dashboard:admin-dashboard' %}?pages=admins">-->
+<!--          <i class="bi bi-people-fill"></i><span>Admins</span>-->
+<!--        </a>-->
+<!--      </li>-->
+<!--      <li class="nav-item">-->
+<!--        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">-->
+<!--          <i class="bi bi-people-fill"></i><span>Doctors</span><i class="bi bi-chevron-down ms-auto"></i>-->
+<!--        </a>-->
+<!--        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">-->
+<!--          <li>-->
+<!--            <a href="{% url 'dashboard:admin-dashboard' %}?pages=doctors_unverified">-->
+<!--              <i class="bi bi-circle"></i><span>Unverified</span>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--            <a href="{% url 'dashboard:admin-dashboard' %}?pages=doctors_waiting">-->
+<!--              <i class="bi bi-circle"></i><span>Waiting Book</span>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </li>-->
       <li class="nav-item">
         <a class="nav-link collapsed" href="{% url 'dashboard:admin-dashboard' %}?pages=view_feedback">
           <i class="bi bi-chat-left-fill"></i>

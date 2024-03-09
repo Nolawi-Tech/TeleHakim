@@ -1,70 +1,7 @@
-{% load static %}{% block maincontent %}
+{% extends './base.html' %}
+{% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TeleHakim</title>
-    <meta name="description" content="Free Bootstrap Theme by BootstrapMade.com">
-    <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
-
-    <link rel="stylesheet" type="text/css" href="{% static 'https://fonts.googleapis.com/css?family=Open+Sans|Raleway|Candal' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/font-awesome.min.css' %}">
-    <!-- <link href="{% static 'asset/css/recommendation/bootstrap1.min.css' %}" rel="stylesheet"> -->
-    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/recommendation/style.css' %}">
-    <link href="{% static 'asset/css/recommendation/recommend.css'%} " rel="stylesheet">
-    <link href="{% static 'asset/css/recommendation/modified.css'%} " rel="stylesheet">
-
-</head>
-
-<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
-    <!--banner-->
-    <section id="banner" class="banner">
-        <div class="bg-color">
-            <nav class="navbar navbar-default">
-                <div class="container">
-                    <div class="col-md-12">
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-				        <span class="icon-bar"></span>
-				        <span class="icon-bar"></span>
-				        <span class="icon-bar"></span>
-				      </button>
-                            <a class="navbar-brand" href="#"><img src="{% static 'asset/img/logo.png'%}" class="img-responsive" style="width: 140px; margin-top: -16px;"></a>
-                        </div>
-                        <div class="collapse navbar-collapse navbar-right" id="myNavbar">
-                            <ul class="nav navbar-nav">
-                                <li class=""><a href="{url ''}">Home</a></li>
-                                <li class=""><a href="#service">Services</a></li>
-                                <li class=""><a href="#about">About</a></li>
-                                <li class=""><a href="#testimonial">Testimonial</a></li>
-                                <li class=""><a href="#contact">Contact</a></li>
-                                <li class=""><a href="login.html" class="btn btn-info btn-block">Login</a></li>
-                                <div id="google_translate_element"></div>
-                                <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-                                <script>
-                                    function googleTranslateElementInit() {
-                                        new google.translate.TranslateElement({
-                                                pageLanguage: 'en'
-                                            },
-                                            'google_translate_element'
-                                        );
-                                    }
-                                </script>
-
-                            </ul>
-
-                        </div>
-                    </div>
-                </div>
-
-
-            </nav>
-        </div>
-    </section>
+{% block recommend_service %}
     <div class="container col-6 main my-5 ">
         <div class="col-lg-12 ">
             <div class="card bg-success color-white">
@@ -76,18 +13,21 @@
                 <div class="image-container text-center">
                     <img class="img img-fluid " onclick="selectImage('page1.html')" src="{% static 'asset/img/recommend/symptoms/cough men.png' %} " alt=" ">
                     <p class="text-center">coughing</p>
+                    <input type="checkbox" id="coughing" name="coughing" value="">
                 </div>
             </div>
             <div class="col-12 col-lg-4 align-items-center ">
                 <div class="image-container">
                     <img class="img img-fluid" onclick="selectImage('page2.html')" src="{% static 'asset/img/recommend/symptoms/headache men.png' %} " alt=" ">
                     <p class="text-center">headache</p>
+                    <input type="checkbox" id="headache" name="headache" value="">
                 </div>
             </div>
             <div class="col-12 col-lg-4 align-items-center ">
                 <div class="image-container">
                     <img class="img img-fluid" onclick="selectImage('page3.html')" src="{% static 'asset/img/recommend/symptoms/vomiting.png' %} " alt=" ">
                     <p class="text-center">vomiting</p>
+                    <input type="checkbox" id="vomiting" name="vomiting" value="">
                 </div>
             </div>
         </div>
@@ -96,12 +36,14 @@
                 <div class="image-container">
                     <img class="img img-fluid" onclick="selectImage('page4.html')" src="{% static 'asset/img/recommend/symptoms/fatigue.png' %} " alt=" ">
                     <p class="text-center">fatigue/tired</p>
+                    <input type="checkbox" id="fatigue" name="fatigue" value="">
                 </div>
             </div>
             <div class="col-12 col-lg-4 align-items-center ">
                 <div class="image-container">
                     <img class="img img-fluid" onclick="selectImage('page5.html')" src="{% static 'asset/img/recommend/symptoms/fever.png' %} " alt=" ">
                     <p class="text-center">fever</p>
+                    <input type="checkbox" id="fever" name="fever" value="">
                 </div>
             </div>
 
@@ -116,11 +58,11 @@
 
         <div class="row  d-flex justify-content-between pr-5">
             <div class="col-auto">
-                <button id="previousButton" class="btn-1 btn-primary">Prev</button>
+                <button id="previousButton" class="btn btn-primary">Prev</button>
             </div>
 
             <div class="col-auto">
-                <button id="nextButton" class="btn-1 btn-primary ">Next</button>
+                <button id="nextButton" class="btn btn-primary ">Next</button>
             </div>
         </div>
 
@@ -154,14 +96,19 @@
         function selectImage(page) {
             if (page === 'page1.html') {
                 page1.clicked = true;
+                document.getElementById("coughing").checked = true;
             } else if (page === 'page2.html') {
                 page2.clicked = true;
+                document.getElementById("headache").checked = true;
             } else if (page === 'page3.html') {
                 page3.clicked = true;
+                document.getElementById("vomiting").checked = true;
             } else if (page === 'page4.html') {
                 page4.clicked = true;
+                document.getElementById("fatigue").checked = true;
             } else if (page === 'page5.html') {
                 page5.clicked = true;
+                document.getElementById("fever").checked = true;
             } else if (page === 'page6.html') {
                 page6.clicked = true;
             }
@@ -199,4 +146,4 @@
             }
         });
     </script>
-</body> {% endblock maincontent%}
+{% endblock %}

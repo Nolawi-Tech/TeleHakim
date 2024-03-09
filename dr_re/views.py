@@ -5,7 +5,7 @@ import pandas as pd
 import joblib
 import os
 # from django.conf.settings import PROJECT_ROOT
-
+from account.include import user_info, user_role
 from django.conf import settings
 
 # Create your views here
@@ -65,9 +65,12 @@ diseases = {0: '(vertigo) Paroymsal  Positional Vertigo', 1: 'AIDS', 2: 'Acne', 
             38: 'Urinary tract infection', 39: 'Varicose veins', 40: 'hepatitis A'}
 
 
-@login_required(login_url='account:login')
 def re_home(request):
     return render(request, 'recommendation/re_home.html')
+
+
+def test_page(request):
+    return render(request, "recommendation/base.html")
 
 
 def login(request):
@@ -131,44 +134,90 @@ def vom_interview(request):
 
 
 def interview3(request):
-    return render(request, "recommendation/interview3.html")
+    status = user_role(request)
+    if status is not None:
+        status = "yes"
+    else:
+        status = "no"
+    return render(request, "recommendation/interview3.html", {"status": status})
 
 
 def interview2(request):
-    return render(request, "recommendation/interview2.html")
+    status = user_role(request)
+    if status is not None:
+        status = "yes"
+    else:
+        status = "no"
+    return render(request, "recommendation/interview2.html", {"status": status})
 
 
 def interview0(request):
-    return render(request, "recommendation/interview0.html", {})
+    status = user_role(request)
+    if status is not None:
+        status = "yes"
+    else:
+        status = "no"
+    print(status)
+    return render(request, "recommendation/interview0.html", {"status": status})
 
 
 def interview1(request):
-    return render(request, "recommendation/interview1.html", {})
+    status = user_role(request)
+    if status is not None:
+        status = "yes"
+    else:
+        status = "no"
+    print(status)
+    return render(request, "recommendation/interview1.html", {"status": status})
 
 
 def interview4(request):
-    return render(request, "recommendation/interview4.html")
+    status = user_role(request)
+    if status is not None:
+        status = "yes"
+    else:
+        status = "no"
+    print(status)
+    return render(request, "recommendation/interview4.html", {"status": status})
 
 
 symptom_list = ['cough']
 
 
 def cough_interview1(request):
-    return render(request, "recommendation/coughing/cough_interview1.html", {'symptom_list': symptom_list})
+    status = user_role(request)
+    if status is not None:
+        status = "yes"
+    else:
+        status = "no"
+    print(status)
+    return render(request, "recommendation/coughing/cough_interview1.html", {'symptom_list': symptom_list, "status": status})
 
 
 def cough_result(request):
+    status = user_role(request)
+    if status is not None:
+        status = "yes"
+    else:
+        status = "no"
+    print(status)
     if request.method == "POST":
         symptom = request.POST.get("symptom")
 
         if symptom:
             symptom_list.append(symptom)
 
-    return render(request, "recommendation/coughing/cough_result.html", {'symptom_list': symptom_list})
+    return render(request, "recommendation/coughing/cough_result.html", {'symptom_list': symptom_list, "status": status})
 
 
 def cough_interview2(request):
-    return render(request, "recommendation/coughing/cough_interview2.html")
+    status = user_role(request)
+    if status is not None:
+        status = "yes"
+    else:
+        status = "no"
+    print(status)
+    return render(request, "recommendation/coughing/cough_interview2.html", {"status": status})
 
 
 # headache

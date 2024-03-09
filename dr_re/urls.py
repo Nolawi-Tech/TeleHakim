@@ -3,6 +3,7 @@ from dr_re.views import *
 
 urlpatterns = [
     path("", re_home, name="re_home"),
+    path("test", test_page, name="test"),
     path("login", login, name="login"),
     path("interview0", interview0, name="interview0"),
     path("interview1", interview1, name="interview1"),

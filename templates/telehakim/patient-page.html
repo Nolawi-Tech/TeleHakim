@@ -40,6 +40,12 @@ Patient
                 <span>Prescription History</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="http://127.0.0.1:8000/recommend/interview0">
+                <i class="bi bi-file-medical"></i>
+                <span>Recommendation</span>
+            </a>
+        </li>
     </ul>
 
 </aside><!-- End Sidebar-->
@@ -281,6 +287,15 @@ medical-history
     {% endif %}
 {% elif page == 'medical_history' %}
 <!-- start of view Medical History -->
+<!-- Train button start   -->
+    {% if medical_histories %}
+        <link rel="stylesheet" href="{% static 'land/assets/css/style.css' %}">
+        <script src="{% static 'land/assets/js/script.js' %}"></script>
+        <div id="chatIcon-2" class="chat-icon-2" title="Train Data">
+            <img src="{% static 'land/assets/images/settings.png' %}" alt="Support Chat" class="icon">
+        </div>
+    {% endif %}
+
 <div class="row">
     <div class="col-lg-9">
         <h5 class="card-title">Medical History</h5>
@@ -299,6 +314,13 @@ medical-history
 </div>
 <!-- end view Medical History -->
 {% elif page == 'prescriptions' %}
+    {% if prescriptions %}
+        <link rel="stylesheet" href="{% static 'land/assets/css/style.css' %}">
+        <script src="{% static 'land/assets/js/script.js' %}"></script>
+        <div id="chatIcon-2" class="chat-icon-2" title="Train Data">
+            <img src="{% static 'land/assets/images/settings.png' %}" alt="Support Chat" class="icon">
+        </div>
+    {% endif %}
 <div class="row">
     <div class="col-lg-9">
         <h5 class="card-title">Prescription History</h5>
