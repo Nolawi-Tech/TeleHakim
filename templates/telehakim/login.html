@@ -105,7 +105,8 @@ login
                     </div>
                     <div class="col-12">
                         <p class="small mb-0"><a href="{% url 'account:revoke-new-password' %}?revoke=true">I
-                            forgot my password.</a></p>
+                            forgot my password.</a>
+                        </p>
                     </div>
                     <div class="col-12">
                         <button class="btn btn-primary w-100" name="login" type="submit">Login</button>
@@ -114,6 +115,8 @@ login
                         <p class="small mb-0">Don't have account? <a
                                 href="{% url 'account:register-patient' 'index' %}">Create
                             an account</a></p>
+                        <span class="small mb-0"> <a
+                                href="{% url 'account:home_page'%}">go back to home?</a></span>
                     </div>
                 </form>
                 {% endif %}

@@ -70,9 +70,9 @@
 
     <section class="popupBody">
 
-            <div class="action_btns">
-                <a href="register_patient/index/" class="btn">Register(user)</a>
-                <a href="register_doctor/index/" class="btn">Register(dr)</a>
+            <div class="action_btns d-inline">
+                <a href="{% url 'account:register-patient' 'index' %}" class="btn">Register(User)</a>
+                <a href="{% url 'account:register-doctor' 'index' %}" class="btn">Register(Dr.)</a>
             </div>
 
     </section>
@@ -87,7 +87,7 @@
               <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
                 <div class="row">
                   <div class="col-lg-12  text-dark">
-                    <h3><bold class="text-primary">Healthcare</bold> to your fingertips, because health knows no distance.</h3> <br>
+                    <h1><bold class="text-primary">Healthcare</bold> to your fingertips, because health knows no distance.</h1> <br>
                     <p class="text-dark">TeleHakim is merging telecommunication and AI, enhances healthcare with precise diagnostics and personalized treatment plans, prioritizing data security for cost-effective accessibility.</p>
                   </div>
                   <div class="col-lg-12 ">
